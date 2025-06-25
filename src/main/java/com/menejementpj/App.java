@@ -12,7 +12,7 @@ public class App extends Application {
 
     private static Scene scene;
 
-    private static Stage primaryStageInstance;
+    private static Stage primaryStageInstance = null;
 
     private static int currentLoggedInHidden_uid = -1;
     private static int currentLoggedInUserID = -1;
@@ -20,7 +20,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        primaryStageInstance = stage;
         scene = new Scene(loadFXML("login"), 1280, 800);
+  
         stage.setScene(scene);
         stage.setTitle("Login - Management Project");
         stage.setResizable(false);
