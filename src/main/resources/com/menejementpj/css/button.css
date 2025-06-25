@@ -1,0 +1,42 @@
+/* styles.css */
+
+/* =================================
+   Default Button Styles
+   ================================= */
+
+/* This targets all Buttons */
+.button {
+  /* Adding a transition makes the change smooth */
+  -fx-transition: all 0.2s ease-in-out;
+}
+
+/* HOVER EFFECT for any button */
+.button:hover {
+  /* Make the button slightly brighter */
+  -fx-background-color: linear-gradient(
+    from 0% 0% to 100% 100%,
+    #1aab8a,
+    #019779
+  );
+  -fx-cursor: hand;
+  /* Add a subtle drop shadow to lift it off the page */
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0, 2);
+  -fx-border-color: white;
+  -fx-border-radius: 5px;
+  /* Make the button slightly larger */
+  -fx-scale-x: 1.05;
+  -fx-scale-y: 1.05;
+}
+
+/* CLICK EFFECT for any button */
+.button:pressed {
+  /* Make the button a bit smaller to simulate being pushed in */
+  -fx-scale-x: 0.98;
+  -fx-scale-y: 0.98;
+
+  /* Make it slightly darker */
+  -fx-background-color: #017a61;
+
+  /* Remove the shadow when pressed */
+  -fx-effect: none;
+}

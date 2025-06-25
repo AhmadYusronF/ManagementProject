@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Group xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#019779" height="140.0" stroke="#f0f0f000" strokeType="INSIDE" width="230.0" />
+      
+      <Label fx:id="projectTitleLabel" layoutX="15.0" layoutY="6.0" prefWidth="200.0" styleClass="project-card-title" text="Project Title">
+         <font>
+            <Font name="Poppins SemiBold" size="12.0" />
+         </font></Label>
+      
+      <Label fx:id="projectDescriptionLabel" layoutX="15.0" layoutY="37.0" prefHeight="50.0" prefWidth="200.0" styleClass="project-card-description" text="Description placeholder" wrapText="true" />
+
+      <Label fx:id="projectCreatedAtLabel" alignment="BASELINE_LEFT" layoutX="15.0" layoutY="100.0" prefHeight="17.0" prefWidth="180.0" styleClass="project-card-created-at" text="Created at" />
+      
+      <Label fx:id="projectDateLabel" alignment="BASELINE_LEFT" layoutX="15.0" layoutY="118.0" prefHeight="17.0" prefWidth="180.0" text="2025-06-22" textFill="WHITE" />
+   </children>
+</Group>
