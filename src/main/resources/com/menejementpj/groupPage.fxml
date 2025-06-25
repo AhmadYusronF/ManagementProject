@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -11,162 +13,227 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #18191A;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.controller.GroupPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.controller.GroupPageController">
   <children>
-    <VBox alignment="CENTER" layoutX="880.0" prefHeight="800.0" prefWidth="400.0" style="-fx-background-color: #019779;">
+    <AnchorPane layoutX="134.0" layoutY="39.0" prefHeight="298.0" prefWidth="758.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10;">
       <children>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: #252525; -fx-background-radius: 10;" translateY="-20.0">
-          <children>
-            <Label layoutX="37.0" layoutY="14.0" text="Ahmad Yusron Fadil" textFill="WHITE">
-              <font>
-                <Font name="Poppins SemiBold" size="22.0" />
-              </font>
-            </Label>
-          </children>
-        </AnchorPane>
-        <VBox maxHeight="-Infinity" maxWidth="-Infinity" translateY="25.0">
-          <children>
-            <StackPane fx:id="myStackPane" prefHeight="550.0" prefWidth="300.0" style="-fx-background-radius: 10; -fx-background-color: #252525;" VBox.vgrow="SOMETIMES">
-              <clip>
-                <Rectangle arcHeight="20" arcWidth="20" height="550" width="300" />
-              </clip>
+            <AnchorPane prefHeight="60.0" prefWidth="758.0" style="-fx-background-color: #E0E0E0;">
+               <children>
+            <StackPane layoutX="20.0">
               <children>
-                <ListView fx:id="myListView" maxHeight="550.0" maxWidth="-Infinity" minHeight="200.0" prefWidth="300.0" styleClass="list-view">
-                  <opaqueInsets>
-                    <Insets />
-                  </opaqueInsets>
-                  <StackPane.margin>
-                    <Insets top="40.0" />
-                  </StackPane.margin>
-                </ListView>
-                <Rectangle arcHeight="20.0" fill="#242424" height="40.0" stroke="BLACK" strokeType="INSIDE" width="300.0" StackPane.alignment="TOP_CENTER" />
-                <Label text="My Task" textFill="WHITE" StackPane.alignment="TOP_CENTER">
-                  <font>
-                    <Font name="Poppins Regular" size="22.0" />
-                  </font>
-                </Label>
-              </children>
-            </StackPane>
-          </children>
-          <VBox.margin>
-            <Insets />
-          </VBox.margin>
-        </VBox>
-      </children>
-    </VBox>
-    <AnchorPane layoutX="29.0" layoutY="69.0" prefHeight="298.0" prefWidth="800.0" style="-fx-background-color: #252525; -fx-background-radius: 10;">
-      <children>
-        <HBox prefHeight="70.0" prefWidth="800.0" style="-fx-background-color: #019779; -fx-background-radius: 10;">
-          <children>
-            <StackPane>
-              <children>
-                <Label prefHeight="19.0" prefWidth="161.0" text="2024-11-15 09:30:00 UTC" textFill="WHITE" StackPane.alignment="BOTTOM_LEFT">
-                  <font>
-                    <Font name="Poppins Medium" size="12.0" />
-                  </font>
-                </Label>
-                <Label prefHeight="35.0" prefWidth="355.0" text="Sekumpulan Orang Bernafas" textFill="WHITE" StackPane.alignment="TOP_CENTER">
+                <Label prefHeight="35.0" prefWidth="355.0" text="Sekumpulan Orang Bernafas" textFill="#212121" StackPane.alignment="TOP_CENTER">
                   <font>
                     <Font name="Poppins SemiBold" size="24.0" />
                   </font>
                 </Label>
-                <Label prefWidth="76.0" text="Created At" StackPane.alignment="CENTER_LEFT">
-                  <font>
-                    <Font name="Poppins SemiBold" size="13.0" />
-                  </font>
-                  <StackPane.margin>
-                    <Insets top="20.0" />
-                  </StackPane.margin>
-                </Label>
               </children>
             </StackPane>
-            <Region prefHeight="200.0" prefWidth="200.0" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#" prefHeight="30.0" prefWidth="50.0" text="&lt;">
-              <font>
-                <Font name="Poppins Bold" size="30.0" />
-              </font>
-            </Button>
-          </children>
-          <padding>
-            <Insets left="20.0" right="20.0" />
-          </padding>
-        </HBox>
-        <Label layoutX="19.0" layoutY="83.0" prefHeight="27.0" prefWidth="107.0" text="Description" textFill="#019779">
+          <Label layoutX="20.0" layoutY="37.0" prefHeight="19.0" prefWidth="238.0" text="Created At 2024-11-15 09:30:00 UTC" textFill="#757575">
+            <font>
+              <Font name="Poppins SemiBold" size="13.0" />
+            </font>
+          </Label>
+                  <Button layoutX="677.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" text="Button">
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Images/Options%20Icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+        <Label layoutX="19.0" layoutY="83.0" prefHeight="27.0" prefWidth="107.0" text="Description" textFill="#212121">
           <font>
             <Font name="Poppins SemiBold" size="18.0" />
           </font>
         </Label>
-        <Label layoutX="17.0" layoutY="230.5" prefWidth="76.0" text="Owner" textFill="#019779">
-          <font>
-            <Font name="Poppins SemiBold" size="18.0" />
-          </font>
-        </Label>
-        <Label layoutX="18.0" layoutY="252.5" prefHeight="32.0" prefWidth="231.0" text="Ahmad Yusron Fadil" textFill="WHITE">
-          <font>
-            <Font name="Poppins SemiBold" size="16.0" />
-          </font>
-        </Label>
-        <Label alignment="TOP_LEFT" contentDisplay="TOP" layoutX="20.0" layoutY="116.0" prefHeight="101.0" prefWidth="722.0" text="Lorem Ipsum" textFill="WHITE">
+        <Label alignment="TOP_LEFT" contentDisplay="TOP" layoutX="20.0" layoutY="116.0" prefHeight="156.0" prefWidth="722.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 6;" text="Lorem Ipsum" textFill="#212121">
           <font>
             <Font name="Poppins Regular" size="15.0" />
           </font>
+               <padding>
+                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+               </padding>
         </Label>
       </children>
     </AnchorPane>
-    <AnchorPane layoutX="28.5" layoutY="468.0">
+    <AnchorPane layoutX="134.0" layoutY="385.0" prefHeight="339.0" prefWidth="760.0">
       <children>
-        <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#252525" height="219.0" layoutX="0.5" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />
-        <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#019779" height="44.0" layoutY="0.5" stroke="BLACK" width="800.0" />
-        <Label layoutX="351.5" layoutY="11.0" text="PROJECTS" textFill="WHITE">
-          <font>
-            <Font name="Poppins Medium" size="16.0" />
-          </font>
-        </Label>
-        <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#019779" height="136.0" layoutX="19.5" layoutY="56.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-        <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#019779" height="136.0" layoutX="241.5" layoutY="56.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-        <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#019779" height="136.0" layoutX="460.5" layoutY="56.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-        <Label layoutX="35.5" layoutY="56.0" prefHeight="32.0" prefWidth="161.0" text="Perencanaan siput balap" textFill="#252525">
-          <font>
-            <Font name="Poppins SemiBold" size="12.0" />
-          </font>
-        </Label>
-        <Label layoutX="36.5" layoutY="82.0" prefHeight="53.0" prefWidth="176.0" text="Membuat Siput Balap untuk menjadi yang terkuat dan melampaui nya" textFill="WHITE" wrapText="true">
-          <font>
-            <Font name="Poppins Medium" size="10.0" />
-          </font>
-        </Label>
-        <Label layoutX="35.5" layoutY="140.0" prefHeight="28.0" prefWidth="65.0" text="Created at" textFill="#252525" wrapText="true">
-          <font>
-            <Font name="Poppins Medium" size="10.0" />
-          </font>
-        </Label>
-        <Label layoutX="35.5" layoutY="159.0" prefHeight="18.0" prefWidth="122.0" text="2024-11-15 09:30:00 UTC" textFill="WHITE" wrapText="true">
-          <font>
-            <Font name="Poppins Medium" size="10.0" />
-          </font>
-        </Label>
-        <Label layoutX="261.5" layoutY="54.0" prefHeight="32.0" prefWidth="161.0" text="Perencanaan gulat gurita" textFill="#252525">
-          <font>
-            <Font name="Poppins SemiBold" size="12.0" />
-          </font>
-        </Label>
-        <Label layoutX="478.5" layoutY="55.0" prefHeight="32.0" prefWidth="161.0" text="Perencanaan merancang" textFill="#252525">
-          <font>
-            <Font name="Poppins SemiBold" size="12.0" />
-          </font>
-        </Label>
-        <Button fx:id="viewAllProjectsButton" layoutX="681.5" layoutY="160.0" mnemonicParsing="false" onAction="#handleViewAllProjectsClick" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #0B60B0; -fx-background-radius: 5;" stylesheets="@css/button.css" text="View All" textFill="WHITE">
+        <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="339.0" layoutX="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="760.0" />
+            <HBox alignment="CENTER" layoutX="1.0" layoutY="-2.0" prefHeight="47.0" prefWidth="760.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 6;">
+               <children>
+              <Label text="PROJECTS" textFill="#212121">
+                <font>
+                  <Font name="Poppins SemiBold" size="24.0" />
+                </font>
+              </Label>
+               </children>
+            </HBox>
+        <Button fx:id="viewAllProjectsButton" layoutX="647.0" layoutY="127.0" mnemonicParsing="false" onAction="#handleViewAllProjectsClick" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #0B60B0; -fx-background-radius: 5;" stylesheets="@css/button.css" text="View All" textFill="WHITE">
           <font>
             <Font name="Poppins SemiBold" size="12.0" />
           </font>
         </Button>
-        <Button fx:id="createProjectButton" layoutX="682.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleCreateProjectClick" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #019779; -fx-background-radius: 5;" stylesheets="@css/button.css" text="CREATE" textFill="WHITE">
+        <Button fx:id="createProjectButton" layoutX="647.0" layoutY="70.0" mnemonicParsing="false" onAction="#handleCreateProjectClick" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #019779; -fx-background-radius: 5;" stylesheets="@css/button.css" text="CREATE" textFill="WHITE">
           <font>
             <Font name="Poppins SemiBold" size="12.0" />
           </font>
         </Button>
+            <AnchorPane layoutX="22.0" layoutY="70.0" prefHeight="219.0" prefWidth="223.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 6;">
+               <children>
+                  <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#212121" height="65.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="292.0" />
+                  <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="25.0" spacing="10.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c0c0c0" height="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="card-image-placeholder" width="50.0" />
+                        <VBox>
+                           <children>
+                              <Label styleClass="card-title" text="The Communitity Journal" textFill="WHITE">
+                                 <font>
+                                    <Font name="Poppins SemiBold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label styleClass="card-subtitle" text="Created at : 2012-12-12" textFill="#757575">
+                                 <font>
+                                    <Font name="Poppins Regular" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Region layoutX="30.0" layoutY="90.0" />
+                  <Text layoutX="30.0" layoutY="105.0" styleClass="card-description" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi" wrappingWidth="250.0" />
+                  <Region layoutX="30.0" layoutY="223.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="335.0" layoutY="70.0" prefHeight="219.0" prefWidth="223.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 6;">
+               <children>
+                  <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#212121" height="65.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="292.0" />
+                  <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="25.0" spacing="10.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c0c0c0" height="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="card-image-placeholder" width="50.0" />
+                        <VBox>
+                           <children>
+                              <Label styleClass="card-title" text="The Communitity Journal" textFill="WHITE">
+                                 <font>
+                                    <Font name="Poppins SemiBold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label styleClass="card-subtitle" text="Created at : 2012-12-12" textFill="#757575">
+                                 <font>
+                                    <Font name="Poppins Regular" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Region layoutX="30.0" layoutY="90.0" />
+                  <Text layoutX="30.0" layoutY="105.0" styleClass="card-description" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi" wrappingWidth="250.0" />
+                  <Region layoutX="30.0" layoutY="223.0" />
+               </children>
+            </AnchorPane>
       </children>
     </AnchorPane>
+      <VBox alignment="CENTER" prefHeight="800.0" prefWidth="100.0" style="-fx-background-color: #F5F5F5; -fx-border-color: #E0E0E0; -fx-border-width: 2;">
+         <children>
+            <Region prefHeight="130.0" prefWidth="200.0" />
+            <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/Untitled%20design.png" />
+               </image>
+            </ImageView>
+            <Region prefHeight="150.0" prefWidth="96.0" />
+            <Button fx:id="btnHome" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" textFill="#757575">
+               <font>
+                  <Font name="Poppins SemiBold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Home%20Icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Region prefHeight="130.0" prefWidth="200.0" />
+            <Button fx:id="btnGroub" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGoToGroub" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #007766;" stylesheets="@css/button.css" textFill="#757575">
+               <font>
+                  <Font name="Poppins SemiBold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Group%20Icon%20Active.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Region prefHeight="130.0" prefWidth="200.0" />
+            <Button fx:id="btnProject" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGotoProject" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
+               <font>
+                  <Font name="Poppins SemiBold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fx:id="b" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Project%20Icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Region prefHeight="130.0" prefWidth="200.0" />
+            <Button fx:id="btnChat" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGotoChat" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
+               <font>
+                  <Font name="Poppins SemiBold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Chat%20Icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Region prefHeight="250.0" prefWidth="96.0" />
+            <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/Untitled%20design.png" />
+               </image>
+            </ImageView>
+            <Region prefHeight="150.0" prefWidth="96.0" />
+            <Button fx:id="btnLogout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleLogout" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
+               <font>
+                  <Font name="Poppins SemiBold" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Exit%20Icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Region prefHeight="130.0" prefWidth="96.0" />
+         </children>
+      </VBox>
+      <VBox layoutX="919.0" layoutY="39.0" prefHeight="685.0" prefWidth="325.0">
+         <children>
+            <AnchorPane prefHeight="130.0" prefWidth="260.0" style="-fx-background-color: #E0E0E0;">
+               <children>
+                  <Label layoutX="88.0" layoutY="15.0" text="Member List">
+                     <font>
+                        <Font name="Poppins SemiBold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <ListView prefHeight="686.0" prefWidth="296.0" />
+         </children>
+      </VBox>
   </children>
 </AnchorPane>
