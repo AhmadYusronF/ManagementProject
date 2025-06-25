@@ -20,7 +20,6 @@
   The main layout is a VBox, which stacks the header and the group cards vertically.
 -->
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GroupViewController">
    <children>
       <VBox layoutX="100.0" prefWidth="1178.0" spacing="20.0" styleClass="main-container" stylesheets="@../css/groupTab.css">
@@ -81,7 +80,7 @@
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/Group%20Icon.png" />
+                        <Image url="@../Images/Group%20Icon%20Active.png" />
                      </image>
                   </ImageView>
                </graphic>
