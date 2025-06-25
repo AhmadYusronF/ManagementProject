@@ -20,8 +20,6 @@
   );
   -fx-cursor: hand;
   /* Add a subtle drop shadow to lift it off the page */
-  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0, 2);
-  -fx-border-color: white;
   -fx-border-radius: 5px;
   /* Make the button slightly larger */
   -fx-scale-x: 1.05;
