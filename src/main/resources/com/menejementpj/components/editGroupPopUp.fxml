@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+  FXML for the "Create Group" screen.
+  This layout is designed to match the provided user interface image.
+  It uses a VBox as the main container to stack elements vertically,
+  and a GridPane to organize the input fields and labels for alignment.
+  A TableView is used to display the list of members.
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" spacing="20" style="-fx-background-color: #f4f7fc; -fx-padding: 40;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GroupController">
+
+    <!-- Main Title -->
+    <Label text="EDIT GROUP">
+        <font>
+            <Font name="System Bold" size="24.0" />
+        </font>
+    </Label>
+
+    <!-- Main Content Area using GridPane for alignment -->
+    <GridPane hgap="40" vgap="20">
+        <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+            <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+        </columnConstraints>
+
+        <!-- Left Side: Group Name and Description -->
+        <VBox spacing="15" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Label text="Group Name">
+                <font>
+                    <Font name="System" size="14.0" />
+                </font>
+            </Label>
+            <TextField fx:id="groupNameField" prefHeight="32.0" prefWidth="458.0" promptText="" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;" />
+
+            <Label text="Description">
+                 <font>
+                    <Font name="System" size="14.0" />
+                </font>
+                <VBox.margin>
+                    <Insets top="10" />
+                </VBox.margin>
+            </Label>
+            <TextArea fx:id="descriptionArea" prefHeight="100.0" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;" wrapText="true" />
+        </VBox>
+
+        <!-- Right Side: Icon Upload -->
+        <VBox alignment="TOP_LEFT" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <Label text="Icon">
+                 <font>
+                    <Font name="System" size="14.0" />
+                </font>
+            </Label>
+            <Pane fx:id="iconPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="82.0" prefWidth="105.0" style="-fx-border-color: #E0E0E0; -fx-border-radius: 6; -fx-background-color: #ffffff;" />
+            <Hyperlink onAction="#handleUploadFile" text="Upload File" />
+        </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+    </GridPane>
+
+    <!-- Members Section -->
+    <VBox spacing="10" style="-fx-padding: 20 0 0 0;">
+        <Label text="Members - Roles">
+             <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+        
+        <!-- Member Table -->
+        <TableView fx:id="membersTable" prefHeight="200" prefWidth="685.0" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-radius: 8;">
+            <columns>
+                <TableColumn fx:id="nameColumn" prefWidth="250.0" text="Nama" />
+                <TableColumn fx:id="joinedAtColumn" prefWidth="200.0" text="Joined At" />
+                <TableColumn fx:id="rolesColumn" prefWidth="150.0" text="Roles" />
+            </columns>
+            <placeholder>
+                <Label text="No members added yet." />
+            </placeholder>
+        </TableView>
+
+        <Hyperlink onAction="#handleAddMember" text="+ Add More Member">
+            <VBox.margin>
+                <Insets top="10" />
+            </VBox.margin>
+        </Hyperlink>
+    </VBox>
+   <AnchorPane>
+      <children>
+            <Button fx:id="saveButton" layoutX="423.0" layoutY="20.0" onAction="#handleSave" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #388E3C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10 30;" text="SAVE">
+               <font>
+                   <Font name="Poppins SemiBold" size="14.0" />
+               </font>
+           </Button>
+         <Button fx:id="saveButton1" layoutX="788.0" layoutY="20.0" onAction="#handleSave" prefHeight="40.0" prefWidth="168.0" style="-fx-background-color: #D32F2F; -fx-background-radius: 6; -fx-padding: 10 30;" text="DELETE GROUP" textFill="WHITE">
+            <font>
+               <Font name="Poppins SemiBold" size="14.0" />
+            </font>
+         </Button>
+      </children>
+   </AnchorPane>
+
+</VBox>

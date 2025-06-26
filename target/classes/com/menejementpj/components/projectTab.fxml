@@ -29,7 +29,7 @@
          <children>
             <AnchorPane>
                <children>
-                  <Label styleClass="header-title" text="JOIN OR CREATE GROUP" />
+                  <Label styleClass="header-title" text="PROJECT LIST" />
                   <Button layoutY="47.0" mnemonicParsing="false" styleClass="create-button" stylesheets="@../css/button.css" text="Create" />
                </children>
             </AnchorPane>
@@ -49,7 +49,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <fx:include source="groupCard.fxml" />
+                  <fx:include source="projectCard.fxml" />
                </children>
             </GridPane>
          </content>

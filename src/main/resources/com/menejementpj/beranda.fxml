@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -26,20 +25,11 @@
             </Label>
             <VBox layoutX="804.0" layoutY="111.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="550.0" prefWidth="300.0">
                <children>
-                  <StackPane fx:id="myStackPane" prefHeight="550.0" prefWidth="300.0" style="-fx-background-radius: 10; -fx-background-color: #252525;" VBox.vgrow="SOMETIMES">
+                  <StackPane fx:id="myStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="300.0" style="-fx-background-radius: 10; -fx-background-color: transparent;" VBox.vgrow="SOMETIMES">
                      <clip>
                         <Rectangle arcHeight="20" arcWidth="20" height="550" width="300" />
                      </clip>
                      <children>
-                        <ListView fx:id="myListView" minHeight="200.0" prefWidth="300.0" style="-fx-background-color: #FFFFFF;" styleClass="list-view">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <StackPane.margin>
-                              <Insets top="40.0" />
-                           </StackPane.margin>
-                        </ListView>
-                        <Rectangle fill="#e0e0e0" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="300.0" StackPane.alignment="TOP_CENTER" />
                         <Label text="My Task" textFill="#212121" StackPane.alignment="TOP_CENTER">
                            <font>
                               <Font name="Poppins SemiBold" size="20.0" />
@@ -50,53 +40,65 @@
                         </Label>
                      </children>
                   </StackPane>
+                  <ScrollPane prefHeight="518.0" prefWidth="300.0">
+                     <content>
+                        <VBox prefHeight="513.0" prefWidth="283.0">
+                           <children>
+                              <fx:include source="components/myTaskCard.fxml" />
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
                </children>
             </VBox>
-            <HBox layoutX="77.0" layoutY="111.0" prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 6;">
+            <VBox layoutX="78.0" layoutY="398.0" prefHeight="263.0" prefWidth="600.0" spacing="15.0">
                <children>
-                  <StackPane prefHeight="200.0" prefWidth="614.0">
-                     <children>
-                        <HBox maxHeight="-Infinity" prefHeight="30.0" prefWidth="600.0" style="-fx-background-color: #E0E0E0;" StackPane.alignment="TOP_CENTER">
+                  <Label text="Activity Log">
+                     <font>
+                        <Font name="Poppins SemiBold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="583.0">
                            <children>
-                              <Label text="My Group">
-                                 <font>
-                                    <Font name="Poppins SemiBold" size="20.0" />
-                                 </font>
-                              </Label>
+                              <fx:include source="components/activityLogCard.fxml" />
+                              <fx:include source="components/activityLogCard.fxml" />
+                              <fx:include source="components/activityLogCard.fxml" />
+                              <fx:include source="components/activityLogCard.fxml" />
                            </children>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </HBox>
-                     </children>
-                  </StackPane>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
                </children>
-            </HBox>
-            <HBox layoutX="77.0" layoutY="400.0" prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 6;">
+            </VBox>
+            <AnchorPane layoutX="62.0" layoutY="117.0" prefHeight="269.0" prefWidth="632.0" style="-fx-background-color: #ffffff; -fx-background-radius: 6;">
                <children>
-                  <StackPane prefHeight="200.0" prefWidth="614.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="1.0" layoutY="-2.0" prefHeight="47.0" prefWidth="611.0" style="-fx-background-color: transparent; -fx-background-radius: 6;">
                      <children>
-                        <HBox maxHeight="-Infinity" prefHeight="30.0" prefWidth="600.0" style="-fx-background-color: #E0E0E0;" StackPane.alignment="TOP_CENTER">
-                           <children>
-                              <Label text="Recent Activity">
-                                 <font>
-                                    <Font name="Poppins SemiBold" size="20.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </HBox>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #E0E0E0;">
-                           <StackPane.margin>
-                              <Insets top="30.0" />
-                           </StackPane.margin>
-                        </ScrollPane>
+                        <Label text="Group News" textFill="#212121">
+                           <font>
+                              <Font name="Poppins SemiBold" size="24.0" />
+                           </font>
+                        </Label>
                      </children>
-                  </StackPane>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <Label alignment="TOP_LEFT" contentDisplay="TOP" layoutX="20.0" layoutY="50.0" prefHeight="201.0" prefWidth="590.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 6;" text="Lorem Ipsum" textFill="#212121">
+                     <font>
+                        <Font name="Poppins Regular" size="15.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                     </padding>
+                  </Label>
                </children>
-            </HBox>
+            </AnchorPane>
          </children>
       </AnchorPane>
       <VBox alignment="CENTER" prefHeight="800.0" prefWidth="100.0" style="-fx-background-color: #F5F5F5; -fx-border-color: #E0E0E0; -fx-border-width: 2;">
