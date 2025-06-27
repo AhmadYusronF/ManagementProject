@@ -23,7 +23,7 @@
 <VBox alignment="TOP_CENTER" spacing="20" style="-fx-background-color: #F5F5F5; -fx-padding: 40;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GroupController">
 
     <!-- Main Title -->
-    <Label text="CREATE PROJECT">
+    <Label text="EDIT PROJECT">
         <font>
             <Font name="System Bold" size="24.0" />
         </font>
@@ -31,7 +31,7 @@
 
      <!-- Left Side: Group Name and Description -->
      <VBox spacing="15">
-         <Label text="Group Name">
+         <Label text="Project Name">
              <font>
                  <Font name="Poppins SemiBold" size="14.0" />
              </font>
@@ -71,7 +71,7 @@
                 <TableColumn fx:id="rolesColumn" prefWidth="150.0" text="Member" />
             </columns>
             <placeholder>
-                <Label text="No members added yet." />
+                <Label text="No Task added yet." />
             </placeholder>
         </TableView>
 

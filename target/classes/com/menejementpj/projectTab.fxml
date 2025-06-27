@@ -14,15 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<!-- 
-  This is the main FXML file that defines the layout of the application.
-  It uses a ScrollPane as the root to allow for vertical scrolling if more groups are added.
-  The main layout is a VBox, which stacks the header and the group cards vertically.
--->
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GroupViewController">
    <children>
-      <VBox layoutX="100.0" prefWidth="1178.0" spacing="20.0" styleClass="main-container" stylesheets="@../css/groupTab.css">
+      <VBox layoutX="100.0" prefWidth="1178.0" spacing="20.0" styleClass="main-container" stylesheets="@css/groupTab.css">
          <padding>
             <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
          </padding>
@@ -30,7 +24,7 @@
             <AnchorPane>
                <children>
                   <Label styleClass="header-title" text="PROJECT LIST" />
-                  <Button layoutY="47.0" mnemonicParsing="false" styleClass="create-button" stylesheets="@../css/button.css" text="Create" />
+                  <Button layoutY="47.0" mnemonicParsing="false" styleClass="create-button" stylesheets="@css/button.css" text="Create" />
                </children>
             </AnchorPane>
          </children>
@@ -49,7 +43,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <fx:include source="projectCard.fxml" />
+                  <fx:include source="components/project/projectCard.fxml" />
                </children>
             </GridPane>
          </content>
@@ -59,57 +53,57 @@
             <Region prefHeight="130.0" prefWidth="200.0" />
             <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/Logo%20MP.png" />
+                  <Image url="@Images/Untitled%20design.png" />
                </image>
             </ImageView>
             <Region prefHeight="150.0" prefWidth="96.0" />
-            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@../css/button.css" textFill="#757575">
+            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/Home%20Icon.png" />
+                        <Image url="@Images/Home%20Icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
             <Region prefHeight="130.0" prefWidth="200.0" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #007766;" stylesheets="@../css/button.css" textFill="#757575">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/Group%20Icon%20Active.png" />
+                        <Image url="@Images/Group%20Icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
             <Region prefHeight="130.0" prefWidth="200.0" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@../css/button.css" textFill="#757575">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/Project%20Icon.png" />
+                        <Image url="@Images/Project%20Icon.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
             <Region prefHeight="130.0" prefWidth="200.0" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@../css/button.css" textFill="#757575">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/Chat%20Icon.png" />
+                        <Image url="@Images/Chat%20Icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -117,18 +111,18 @@
             <Region prefHeight="250.0" prefWidth="96.0" />
             <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/Untitled%20design.png" />
+                  <Image url="@Images/Untitled%20design.png" />
                </image>
             </ImageView>
             <Region prefHeight="150.0" prefWidth="96.0" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@../css/button.css" textFill="#757575">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/Exit%20Icon.png" />
+                        <Image url="@Images/Exit%20Icon.png" />
                      </image>
                   </ImageView>
                </graphic>

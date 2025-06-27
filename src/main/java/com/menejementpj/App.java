@@ -21,8 +21,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStageInstance = stage;
-        scene = new Scene(loadFXML("login"), 1280, 800);
-  
+        scene = new Scene(loadFXML("chatPopUp"), 1280, 800);
+
         stage.setScene(scene);
         stage.setTitle("Login - Management Project");
         stage.setResizable(false);
