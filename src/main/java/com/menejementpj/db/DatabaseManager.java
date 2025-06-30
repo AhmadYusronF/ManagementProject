@@ -84,6 +84,8 @@ public class DatabaseManager {
         return groupID;
     }
 
+    
+
     public static String getUsername(int userID) {
         String username = null;
         String sql = "SELECT username FROM users WHERE users_id = ?";
@@ -164,5 +166,17 @@ public class DatabaseManager {
             System.err.println("Error fetching tasks from database for user ID '" + userID + "': " + e.getMessage());
         }
         return taskItems;
+    }
+
+    public static String getDataGroub() {
+        String query = "";
+        
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return "tes";
     }
 }

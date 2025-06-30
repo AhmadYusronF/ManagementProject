@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" maxWidth="-Infinity" prefHeight="400" prefWidth="400.0" spacing="10" style="-fx-background-color: #F5F5F5; -fx-padding: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.controller.ChatPopupController">
+
+    <Label text="Group Name">
+        <font>
+            <Font name="Segoe UI Bold" size="18.0" />
+        </font>
+    </Label>
+
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" style="-fx-background-color: #FFFFFF; -fx-background: #FFFFFF; -fx-border-color: #E0E0E0;">
+        <VBox.vgrow>ALWAYS</VBox.vgrow>
+        <content>
+            <VBox fx:id="chatHistoryBox" spacing="8" style="-fx-padding: 10; -fx-background-color: #E0E0E0;" />
+        </content>
+    </ScrollPane>
+
+    <HBox alignment="CENTER" spacing="10">
+        <TextField fx:id="messageField" promptText="Type a message..." style="-fx-background-color: #E0E0E0; -fx-text-fill: black; -fx-prompt-text-fill: #757575;" HBox.hgrow="ALWAYS" />
+        <Button defaultButton="true" onAction="#handleSendAction" style="-fx-background-color: #007766; -fx-text-fill: white; -fx-font-weight: bold;" text="Send" />
+    </HBox>
+
+</VBox>

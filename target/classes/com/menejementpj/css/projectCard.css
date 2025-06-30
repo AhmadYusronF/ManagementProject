@@ -1,0 +1,59 @@
+.card {
+  -fx-background-color: #ffffff;
+  -fx-padding: 20px;
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
+  -fx-effect: dropshadow(
+    gaussian,
+    rgba(0, 0, 0, 0.1),
+    10,
+    0,
+    0,
+    5
+  ); /* Soft shadow */
+  -fx-spacing: 15;
+  -fx-alignment: top-left;
+  -fx-min-height: 250px; /* Ensure cards have a minimum height */
+  -fx-pref-width: 300px;
+}
+
+.card-image-placeholder {
+  -fx-arc-width: 8;
+  -fx-arc-height: 8;
+}
+
+.card-title {
+  -fx-font-family: "System";
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #212529;
+}
+
+.card-subtitle {
+  -fx-font-family: "System";
+  -fx-font-size: 12px;
+  -fx-text-fill: #6c757d;
+}
+
+.card-description {
+  -fx-font-family: "System";
+  -fx-font-size: 13px;
+  -fx-fill: #495057;
+  -fx-line-spacing: 4px;
+}
+
+/* --- Join Button --- */
+.detail-button {
+  -fx-background-color: #008080; /* Teal color */
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-padding: 8px 30px;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px;
+  -fx-cursor: hand;
+}
+
+.detail-button:hover {
+  -fx-background-color: #006666; /* Darker teal on hover */
+}

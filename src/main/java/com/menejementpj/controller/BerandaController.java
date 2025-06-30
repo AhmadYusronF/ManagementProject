@@ -10,8 +10,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class BerandaController {
+
+    @FXML
+    private VBox activitylogContainer;
+
+    @FXML
+    private VBox taskContainer;
 
     @FXML
     private ImageView b;
@@ -54,6 +61,11 @@ public class BerandaController {
 
     @FXML
     void toggleGotoProject(ActionEvent event) {
+
+    }
+
+    @FXML
+    void goToHome(ActionEvent event) {
 
     }
 

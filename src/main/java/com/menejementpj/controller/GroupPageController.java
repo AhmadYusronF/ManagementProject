@@ -2,39 +2,61 @@ package com.menejementpj.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader; // You will need this import
-import javafx.scene.Node; // And this one
-import javafx.scene.Parent; // And this one
-import javafx.scene.Scene; // And this one
-import javafx.stage.Modality; // And this one
-import javafx.stage.Stage; // And this one
-import java.io.IOException; // And definitely this one
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import com.menejementpj.App;
+
+import java.io.IOException;
 
 public class GroupPageController {
 
     @FXML
+    void toggleGoToHome(ActionEvent event) throws IOException {
+        App.setRoot("beranda", "\"Beranda - Management Project\"");
+    }
+
+    @FXML
+    void toggleGoToGroub(ActionEvent event) throws IOException {
+        App.setRoot("groupPage", "GroupPage - myGroup");
+    }
+
+    @FXML
+    void toggleGotoProject(ActionEvent event) throws IOException {
+        App.setRoot("projectPage", "Project - myGroup");
+    }
+
+    @FXML
+    void toggleGotoChat(ActionEvent event) throws IOException {
+        App.setRoot("chatPage", "Chat - myGroup");
+    }
+
+    @FXML
+    void toggleLogout(ActionEvent event) throws IOException {
+        App.setRoot("login", "Login - Management Project");
+    }
+
+    @FXML
     void handleCreateProjectClick(ActionEvent event) {
-        // CORRECTED PATH
         showPopup(event, "/com/menejementpj/popupCreateProject.fxml", "Create New Project");
     }
 
     @FXML
     void handleViewAllProjectsClick(ActionEvent event) {
-        // CORRECTED PATH
         showPopup(event, "/com/menejementpj/popupProject.fxml", "All Projects");
     }
 
     @FXML
     void handleViewAllMembersClick(ActionEvent event) {
-        // CORRECTED PATH - I assume you want a members popup here, not the project one.
-        // I'll leave it as is for now, but you might want to create a popupMember.fxml
+        // Kalau kamu punya popupMember.fxml, ganti di sini
         showPopup(event, "/com/menejementpj/popupProject.fxml", "All Members");
     }
 
-    // This is the CRUCIAL part. Your controller was missing this entire method.
     private void showPopup(ActionEvent event, String fxmlFile, String title) {
         try {
-            // This is the standard way to load a resource from the classpath
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
 
@@ -42,14 +64,11 @@ public class GroupPageController {
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.initOwner(((Node) event.getSource()).getScene().getWindow());
             popupStage.setTitle(title);
-
-            Scene scene = new Scene(root);
-            popupStage.setScene(scene);
+            popupStage.setScene(new Scene(root));
             popupStage.showAndWait();
 
         } catch (IOException e) {
-            // THIS IS THE MOST IMPORTANT LINE FOR DEBUGGING
-            System.err.println("Failed to load FXML file: " + fxmlFile);
+            System.err.println("⚠️ Failed to load FXML file: " + fxmlFile);
             e.printStackTrace();
         }
     }

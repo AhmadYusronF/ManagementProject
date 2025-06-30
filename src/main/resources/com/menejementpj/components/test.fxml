@@ -1,199 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- 
-  FXML for the Project View screen, now with a TabPane layout.
-  - "Project" tab contains project details and the member task list.
-  - "Activity" tab contains the activity log and the section to add new activities.
-  - "News" tab is a new section for group announcements.
-  - "My Task" tab shows a personalized list of tasks for the current user.
+  FXML for the Project View screen, based on the single-view design.
+  This layout uses an HBox to split the view into a main content area and a sidebar for member tasks.
+  - The left side contains project details, a simplified activity log, and an add activity section.
+  - The right side contains a scrollable list of member task cards with improved styling.
 -->
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.Priority?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ProjectViewController"
-      spacing="20" style="-fx-background-color: #ffffff; -fx-padding: 20;">
+<HBox spacing="30" style="-fx-background-color: #ffffff; -fx-padding: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ProjectViewController">
 
-    <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-        <!-- Tab 1: Project Overview -->
-        <Tab text="Project">
-            <content>
-                <HBox spacing="30" style="-fx-padding: 20;">
-                    <!-- Left Column: Project Details -->
-                    <VBox spacing="30" HBox.hgrow="ALWAYS">
-                        <VBox spacing="15" style="-fx-background-color: #f5f5f5; -fx-padding: 25; -fx-background-radius: 10;">
-                            <Label text="Perencanaan Siput Balap" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
-                            <HBox spacing="10" alignment="CENTER_LEFT">
-                                <VBox>
-                                    <Label text="Created At" style="-fx-font-size: 12px; -fx-text-fill: #555555; -fx-font-weight: bold;"/>
-                                    <Label text="2024-11-15 09:30:00 UTC" style="-fx-font-size: 12px; -fx-text-fill: #555555;"/>
-                                </VBox>
-                            </HBox>
-                            <Text text="Membuat arena balapan mini dengan siput sebagai 'pembalap', menggabungkan teknologi pelacakan, edukasi biologi, dan hiburan yang inovatif serta ramah lingkungan."
-                                  wrappingWidth="500.0" style="-fx-font-size: 14px; -fx-fill: #444444; -fx-line-spacing: 4px;"/>
-                            <HBox alignment="CENTER">
-                                <Button text="View on GitHub" fx:id="viewOnGithubButton"
-                                        style="-fx-background-color: #00897B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8 15;"/>
-                                <Pane HBox.hgrow="ALWAYS" />
-                                <VBox alignment="CENTER_RIGHT">
-                                    <Label text="Last Updated At" style="-fx-font-size: 12px; -fx-text-fill: #555555; -fx-font-weight: bold;"/>
-                                    <Label text="2024-11-15 09:30:00 UTC" style="-fx-font-size: 12px; -fx-text-fill: #555555;"/>
-                                </VBox>
-                            </HBox>
-                        </VBox>
-                    </VBox>
-                    <!-- Right Column: Member Tasks -->
-                    <VBox spacing="20" minWidth="350" prefWidth="350">
-                        <Label text="Member Task" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333333; -fx-padding: 0 0 0 5;"/>
-                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-padding: 2;">
-                            <VBox fx:id="memberTaskContainer" spacing="20">
-                                <!-- Member Card 1 -->
-                                <VBox style="-fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-background-radius: 10; -fx-border-radius: 10;">
-                                    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: #f5f5f5; -fx-padding: 15; -fx-background-radius: 10 10 0 0; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;">
-                                        <Circle radius="20" fill="#00897B"/>
-                                        <Label text="Ahmad Yusron Fadil" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
-                                    </HBox>
-                                    <VBox spacing="10" style="-fx-padding: 15;">
-                                        <HBox spacing="10" alignment="CENTER_LEFT"><Circle radius="5" fill="#4CAF50"/><Label text="Penyedia Siput" style="-fx-font-size: 14px;"/></HBox>
-                                        <HBox spacing="10" alignment="CENTER_LEFT"><Circle radius="5" fill="#FFC107"/><Label text="Penyedia Macan" style="-fx-font-size: 14px;"/></HBox>
-                                        <HBox spacing="10" alignment="CENTER_LEFT"><Circle radius="5" fill="#F44336"/><Label text="Penyedia Pistol" style="-fx-font-size: 14px;"/></HBox>
-                                    </VBox>
-                                </VBox>
-                                <!-- Member Card 2 -->
-                                <VBox style="-fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-background-radius: 10; -fx-border-radius: 10;">
-                                    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: #f5f5f5; -fx-padding: 15; -fx-background-radius: 10 10 0 0; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;">
-                                        <Circle radius="20" fill="#00897B"/>
-                                        <Label text="Budi Santoso" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
-                                    </HBox>
-                                    <VBox spacing="10" style="-fx-padding: 15;">
-                                        <HBox spacing="10" alignment="CENTER_LEFT"><Circle radius="5" fill="#4CAF50"/><Label text="Desain UI/UX" style="-fx-font-size: 14px;"/></HBox>
-                                        <HBox spacing="10" alignment="CENTER_LEFT"><Circle radius="5" fill="#4CAF50"/><Label text="Testing Komponen" style="-fx-font-size: 14px;"/></HBox>
-                                    </VBox>
-                                </VBox>
-                            </VBox>
-                        </ScrollPane>
-                    </VBox>
-                </HBox>
-            </content>
-        </Tab>
-
-        <!-- Tab 2: Activity Log -->
-        <Tab text="Activity">
-            <content>
-                <VBox spacing="30" style="-fx-padding: 20;">
-                    <!-- Activity Log Card -->
-                    <VBox fx:id="activityLogContainer" spacing="15" style="-fx-background-color: #f5f5f5; -fx-padding: 25; -fx-background-radius: 10;">
-                        <Label text="Activity Log" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
-                        <!-- Activity Item 1: Completed -->
-                        <HBox alignment="CENTER_LEFT" spacing="15">
-                            <Rectangle width="10" height="40" fill="#4CAF50" arcWidth="5" arcHeight="5"/>
-                            <VBox HBox.hgrow="ALWAYS">
-                                <Label text="Implementasi UI Awal" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-                                <Label text="Menyelesaikan layout dasar untuk tampilan proyek." style="-fx-font-size: 12px; -fx-text-fill: #555555;"/>
-                            </VBox>
-                            <Label text="100%" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #4CAF50;"/>
-                        </HBox>
-                        <!-- Activity Item 2: In Progress -->
-                        <HBox alignment="CENTER_LEFT" spacing="15">
-                            <Rectangle width="10" height="40" fill="#FFC107" arcWidth="5" arcHeight="5"/>
-                            <VBox HBox.hgrow="ALWAYS">
-                                <Label text="Koneksi Database" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-                                <Label text="Sedang mengerjakan koneksi ke database member." style="-fx-font-size: 12px; -fx-text-fill: #555555;"/>
-                            </VBox>
-                            <Label text="50%" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #FFC107;"/>
-                        </HBox>
-                        <!-- Activity Item 3: Not Started -->
-                        <HBox alignment="CENTER_LEFT" spacing="15">
-                            <Rectangle width="10" height="40" fill="#F44336" arcWidth="5" arcHeight="5"/>
-                            <VBox HBox.hgrow="ALWAYS">
-                                <Label text="Fitur Upload Ikon" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-                                <Label text="Belum dimulai." style="-fx-font-size: 12px; -fx-text-fill: #555555;"/>
-                            </VBox>
-                            <Label text="0%" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #F44336;"/>
-                        </HBox>
-                    </VBox>
-                    <!-- Add Activity Section -->
-                    <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-padding: 0 10;">
-                        <Button text="Add Activity" fx:id="addActivityButton" 
-                                style="-fx-background-color: #00897B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8 15;"/>
-                        <Circle radius="18" fill="#BDBDBD"/>
-                        <Circle radius="18" fill="#BDBDBD"/>
-                        <Circle radius="18" fill="#BDBDBD"/>
-                    </HBox>
-                </VBox>
-            </content>
-        </Tab>
+    <!-- Left Column: Project Details & Activity -->
+    <VBox spacing="30" HBox.hgrow="ALWAYS">
         
-        <!-- Tab 3: Group News -->
-        <Tab text="News">
-            <content>
-                <VBox spacing="20" style="-fx-background-color: #f5f5f5; -fx-padding: 25;">
-                     <HBox alignment="CENTER_LEFT">
-                        <Label text="Group News" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
-                        <Pane HBox.hgrow="ALWAYS"/>
-                        <Button text="CREATE" fx:id="createNewsButton"
-                                style="-fx-background-color: #00897B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
-                     </HBox>
-                     <!-- Container for news articles would go here -->
-                     <VBox fx:id="newsContainer" VBox.vgrow="ALWAYS"/>
+        <!-- Project Details Card -->
+        <VBox spacing="15" style="-fx-background-color: #f5f5f5; -fx-padding: 25; -fx-background-radius: 10;">
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Perencanaan Siput Balap" />
+            
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <VBox>
+                    <Label style="-fx-font-size: 12px; -fx-text-fill: #555555; -fx-font-weight: bold;" text="Created At" />
+                    <Label style="-fx-font-size: 12px; -fx-text-fill: #555555;" text="2024-11-15 09:30:00 UTC" />
                 </VBox>
-            </content>
-        </Tab>
+            </HBox>
 
-        <!-- Tab 4: My Task -->
-        <Tab text="My Task">
-            <content>
-                <VBox spacing="20" style="-fx-padding: 25;">
-                    <HBox alignment="CENTER_LEFT">
-                        <Label text="My Task" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
-                    </HBox>
-                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent;">
-                        <VBox fx:id="myTaskContainer" spacing="15">
-                            <!-- Task Card 1 -->
-                            <VBox spacing="8" style="-fx-background-color: #f5f5f5; -fx-padding: 20; -fx-background-radius: 10;">
-                                <Label text="Project: Perencanaan Siput Balap" style="-fx-font-size: 14px; -fx-text-fill: #555555;"/>
-                                <Label text="Penyedia Siput" style="-fx-font-weight: bold; -fx-font-size: 18px;"/>
-                                <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 5 0 0 0;">
-                                    <ProgressBar prefWidth="500" progress="0.75" />
-                                    <Label text="75%" style="-fx-font-weight: bold;"/>
-                                </HBox>
-                            </VBox>
-                            <!-- Task Card 2 -->
-                             <VBox spacing="8" style="-fx-background-color: #f5f5f5; -fx-padding: 20; -fx-background-radius: 10;">
-                                <Label text="Project: Perencanaan Siput Balap" style="-fx-font-size: 14px; -fx-text-fill: #555555;"/>
-                                <Label text="Penyedia Macan" style="-fx-font-weight: bold; -fx-font-size: 18px;"/>
-                                <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 5 0 0 0;">
-                                    <ProgressBar prefWidth="500" progress="0.20" />
-                                    <Label text="20%" style="-fx-font-weight: bold;"/>
-                                </HBox>
-                            </VBox>
-                             <!-- Task Card 3 -->
-                             <VBox spacing="8" style="-fx-background-color: #f5f5f5; -fx-padding: 20; -fx-background-radius: 10;">
-                                <Label text="Project: Renovasi Markas" style="-fx-font-size: 14px; -fx-text-fill: #555555;"/>
-                                <Label text="Desain UI/UX" style="-fx-font-weight: bold; -fx-font-size: 18px;"/>
-                                <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 5 0 0 0;">
-                                    <ProgressBar prefWidth="500" progress="1.0" />
-                                    <Label text="100%" style="-fx-font-weight: bold;"/>
-                                </HBox>
-                            </VBox>
-                        </VBox>
-                    </ScrollPane>
+            <Text style="-fx-font-size: 14px; -fx-fill: #444444; -fx-line-spacing: 4px;" text="Membuat arena balapan mini dengan siput sebagai 'pembalap', menggabungkan teknologi pelacakan, edukasi biologi, dan hiburan yang inovatif serta ramah lingkungan." wrappingWidth="500.0" />
+            
+            <HBox alignment="CENTER">
+                 <Button fx:id="viewOnGithubButton" style="-fx-background-color: #00897B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8 15;" text="View on GitHub" />
+                
+                <Pane HBox.hgrow="ALWAYS" />
+
+                <VBox alignment="CENTER_RIGHT">
+                    <Label style="-fx-font-size: 12px; -fx-text-fill: #555555; -fx-font-weight: bold;" text="Last Updated At" />
+                    <Label style="-fx-font-size: 12px; -fx-text-fill: #555555;" text="2024-11-15 09:30:00 UTC" />
                 </VBox>
+            </HBox>
+        </VBox>
+        
+        <!-- Activity Log Card -->
+        <VBox spacing="10" style="-fx-background-color: #f5f5f5; -fx-padding: 25; -fx-background-radius: 10;">
+            <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Activity Log" />
+         <ScrollPane prefHeight="200.0" prefWidth="200.0">
+            <content>
+               <VBox prefHeight="200.0" prefWidth="484.0">
+                  <children>
+                     <fx:include source="project/activityLogCard.fxml" />
+                     <fx:include source="project/activityLogCard.fxml" />
+                     <fx:include source="project/activityLogCard.fxml" />
+                     <fx:include source="project/activityLogCard.fxml" />
+                  </children>
+               </VBox>
             </content>
-        </Tab>
+         </ScrollPane>
+        </VBox>
+        
+        <!-- Add Activity Section -->
+        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 0 10;">
+            <Button fx:id="addActivityButton" style="-fx-background-color: #00897B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8 15;" text="Add Activity" />
+        </HBox>
 
-    </TabPane>
-</VBox>
+    </VBox>
+    
+    <!-- Right Column: Member Tasks -->
+    <VBox minWidth="350" prefWidth="350" spacing="20">
+        <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333333; -fx-padding: 0 0 0 5;" text="Member Task" />
+        
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="596.0" prefWidth="350.0" style="-fx-background-color: transparent; -fx-padding: 2;">
+            <VBox fx:id="memberTaskContainer" prefHeight="198.0" prefWidth="346.0" spacing="20">
+            <children>
+               <fx:include source="project/memberTaskCard.fxml" />
+               <fx:include source="project/memberTaskCard.fxml" />
+               <fx:include source="project/memberTaskCard.fxml" />
+               <fx:include source="project/memberTaskCard.fxml" />
+            </children>
+                
+            </VBox>
+        </ScrollPane>
+    </VBox>
+</HBox>

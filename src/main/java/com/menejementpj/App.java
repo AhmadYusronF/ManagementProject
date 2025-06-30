@@ -1,5 +1,7 @@
 package com.menejementpj;
 
+import com.menejementpj.auth.Session;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class App extends Application {
 
@@ -14,15 +17,13 @@ public class App extends Application {
 
     private static Stage primaryStageInstance = null;
 
-    private static int currentLoggedInHidden_uid = -1;
-    private static int currentLoggedInUserID = -1;
-    private static int currentLoggedInGroupID = -1;
+    public static Session userSession = new Session();
 
     @Override
     public void start(Stage stage) throws IOException {
         primaryStageInstance = stage;
         scene = new Scene(loadFXML("login"), 1280, 800);
-  
+
         stage.setScene(scene);
         stage.setTitle("Login - Management Project");
         stage.setResizable(false);
@@ -30,9 +31,6 @@ public class App extends Application {
         stage.show();
     }
 
-    // static void setRoot(String fxml) throws IOException {
-    // scene.setRoot(loadFXML(fxml));
-    // }
     public static void setRoot(String fxml, String title) throws IOException {
         scene.setRoot(loadFXML(fxml));
         primaryStageInstance.setTitle(title); // Update the window title
@@ -47,23 +45,9 @@ public class App extends Application {
         launch();
     }
 
-    public static void setUserSession(int hiddenUid, int userId, int groupId) {
-        currentLoggedInHidden_uid = hiddenUid;
-        currentLoggedInUserID = userId;
-        currentLoggedInGroupID = groupId;
+    public static Session getUserSession() {
+        return userSession;
     }
 
-    // Getters for session information
-    public static int getCurrentLoggedInHidden_uid() {
-        return currentLoggedInHidden_uid;
-    }
-
-    public static int getCurrentLoggedInUserID() {
-        return currentLoggedInUserID;
-    }
-
-    public static int getCurrentLoggedInGroupID() {
-        return currentLoggedInGroupID;
-    }
-
+   
 }

@@ -70,7 +70,7 @@ public class LoginController {
         int groupID = DatabaseManager.getGroupID(users_id);
 
         if (hidden_uid != -1) { // Authentication successful
-            App.setUserSession(hidden_uid, users_id, groupID);
+            App.userSession.setUserSession(hidden_uid, users_id, groupID);
             System.out.println("Login successful for HUID: " + hidden_uid);
 
             try {
