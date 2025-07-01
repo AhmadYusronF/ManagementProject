@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GroupViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.controller.ProjectTab">
    <children>
       <VBox layoutX="100.0" prefWidth="1178.0" spacing="20.0" styleClass="main-container" stylesheets="@css/groupTab.css">
          <padding>
@@ -24,7 +24,7 @@
             <AnchorPane>
                <children>
                   <Label styleClass="header-title" text="PROJECT LIST" />
-                  <Button layoutY="47.0" mnemonicParsing="false" styleClass="create-button" stylesheets="@css/button.css" text="Create" />
+                  <Button layoutY="47.0" mnemonicParsing="false" onAction="#handelCreateProject" styleClass="create-button" stylesheets="@css/button.css" text="Create" />
                </children>
             </AnchorPane>
          </children>
@@ -57,7 +57,7 @@
                </image>
             </ImageView>
             <Region prefHeight="150.0" prefWidth="96.0" />
-            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
+            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGoToHome" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
@@ -70,7 +70,7 @@
                </graphic>
             </Button>
             <Region prefHeight="130.0" prefWidth="200.0" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGotoGrup" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
@@ -101,7 +101,7 @@
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="50.0" fitWidth="50.0" onDragDetected="#toggleGotoChat" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Images/Chat%20Icon.png" />
                      </image>

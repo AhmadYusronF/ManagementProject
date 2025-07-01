@@ -18,7 +18,7 @@
   <children>
     <AnchorPane layoutX="100.0" prefHeight="800.0" prefWidth="1181.0">
       <children>
-        <Label layoutX="77.0" layoutY="37.0" text="Welcome, Ahmad Yusron Fadil">
+        <Label fx:id="welcomeUser" layoutX="77.0" layoutY="37.0" text="Welcome, Ahmad Yusron Fadil">
           <font>
             <Font name="Poppins Bold" size="24.0"/>
           </font>
@@ -42,9 +42,9 @@
             </StackPane>
             <ScrollPane prefHeight="518.0" prefWidth="300.0">
               <content>
-                <VBox prefHeight="513.0" prefWidth="283.0">
+                <VBox fx:id="taskContainer" prefHeight="513.0" prefWidth="283.0">
                   <children>
-                    <fx:include source="components/myTaskCard.fxml"/>
+                    
                   </children>
                 </VBox>
               </content>
@@ -63,12 +63,9 @@
             </Label>
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
               <content>
-                <VBox prefHeight="200.0" prefWidth="583.0">
+                <VBox fx:id="activityLogContainer" prefHeight="200.0" prefWidth="583.0">
                   <children>
-                    <fx:include source="components/project/activityLogCard.fxml"/>
-                    <fx:include source="components/project/activityLogCard.fxml"/>
-                    <fx:include source="components/project/ctivityLogCard.fxml"/>
-                    <fx:include source="components/project/activityLogCard.fxml"/>
+                    
                   </children>
                 </VBox>
               </content>

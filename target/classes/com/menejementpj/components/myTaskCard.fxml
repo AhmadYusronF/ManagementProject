@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<HBox alignment="CENTER_LEFT" spacing="15" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER_LEFT" spacing="15" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.components.TaskItemController">
    <children>
       <Rectangle arcHeight="5" arcWidth="5" fill="#4CAF50" height="40" width="10" />
       <VBox HBox.hgrow="ALWAYS">
          <children>
-            <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Perencanaan Siput Balap" />
-            <Label style="-fx-font-size: 12px; -fx-text-fill: #555555;" text="Penyedia Siput" />
+            <Label fx:id="titleTask" style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Perencanaan Siput Balap" />
+            <Label fx:id="subTitleTask" style="-fx-font-size: 12px; -fx-text-fill: #555555;" text="Penyedia Siput" />
          </children>
       </VBox>
-      <Label style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #4CAF50;" text="100%" />
+      <Label fx:id="proggresTask" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #4CAF50;" text="100%" />
    </children>
    <opaqueInsets>
       <Insets />

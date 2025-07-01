@@ -3,10 +3,12 @@ package com.menejementpj.controller;
 import java.io.IOException;
 
 import com.menejementpj.App;
+import com.menejementpj.test.Debug;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -16,6 +18,9 @@ public class BerandaController {
 
     @FXML
     private VBox activitylogContainer;
+
+    @FXML
+    private Label welcomeUser;
 
     @FXML
     private VBox taskContainer;
@@ -45,13 +50,23 @@ public class BerandaController {
     private StackPane myStackPane;
 
     @FXML
+    public void initialize() {
+        Debug.log("initialize start");
+        welcomeUser.setText("Welcome, " + App.user.getUsername());
+    }
+
+    @FXML
     void toggleLogout(ActionEvent event) throws IOException {
         App.setRoot("login", "Login - Management Project");
     }
 
     @FXML
     void toggleGoToGroub(ActionEvent event) throws IOException {
-        App.setRoot("groupPage", "GroubPage - myGroub");
+        if (App.userSession.getCurrentLoggedInGroupID() != 0) {
+            App.setRoot("components/group/groupPage", "GroubPage - myGroub");
+        } else {
+            App.setRoot("groupTab", "Group - join or create");
+        }
     }
 
     @FXML
@@ -60,13 +75,12 @@ public class BerandaController {
     }
 
     @FXML
-    void toggleGotoProject(ActionEvent event) {
-
+    void toggleGotoProject(ActionEvent event) throws IOException {
+        App.setRoot("projectTab", "Project");
     }
 
     @FXML
     void goToHome(ActionEvent event) {
 
     }
-
 }

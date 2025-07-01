@@ -1,14 +1,21 @@
 package com.menejementpj.controller;
 
 import com.menejementpj.db.*;
+import com.menejementpj.test.Debug;
 import com.menejementpj.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -60,29 +67,51 @@ public class LoginController {
 
     @FXML
     public void handleLoginButtonAction(ActionEvent event) {
+        Debug.log("Memulai Login");
         String email = emailField.getText();
-        String password = passwordField.getText(); // Reminder: For production apps, always hash passwords!
-
-        // Authenticate user using the DatabaseManager
-        // DatabaseManager.authenticateUser now returns the user's ID or -1
+        String password = passwordField.getText();
+        Debug.log("Pengecekan 1 ");
         int hidden_uid = DatabaseManager.authenticateUser(email, password);
-        int users_id = DatabaseManager.getUserID(hidden_uid);
-        int groupID = DatabaseManager.getGroupID(users_id);
 
-        if (hidden_uid != -1) { // Authentication successful
-            App.userSession.setUserSession(hidden_uid, users_id, groupID);
+        if (hidden_uid != -1) {
+            Debug.log("Pengecekan 2");
+            DatabaseManager.getUserSession(hidden_uid);
             System.out.println("Login successful for HUID: " + hidden_uid);
+            DatabaseManager.getUserProfile(App.userSession.getCurrentLoggedInUserID());
 
             try {
-                App.setRoot("beranda", "\"Beranda - Management Project\""); // Call the static method in App
-                                                                            // to switch to Beranda scene
+                App.setRoot("beranda", "\"Beranda - Management Project\"");
+
             } catch (IOException e) {
-                e.printStackTrace(); // Print stack trace for debugging
-                messageLabel.setText("Error loading the main application page."); // Display error to user
+                e.printStackTrace();
+                messageLabel.setText("Error loading the main application page.");
             }
-        } else { // Authentication failed
+        } else {
             messageLabel.setText("Invalid email or password. Please try again.");
             System.out.println("Login failed for email: " + email);
+        }
+    }
+
+    @FXML
+    void handleRegisterButtonAction(ActionEvent event) {
+        showPopup(event, "/com/menejementpj/components/accountCreate.fxml", "Create An Account");
+    }
+
+    private void showPopup(ActionEvent event, String fxmlFile, String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            popupStage.setTitle(title);
+            popupStage.setScene(new Scene(root));
+            popupStage.showAndWait();
+
+        } catch (IOException e) {
+            System.err.println("⚠️ Failed to load FXML file: " + fxmlFile);
+            e.printStackTrace();
         }
     }
 }

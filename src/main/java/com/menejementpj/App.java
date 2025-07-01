@@ -1,6 +1,7 @@
 package com.menejementpj;
 
 import com.menejementpj.auth.Session;
+import com.menejementpj.auth.UserData;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
 
 public class App extends Application {
 
@@ -18,6 +18,7 @@ public class App extends Application {
     private static Stage primaryStageInstance = null;
 
     public static Session userSession = new Session();
+    public static UserData user = new UserData();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -27,6 +28,7 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setTitle("Login - Management Project");
         stage.setResizable(false);
+        
 
         stage.show();
     }
@@ -45,9 +47,4 @@ public class App extends Application {
         launch();
     }
 
-    public static Session getUserSession() {
-        return userSession;
-    }
-
-   
 }

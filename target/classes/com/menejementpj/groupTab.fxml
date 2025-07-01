@@ -20,7 +20,7 @@
   The main layout is a VBox, which stacks the header and the group cards vertically.
 -->
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GroupViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.controller.GroupTabController">
    <children>
       <VBox layoutX="100.0" prefWidth="1178.0" spacing="20.0" styleClass="main-container" stylesheets="@css/groupTab.css">
          <padding>
@@ -30,14 +30,14 @@
             <AnchorPane>
                <children>
                   <Label styleClass="header-title" text="JOIN OR CREATE GROUP" />
-                  <Button layoutY="47.0" mnemonicParsing="false" styleClass="create-button" stylesheets="@css\button.css" text="Create" />
+                  <Button layoutY="47.0" mnemonicParsing="false" onDragDetected="#toggleCreateGroub" styleClass="create-button" stylesheets="@css\button.css" text="Create" />
                </children>
             </AnchorPane>
          </children>
       </VBox>
       <ScrollPane layoutX="100.0" layoutY="132.0" prefHeight="669.0" prefWidth="1178.0">
          <content>
-            <GridPane prefHeight="650.0" prefWidth="1161.0">
+            <GridPane fx:id="groubJoinContainer" prefHeight="650.0" prefWidth="1161.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="400.0" minWidth="400.0" prefWidth="400.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="400.0" />
@@ -63,7 +63,7 @@
                </image>
             </ImageView>
             <Region prefHeight="150.0" prefWidth="96.0" />
-            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css\button.css" textFill="#757575">
+            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGoToHome" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css\button.css" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
@@ -76,7 +76,7 @@
                </graphic>
             </Button>
             <Region prefHeight="130.0" prefWidth="200.0" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #007766;" stylesheets="@css\button.css" textFill="#757575">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGoToGroub" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #007766;" stylesheets="@css\button.css" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
@@ -89,7 +89,7 @@
                </graphic>
             </Button>
             <Region prefHeight="130.0" prefWidth="200.0" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css\button.css" textFill="#757575">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGotoProject" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css\button.css" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
@@ -102,7 +102,7 @@
                </graphic>
             </Button>
             <Region prefHeight="130.0" prefWidth="200.0" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css\button.css" textFill="#757575">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGotoChat" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css\button.css" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>

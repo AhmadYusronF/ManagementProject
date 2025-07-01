@@ -9,53 +9,41 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="92.0" layoutY="85.0" text="Create Account">
-         <font>
-            <Font name="Poppins SemiBold" size="32.0" />
-         </font>
-      </Label>
-      <Label layoutX="104.0" layoutY="161.0" text="Email" textFill="#757575">
-         <font>
-            <Font name="Poppins Regular" size="14.0" />
-         </font>
-      </Label>
-      <TextField layoutX="104.0" layoutY="186.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 5;" />
-      <Label layoutX="368.0" layoutY="161.0" text="Nama" textFill="#757575">
-         <font>
-            <Font name="Poppins Regular" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="103.0" layoutY="240.0" text="Password" textFill="#757575">
-         <font>
-            <Font name="Poppins Regular" size="14.0" />
-         </font>
-      </Label>
-      <PasswordField layoutX="103.0" layoutY="268.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 5;" />
-      <Button layoutX="103.0" layoutY="328.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #D32F2F; -fx-background-radius: 10;" text="Cancel" textFill="WHITE">
-         <font>
-            <Font name="Poppins SemiBold" size="16.0" />
-         </font>
-      </Button>
-      <Button layoutX="368.0" layoutY="328.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #007766; -fx-background-radius: 10;" text="Confirm" textFill="WHITE">
-         <font>
-            <Font name="Poppins SemiBold" size="16.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="69.0" fitWidth="69.0" layoutX="369.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e0e0e0" height="69.0" layoutX="369.0" layoutY="235.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.3" width="69.0" />
-      <Label layoutX="450.0" layoutY="240.0" text="Avatar" textFill="#757575">
-         <font>
-            <Font name="Poppins Regular" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="449.0" layoutY="265.0" text="Choose Image" textFill="#007766">
-         <font>
-            <Font name="Poppins Regular" size="14.0" />
-         </font>
-      </Label>
-      <TextField layoutX="368.0" layoutY="186.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 5;" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.controller.CreateAccountController">
+  <children>
+    <Label layoutX="92.0" layoutY="85.0" text="Create Account">
+      <font>
+        <Font name="Poppins SemiBold" size="32.0"/>
+      </font>
+    </Label>
+    <Label layoutX="104.0" layoutY="161.0" text="Email" textFill="#757575">
+      <font>
+        <Font name="Poppins Regular" size="14.0"/>
+      </font>
+    </Label>
+    <TextField fx:id="emailField" layoutX="104.0" layoutY="186.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 5;"/>
+    <Label layoutX="368.0" layoutY="161.0" text="Nama" textFill="#757575">
+      <font>
+        <Font name="Poppins Regular" size="14.0"/>
+      </font>
+    </Label>
+    <Label layoutX="103.0" layoutY="240.0" text="Password" textFill="#757575">
+      <font>
+        <Font name="Poppins Regular" size="14.0"/>
+      </font>
+    </Label>
+    <PasswordField fx:id="passwordField" layoutX="103.0" layoutY="268.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 5;"/>
+    <Button fx:id="cancelBtn" onAction="#handleCancelAction" layoutX="103.0" layoutY="328.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #D32F2F; -fx-background-radius: 10;" stylesheets="@../css/button.css" text="Cancel" textFill="WHITE">
+      <font>
+        <Font name="Poppins SemiBold" size="16.0"/>
+      </font>
+    </Button>
+    <Button stylesheets="@../css/button.css" onAction="#handleConfirmAction" fx:id="confirmBtn" layoutX="368.0" layoutY="328.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #007766; -fx-background-radius: 10;" text="Confirm" textFill="WHITE">
+      <font>
+        <Font name="Poppins SemiBold" size="16.0"/>
+      </font>
+    </Button>
+    <Rectangle fx:id="clipRect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="69.0" layoutX="369.0" layoutY="235.0" width="69.0"/>
+    <TextField fx:id="namaField" layoutX="368.0" layoutY="186.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 5;"/>
+  </children>
 </AnchorPane>

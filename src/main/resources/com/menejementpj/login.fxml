@@ -13,89 +13,89 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.controller.LoginController">
   <children>
-    <Rectangle fx:id="rec" arcHeight="5.0" arcWidth="5.0" fill="WHITESMOKE" height="810.0" layoutX="-1.0" layoutY="-5.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="981.0" AnchorPane.topAnchor="0.0" />
+    <Rectangle fx:id="rec" arcHeight="5.0" arcWidth="5.0" fill="WHITESMOKE" height="810.0" layoutX="-1.0" layoutY="-5.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="981.0" AnchorPane.topAnchor="0.0"/>
     <TextField fx:id="visiblePasswordField" layoutX="42.0" layoutY="423.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #171717; -fx-border-color: #6B6969; -fx-border-radius: 5; -fx-text-fill: white;" visible="false">
       <font>
-        <Font name="Poppins Regular" size="12.0" />
+        <Font name="Poppins Regular" size="12.0"/>
       </font>
       <opaqueInsets>
-        <Insets />
+        <Insets/>
       </opaqueInsets>
       <padding>
-        <Insets left="30.0" />
+        <Insets left="30.0"/>
       </padding>
     </TextField>
-    <PasswordField fx:id="passwordField" layoutX="42.0" layoutY="423.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #171717; -fx-border-color: #6B6969; -fx-border-radius: 5; -fx-text-fill: white;" AnchorPane.bottomAnchor="342.0" AnchorPane.leftAnchor="42.0">
+    <PasswordField fx:id="passwordField" layoutX="42.0" layoutY="423.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #171717; -fx-border-color: #6B6969; -fx-border-radius: 5; -fx-text-fill: white;" text="securepass456" AnchorPane.bottomAnchor="342.0" AnchorPane.leftAnchor="42.0">
       <font>
-        <Font name="Poppins Regular" size="12.0" />
+        <Font name="Poppins Regular" size="12.0"/>
       </font>
       <opaqueInsets>
-        <Insets />
+        <Insets/>
       </opaqueInsets>
       <padding>
-        <Insets left="30.0" right="55.0" />
+        <Insets left="30.0" right="55.0"/>
       </padding>
     </PasswordField>
     <Button fx:id="togglePasswordButton" layoutX="222.0" layoutY="429.0" mnemonicParsing="false" onAction="#togglePasswordVisibility" style="-fx-background-color: white;" text="SHOW">
       <font>
-        <Font name="Poppins SemiBold" size="10.0" />
+        <Font name="Poppins SemiBold" size="10.0"/>
       </font>
     </Button>
-    <TextField fx:id="emailField" layoutX="42.0" layoutY="339.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #171717; -fx-border-color: #6B6969; -fx-border-radius: 5; -fx-text-fill: white;" text="asdas" AnchorPane.bottomAnchor="426.0" AnchorPane.leftAnchor="42.0">
+    <TextField fx:id="emailField" layoutX="42.0" layoutY="339.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #171717; -fx-border-color: #6B6969; -fx-border-radius: 5; -fx-text-fill: white;" text="bob@example.com" AnchorPane.bottomAnchor="426.0" AnchorPane.leftAnchor="42.0">
       <font>
-        <Font name="Poppins Regular" size="12.0" />
+        <Font name="Poppins Regular" size="12.0"/>
       </font>
       <opaqueInsets>
-        <Insets />
+        <Insets/>
       </opaqueInsets>
       <padding>
-        <Insets left="30.0" />
+        <Insets left="30.0"/>
       </padding>
     </TextField>
     <Button fx:id="loginButton" layoutX="43.0" layoutY="541.0" mnemonicParsing="false" onAction="#handleLoginButtonAction" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #007766; -fx-background-radius: 5;" stylesheets="@css/button.css" text="SIGN IN" textFill="WHITE" AnchorPane.bottomAnchor="219.0" AnchorPane.leftAnchor="43.0">
       <font>
-        <Font name="Poppins Bold" size="16.0" />
+        <Font name="Poppins Bold" size="16.0"/>
       </font>
     </Button>
     <Label layoutX="45.0" layoutY="316.0" text="Email" textFill="#212121" AnchorPane.bottomAnchor="464.0" AnchorPane.leftAnchor="45.0">
       <font>
-        <Font name="Poppins Regular" size="14.0" />
+        <Font name="Poppins Regular" size="14.0"/>
       </font>
     </Label>
     <Label layoutX="45.0" layoutY="400.0" text="Password" textFill="#212121" AnchorPane.bottomAnchor="380.0" AnchorPane.leftAnchor="45.0">
       <font>
-        <Font size="14.0" />
+        <Font size="14.0"/>
       </font>
     </Label>
     <Label layoutX="42.0" layoutY="246.0" text="Sign In" textFill="#212121" AnchorPane.bottomAnchor="509.0" AnchorPane.leftAnchor="42.0">
       <font>
-        <Font name="Poppins SemiBold" size="32.0" />
+        <Font name="Poppins SemiBold" size="32.0"/>
       </font>
     </Label>
     <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="54.0" layoutY="433.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="351.0" AnchorPane.leftAnchor="54.0">
       <image>
-        <Image url="@Images/Password%20Icon.png" />
+        <Image url="@Images/Password%20Icon.png"/>
       </image>
     </ImageView>
     <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="54.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="435.0" AnchorPane.leftAnchor="54.0">
       <image>
-        <Image url="@Images/Email%20Icon.png" />
+        <Image url="@Images/Email%20Icon.png"/>
       </image>
     </ImageView>
     <Label fx:id="messageLabel" layoutX="46.0" layoutY="598.0" prefHeight="20.0" prefWidth="225.0" textFill="RED" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="1009.0">
       <font>
-        <Font size="14.0" />
+        <Font size="14.0"/>
       </font>
     </Label>
     <ImageView fitHeight="822.0" fitWidth="1004.0" layoutX="293.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
       <image>
-        <Image url="@Images/Login%20WP.png" />
+        <Image url="@Images/Login%20WP.png"/>
       </image>
     </ImageView>
-      <Button fx:id="loginButton1" layoutX="43.0" layoutY="486.0" mnemonicParsing="false" onAction="#handleLoginButtonAction" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #2962FF; -fx-background-radius: 5;" stylesheets="@css/button.css" text="REGISTER" textFill="WHITE">
-         <font>
-            <Font name="Poppins Bold" size="16.0" />
-         </font>
-      </Button>
+    <Button fx:id="registerBtn" layoutX="43.0" layoutY="486.0" mnemonicParsing="false" onAction="#handleRegisterButtonAction" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #2962FF; -fx-background-radius: 5;" stylesheets="@css/button.css" text="REGISTER" textFill="WHITE">
+      <font>
+        <Font name="Poppins Bold" size="16.0"/>
+      </font>
+    </Button>
   </children>
 </AnchorPane>

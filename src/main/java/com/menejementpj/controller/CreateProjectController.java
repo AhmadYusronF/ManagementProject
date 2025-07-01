@@ -21,11 +21,9 @@ public class CreateProjectController {
 
         if (title.isBlank()) {
             System.out.println("Title cannot be empty.");
-            // You could show an alert here for better user feedback
             return;
         }
 
-        // --- Your database or logic to save the project would go here ---
         System.out.println("CONFIRMED: Saving Project");
         System.out.println("Title: " + title);
         System.out.println("Description: " + description);
@@ -40,7 +38,7 @@ public class CreateProjectController {
     }
 
     private void closeWindow(ActionEvent event) {
-        // Gets the stage from the button that was clicked and closes it
+
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.close();
     }

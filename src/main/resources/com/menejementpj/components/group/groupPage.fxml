@@ -97,7 +97,7 @@
                </image>
             </ImageView>
             <Region prefHeight="150.0" prefWidth="96.0" />
-            <Button fx:id="btnHome" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@../../css/button.css" textFill="#757575">
+            <Button fx:id="btnHome" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGoToHome" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@../../css/button.css" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
