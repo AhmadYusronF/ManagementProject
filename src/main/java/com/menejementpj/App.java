@@ -2,6 +2,7 @@ package com.menejementpj;
 
 import com.menejementpj.auth.Session;
 import com.menejementpj.auth.UserData;
+import com.menejementpj.auth.GroupData;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ public class App extends Application {
 
     private static Stage primaryStageInstance = null;
 
+    public static GroupData group = new GroupData();
     public static Session userSession = new Session();
     public static UserData user = new UserData();
 
@@ -28,7 +30,6 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setTitle("Login - Management Project");
         stage.setResizable(false);
-        
 
         stage.show();
     }

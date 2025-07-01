@@ -56,7 +56,7 @@ public class GroupPageController {
 
     @FXML
     void toggleGotoChat(ActionEvent event) throws IOException {
-        App.setRoot("chatPage", "Chat - myGroup");
+        showPopupChat(event, "/com/menejementpj/chatPopUp.fxml", "Group Chat");
     }
 
     @FXML
@@ -96,4 +96,32 @@ public class GroupPageController {
             e.printStackTrace();
         }
     }
+
+    private void showPopupChat(ActionEvent event, String fxmlFile, String title) {
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
+
+            Scene popupScene = new Scene(root);
+
+            String cssPath = "/com/menejementpj/css/chatMessage.css";
+            popupScene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle(title);
+            popupStage.setScene(popupScene);
+            popupStage.initModality(Modality.NONE);
+            popupStage.setResizable(false);
+
+            Stage ownerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            popupStage.initOwner(ownerStage);
+
+            popupStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

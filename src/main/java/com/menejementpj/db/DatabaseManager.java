@@ -5,6 +5,7 @@ import com.menejementpj.components.PopUpAlert;
 // import com.menejementpj.model.ActivityLog;
 import com.menejementpj.test.Debug;
 import com.menejementpj.type.*;
+import com.menejementpj.model.ChatMessage;
 // import com.mysql.cj.xdevapi.Result;
 import com.menejementpj.model.Project;
 
@@ -182,7 +183,7 @@ public class DatabaseManager {
 
                 stmtAccount.setString(1, email);
                 stmtAccount.setString(2, password);
-                stmtAccount.setInt(3, 3);
+
                 stmtAccount.executeUpdate();
 
                 try (ResultSet generatedKeys = stmtAccount.getGeneratedKeys()) {
@@ -199,6 +200,7 @@ public class DatabaseManager {
 
                 stmtUser.setString(1, username);
                 stmtUser.setLong(2, generatedHiddenUid);
+                stmtUser.setInt(3, 3);
                 stmtUser.executeUpdate();
                 System.out.println("Data pengguna berhasil dibuat untuk username: " + username);
             }
@@ -275,5 +277,73 @@ public class DatabaseManager {
             Debug.error("Gagal dapat project" + e.getMessage());
             return null;
         }
+    }
+
+    public static void getDataGroup(int groupId) {
+        String sql = "SELECT group_name FROM `groups` WHERE groups_id = ?";
+
+        try (Connection conn = connect();
+
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, groupId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String groupName = rs.getString("group_name");
+                App.group.setGroupData(groupName);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void sendMessage(String message) {
+        String sql = "INSERT INTO group_chat (fk_groups_id, fk_users_id, message) VALUES (?, ?, ?)";
+
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, App.userSession.getCurrentLoggedInGroupID());
+            pstmt.setInt(2, App.userSession.getCurrentLoggedInUserID());
+            pstmt.setString(3, message);
+
+            pstmt.executeUpdate();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    public static List<ChatMessage> getChatMessages(int groupId) {
+
+        String sql = "SELECT gc.fk_users_id, u.username, gc.message, gc.sent_at " +
+                "FROM group_chat gc " +
+                "JOIN users u ON gc.fk_users_id = u.users_id " +
+                "WHERE gc.fk_groups_id = ? " +
+                "ORDER BY gc.sent_at ASC";
+
+        List<ChatMessage> messages = new ArrayList<>();
+
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, groupId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                messages.add(new ChatMessage(
+                        rs.getInt("fk_users_id"),
+                        rs.getString("username"),
+                        rs.getString("message"),
+                        rs.getTimestamp("sent_at").toLocalDateTime() // Retrieve and convert timestamp
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return messages;
     }
 }

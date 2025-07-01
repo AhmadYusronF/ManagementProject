@@ -14,7 +14,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.controller.LoginController">
   <children>
     <Rectangle fx:id="rec" arcHeight="5.0" arcWidth="5.0" fill="WHITESMOKE" height="810.0" layoutX="-1.0" layoutY="-5.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="981.0" AnchorPane.topAnchor="0.0"/>
-    <TextField fx:id="visiblePasswordField" layoutX="42.0" layoutY="423.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #171717; -fx-border-color: #6B6969; -fx-border-radius: 5; -fx-text-fill: white;" visible="false">
+    <TextField fx:id="visiblePasswordField" layoutX="42.0" layoutY="423.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #E0E0E0; -fx-border-radius: 5; -fx-text-fill: black;" visible="false">
       <font>
         <Font name="Poppins Regular" size="12.0"/>
       </font>
@@ -25,10 +25,7 @@
         <Insets left="30.0"/>
       </padding>
     </TextField>
-    <PasswordField fx:id="passwordField" layoutX="42.0" layoutY="423.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #171717; -fx-border-color: #6B6969; -fx-border-radius: 5; -fx-text-fill: white;" text="securepass456" AnchorPane.bottomAnchor="342.0" AnchorPane.leftAnchor="42.0">
-      <font>
-        <Font name="Poppins Regular" size="12.0"/>
-      </font>
+    <PasswordField fx:id="passwordField" layoutX="42.0" layoutY="423.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #E0E0E0; -fx-border-radius: 5; -fx-text-fill: black;" text="securepass456" AnchorPane.bottomAnchor="342.0" AnchorPane.leftAnchor="42.0">
       <opaqueInsets>
         <Insets/>
       </opaqueInsets>
@@ -41,7 +38,7 @@
         <Font name="Poppins SemiBold" size="10.0"/>
       </font>
     </Button>
-    <TextField fx:id="emailField" layoutX="42.0" layoutY="339.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #171717; -fx-border-color: #6B6969; -fx-border-radius: 5; -fx-text-fill: white;" text="bob@example.com" AnchorPane.bottomAnchor="426.0" AnchorPane.leftAnchor="42.0">
+    <TextField fx:id="emailField" layoutX="42.0" layoutY="339.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #E0E0E0; -fx-border-radius: 5; -fx-text-fill: black;" text="bob@example.com" AnchorPane.bottomAnchor="426.0" AnchorPane.leftAnchor="42.0">
       <font>
         <Font name="Poppins Regular" size="12.0"/>
       </font>

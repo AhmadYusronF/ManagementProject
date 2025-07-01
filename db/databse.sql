@@ -797,3 +797,17 @@ ALTER TABLE `account`
 	CHANGE `hidden_uid` `hidden_uid` int(11) NOT NULL AUTO_INCREMENT ;
 
 ALTER TABLE users DROP COLUMN avatar;
+
+
+CREATE TABLE `group_chat` (
+    `group_chat_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `fk_groups_id` INT(11) DEFAULT NULL,
+    `fk_users_id` INT(11) DEFAULT NULL,
+    `message` TEXT DEFAULT NULL,
+    `sent_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    PRIMARY KEY (`group_chat_id`),
+    FOREIGN KEY (`fk_groups_id`) REFERENCES `groups`(`groups_id`),
+    FOREIGN KEY (`fk_users_id`) REFERENCES `users`(`users_id`)
+);
+
+DROP TABLE project_chat;

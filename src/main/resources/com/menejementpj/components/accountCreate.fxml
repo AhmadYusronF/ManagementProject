@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -32,13 +31,24 @@
         <Font name="Poppins Regular" size="14.0"/>
       </font>
     </Label>
-    <PasswordField fx:id="passwordField" layoutX="103.0" layoutY="268.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 5;"/>
-    <Button fx:id="cancelBtn" onAction="#handleCancelAction" layoutX="103.0" layoutY="328.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #D32F2F; -fx-background-radius: 10;" stylesheets="@../css/button.css" text="Cancel" textFill="WHITE">
+    <TextField fx:id="visiblePasswordField" layoutX="100.0" layoutY="260.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #E0E0E0; -fx-border-radius: 5; -fx-text-fill: black;" visible="false">
+      <font>
+        <Font name="Poppins Regular" size="12.0"/>
+      </font>
+    </TextField>
+    <PasswordField fx:id="passwordField" layoutX="100.0" layoutY="260.0" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #E0E0E0; -fx-border-radius: 5; -fx-text-fill: black;">
+</PasswordField>
+    <Button fx:id="togglePasswordButton" layoutX="278.0" layoutY="267.0" mnemonicParsing="false" onAction="#togglePasswordVisibility" style="-fx-background-color: white;" text="SHOW">
+      <font>
+        <Font name="Poppins SemiBold" size="10.0"/>
+      </font>
+    </Button>
+    <Button fx:id="cancelBtn" layoutX="103.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleCancelAction" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #D32F2F; -fx-background-radius: 10;" stylesheets="@../css/button.css" text="Cancel" textFill="WHITE">
       <font>
         <Font name="Poppins SemiBold" size="16.0"/>
       </font>
     </Button>
-    <Button stylesheets="@../css/button.css" onAction="#handleConfirmAction" fx:id="confirmBtn" layoutX="368.0" layoutY="328.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #007766; -fx-background-radius: 10;" text="Confirm" textFill="WHITE">
+    <Button fx:id="confirmBtn" layoutX="368.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleConfirmAction" prefHeight="40.0" prefWidth="230.0" style="-fx-background-color: #007766; -fx-background-radius: 10;" stylesheets="@../css/button.css" text="Confirm" textFill="WHITE">
       <font>
         <Font name="Poppins SemiBold" size="16.0"/>
       </font>

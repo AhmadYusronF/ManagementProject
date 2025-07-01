@@ -27,6 +27,9 @@ public class CreateAccountController {
     private Rectangle clipRect;
 
     @FXML
+    private Button togglePasswordButton;
+
+    @FXML
     private Button cancelBtn;
 
     @FXML
@@ -40,6 +43,11 @@ public class CreateAccountController {
 
     @FXML
     private PasswordField passwordField;
+    
+    @FXML
+    private TextField visiblePasswordField;
+
+    private boolean isPasswordVisible = false;
 
     @FXML
     void handleCancelAction(ActionEvent event) {
@@ -94,6 +102,30 @@ public class CreateAccountController {
         } catch (IOException e) {
             System.err.println("⚠️ Failed to load FXML file: " + fxmlFile);
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void initialize() {
+        passwordField.textProperty().bindBidirectional(visiblePasswordField.textProperty());
+    }
+
+    @FXML
+    private void togglePasswordVisibility() {
+        isPasswordVisible = !isPasswordVisible;
+
+        if (isPasswordVisible) {
+            visiblePasswordField.setVisible(true);
+            visiblePasswordField.setManaged(true);
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+            togglePasswordButton.setText("HIDE");
+        } else {
+            visiblePasswordField.setVisible(false);
+            visiblePasswordField.setManaged(false);
+            passwordField.setVisible(true);
+            passwordField.setManaged(true);
+            togglePasswordButton.setText("SHOW");
         }
     }
 }
