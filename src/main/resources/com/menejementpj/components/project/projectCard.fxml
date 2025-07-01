@@ -9,22 +9,22 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="330.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 6;" stylesheets="@../../css/projectCard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="330.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 6;" stylesheets="@../../css/projectCard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.components.ProjectCardController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e0e0e0" height="65.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="330.0" />
       <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="25.0" spacing="10.0">
          <children>
             <VBox>
                <children>
-                  <Label styleClass="card-title" text="The Communitity Journal" />
-                  <Label styleClass="card-subtitle" text="Created at : 2012-12-12" />
+                  <Label fx:id="title" styleClass="card-title" text="The Communitity Journal" />
+                  <Label fx:id="subtitle" styleClass="card-subtitle" text="Created at : 2012-12-12" />
                </children>
             </VBox>
          </children>
       </HBox>
       <Region layoutX="30.0" layoutY="90.0" />
-      <Text layoutX="30.0" layoutY="92.0" styleClass="card-description" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi" wrappingWidth="250.0" />
+      <Text fx:id="describ" layoutX="30.0" layoutY="84.0" styleClass="card-description" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi" wrappingWidth="250.0" />
       <Region layoutX="30.0" layoutY="223.0" />
-      <Button layoutX="30.0" layoutY="191.0" mnemonicParsing="false" styleClass="detail-button" stylesheets="@../../css/button.css" text="Detail" />
+      <Button layoutX="30.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleDetail" styleClass="detail-button" stylesheets="@../../css/button.css" text="Detail" />
    </children>
 </AnchorPane>

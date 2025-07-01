@@ -1,10 +1,12 @@
 package com.menejementpj.db;
 
 import com.menejementpj.App;
-import com.menejementpj.auth.Session;
 import com.menejementpj.components.PopUpAlert;
+// import com.menejementpj.model.ActivityLog;
 import com.menejementpj.test.Debug;
 import com.menejementpj.type.*;
+// import com.mysql.cj.xdevapi.Result;
+import com.menejementpj.model.Project;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -52,105 +54,6 @@ public class DatabaseManager {
         }
         Debug.log("Mendapatkan hidden_uid" + hidden_uid);
         return hidden_uid;
-    }
-
-    public static int getUserID(int huid) {
-        int usersID = 0;
-        String sql = "SELECT users_id FROM users where fk_hidden_uid = ?";
-
-        try (Connection conn = connect();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, huid);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                usersID = rs.getInt("users_id");
-            }
-        } catch (SQLException | NullPointerException e) {
-            System.err.println("Database error retrieving userID for hidden_uid '" + huid + "': " + e.getMessage());
-        }
-        return usersID;
-    }
-
-    public static int getGroupID(int userID) {
-        int groupID = 0;
-        String sql = "SELECT fk_groups_id FROM groups_member where fk_users_id = ?";
-
-        try (Connection conn = connect();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, userID);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                groupID = rs.getInt("fk_groups_id");
-            }
-        } catch (SQLException | NullPointerException e) {
-            System.err.println("Database error retrieving groupID for user ID '" + userID + "': " + e.getMessage());
-        }
-        return groupID;
-    }
-
-    public static String getUsername(int userID) {
-        String username = null;
-        String sql = "SELECT username FROM users WHERE users_id = ?";
-
-        try (Connection conn = connect();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, userID);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                username = rs.getString("username");
-            }
-        } catch (SQLException | NullPointerException e) {
-            System.err.println("Database error retrieving username for ID '" + userID + "': " + e.getMessage());
-        }
-        return username;
-    }
-
-    public static String getGroupName(int groupId) {
-        String groupName = null;
-        String sql = "SELECT group_name FROM groups WHERE groups_id = ?";
-
-        try (Connection conn = connect();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, groupId);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                groupName = rs.getString("group_name");
-            }
-        } catch (SQLException | NullPointerException e) {
-            System.err.println("Database error retrieving group name for ID '" + groupId + "': " + e.getMessage());
-        }
-        return groupName;
-    }
-
-    public static List<Project> getProjects(int groupID) {
-        List<Project> projects = new ArrayList<>();
-        String sql = "SELECT title, groups_project_description, groups_project_created_at FROM groups_project WHERE fk_groups_id = ?";
-
-        try (Connection conn = connect();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, groupID);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                String title = rs.getString("title");
-                String description = rs.getString("groups_project_description");
-                LocalDate createdAt = rs.getDate("groups_project_created_at").toLocalDate();
-                projects.add(new Project(title, description, createdAt));
-            }
-        } catch (SQLException | NullPointerException e) {
-            System.err
-                    .println("Error fetching projects from database for group ID '" + groupID + "': " + e.getMessage());
-        }
-        return projects;
     }
 
     public static String getDataGroub() {
@@ -323,6 +226,54 @@ public class DatabaseManager {
                     PopUpAlert.popupErr("Error", "Error Close SQL", "Error : " + ex.getMessage());
                 }
             }
+        }
+    }
+
+    // public static List<ActivityLog>(int userID){
+    // List<ActivityLog> activityLogs;
+
+    // String query = "SELECT task,project_task_description,status status FROM
+    // project_task WHERE fk_users_id = ?";
+    // try (Connection conn = connect();
+    // PreparedStatement pstmt = conn.prepareStatement(query);
+    // ){
+    // pstmt.setInt(1, userID);
+    // ResultSet rs = pstmt.executeQuery();
+
+    // while (rs.next()) {
+    // String title = rs.getString(query)
+    // activityLogs.add(new ActivityLog(query, query, query))
+    // }
+
+    // } catch (Exception e) {
+    // // TODO: handle exception
+    // }
+    // }
+
+    public static List<Project> getProjectGrup() {
+
+        List<Project> projects = new ArrayList<>();
+
+        String query = "SELECT groups_project_id, title, groups_project_description, groups_project_created_at, groups_project_updated_at, repo_url FROM groups_project WHERE fk_groups_id = ?";
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(query);) {
+            pstmt.setInt(1, App.userSession.getCurrentLoggedInGroupID());
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("groups_project_id");
+                String title = rs.getString("title");
+                String describ = rs.getString("groups_project_description");
+                LocalDate createAt = rs.getDate("groups_project_created_at").toLocalDate();
+                LocalDate updateAt = rs.getDate("groups_project_updated_at").toLocalDate();
+                String repo = rs.getString("repo_url");
+                projects.add(new Project(title, describ, createAt, updateAt, repo, id));
+            }
+            Debug.success("Data Project Berhasil: " + projects);
+            return projects;
+        } catch (Exception e) {
+            Debug.error("Gagal dapat project" + e.getMessage());
+            return null;
         }
     }
 }

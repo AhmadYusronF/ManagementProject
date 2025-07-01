@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.menejementpj.App;
@@ -13,6 +15,29 @@ import com.menejementpj.App;
 import java.io.IOException;
 
 public class GroupPageController {
+    @FXML
+    private Button createProjectButton;
+
+    @FXML
+    private Button btnHome;
+
+    @FXML
+    private Button btnGroub;
+
+    @FXML
+    private Button btnProject;
+
+    @FXML
+    private ImageView b;
+
+    @FXML
+    private Button btnChat;
+
+    @FXML
+    private Button btnLogout;
+
+    @FXML
+    private Button createProjectButton1;
 
     @FXML
     void toggleGoToHome(ActionEvent event) throws IOException {
@@ -26,7 +51,7 @@ public class GroupPageController {
 
     @FXML
     void toggleGotoProject(ActionEvent event) throws IOException {
-        App.setRoot("projectPage", "Project - myGroup");
+        App.setRoot("projectTab", "Project - myGroup");
     }
 
     @FXML
@@ -51,7 +76,6 @@ public class GroupPageController {
 
     @FXML
     void handleViewAllMembersClick(ActionEvent event) {
-        // Kalau kamu punya popupMember.fxml, ganti di sini
         showPopup(event, "/com/menejementpj/popupProject.fxml", "All Members");
     }
 

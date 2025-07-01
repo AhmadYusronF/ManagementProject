@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -31,7 +32,7 @@
       </VBox>
       <ScrollPane layoutX="100.0" layoutY="132.0" prefHeight="669.0" prefWidth="1178.0">
          <content>
-            <GridPane prefHeight="650.0" prefWidth="1161.0">
+            <GridPane fx:id="projectContainer" prefHeight="650.0" prefWidth="1161.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="400.0" minWidth="400.0" prefWidth="400.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="400.0" />
@@ -83,7 +84,7 @@
                </graphic>
             </Button>
             <Region prefHeight="130.0" prefWidth="200.0" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" textFill="#757575">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleGoToProject" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
@@ -120,7 +121,7 @@
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="50.0" fitWidth="50.0" onDragDetected="#toggleLogout" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Images/Exit%20Icon.png" />
                      </image>
@@ -130,5 +131,6 @@
             <Region prefHeight="130.0" prefWidth="96.0" />
          </children>
       </VBox>
+      <Accordion />
    </children>
 </AnchorPane>

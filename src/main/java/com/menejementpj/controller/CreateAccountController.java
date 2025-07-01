@@ -17,14 +17,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class CreateAccountController {
 
     @FXML
-    private ImageView avatarView;
+    private Rectangle clipRect;
 
     @FXML
     private Button cancelBtn;
@@ -36,13 +36,7 @@ public class CreateAccountController {
     private TextField emailField;
 
     @FXML
-    private Button imageBtn;
-
-    @FXML
     private TextField namaField;
-
-    @FXML
-    private Button registerBtn;
 
     @FXML
     private PasswordField passwordField;
@@ -59,7 +53,7 @@ public class CreateAccountController {
         String nama = namaField.getText();
         String email = emailField.getText();
         String password = passwordField.getText();
-     
+
         if (nama.isEmpty() || email.isEmpty() || password.isEmpty()) {
             PopUpAlert.popupWarn("Kesalahan", "Semua field harus diisi!", "");
             return;
@@ -68,10 +62,9 @@ public class CreateAccountController {
         System.out.println("Data yang akan dikirim ke database:");
         System.out.println("  - Nama: " + nama);
         System.out.println("  - Email: " + email);
-        System.out.println("  - Password: " + "[DISEMBUNYIKAN]"); 
+        System.out.println("  - Password: " + "[DISEMBUNYIKAN]");
         boolean isSuccess = DatabaseManager.daftarAkunDanPengguna(email, password, nama);
 
-    
         if (isSuccess) {
             PopUpAlert.popupInfo("Sukses! Akun berhasil dibuat", "Account dengan email " + email + " berhasil dibuat",
                     "");

@@ -30,7 +30,7 @@
             <AnchorPane>
                <children>
                   <Label styleClass="header-title" text="JOIN OR CREATE GROUP" />
-                  <Button layoutY="47.0" mnemonicParsing="false" onDragDetected="#toggleCreateGroub" styleClass="create-button" stylesheets="@css\button.css" text="Create" />
+                  <Button layoutY="47.0" mnemonicParsing="false" onAction="#handleCreateGroub" styleClass="create-button" stylesheets="@css\button.css" text="Create" />
                </children>
             </AnchorPane>
          </children>
@@ -121,7 +121,7 @@
                </image>
             </ImageView>
             <Region prefHeight="150.0" prefWidth="96.0" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css\button.css" textFill="#757575">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleLogout" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css\button.css" textFill="#757575">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>

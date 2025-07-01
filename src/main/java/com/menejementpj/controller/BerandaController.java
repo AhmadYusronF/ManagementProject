@@ -1,6 +1,8 @@
 package com.menejementpj.controller;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import com.menejementpj.App;
 import com.menejementpj.test.Debug;
@@ -9,15 +11,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class BerandaController {
-
     @FXML
-    private VBox activitylogContainer;
+    private VBox activityLogContainer;
 
     @FXML
     private Label welcomeUser;
@@ -43,17 +43,11 @@ public class BerandaController {
     @FXML
     private Button btnProject;
 
-    @FXML
-    private ListView<?> myListView;
+    // @FXML
+    // private ListView<?> myListView;
 
     @FXML
     private StackPane myStackPane;
-
-    @FXML
-    public void initialize() {
-        Debug.log("initialize start");
-        welcomeUser.setText("Welcome, " + App.user.getUsername());
-    }
 
     @FXML
     void toggleLogout(ActionEvent event) throws IOException {
@@ -82,5 +76,12 @@ public class BerandaController {
     @FXML
     void goToHome(ActionEvent event) {
 
+    }
+
+    @FXML
+    private void initialize() {
+        // Hint: initialize() will be called when the associated FXML has been
+        // completely loaded.
+        welcomeUser.setText("Welcome, " + App.user.getUsername());
     }
 }

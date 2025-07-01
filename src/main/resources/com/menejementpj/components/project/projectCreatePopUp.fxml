@@ -7,7 +7,6 @@
   and a GridPane to organize the input fields and labels for alignment.
   A TableView is used to display the list of members.
 -->
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
@@ -20,80 +19,73 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" spacing="20" style="-fx-background-color: #F5F5F5; -fx-padding: 40;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.GroupController">
-
-    <!-- Main Title -->
-    <Label text="CREATE PROJECT">
-        <font>
-            <Font name="System Bold" size="24.0" />
-        </font>
+<VBox alignment="TOP_CENTER" spacing="20" style="-fx-background-color: #F5F5F5; -fx-padding: 40;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.components.CreateProject">
+  <!-- Main Title -->
+  <Label text="CREATE PROJECT">
+    <font>
+      <Font name="System Bold" size="24.0"/>
+    </font>
+  </Label>
+  <!-- Left Side: Group Name and Description -->
+  <VBox spacing="15">
+    <Label text="Project Name">
+      <font>
+        <Font name="Poppins SemiBold" size="14.0"/>
+      </font>
     </Label>
-
-     <!-- Left Side: Group Name and Description -->
-     <VBox spacing="15">
-         <Label text="Project Name">
-             <font>
-                 <Font name="Poppins SemiBold" size="14.0" />
-             </font>
-         </Label>
-         <TextField fx:id="groupNameField" prefHeight="32.0" prefWidth="458.0" promptText="" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;" />
-
-         <Label text="Description">
-              <font>
-                 <Font name="Poppins SemiBold" size="14.0" />
-             </font>
-             <VBox.margin>
-                 <Insets top="10" />
-             </VBox.margin>
-         </Label>
-         <TextArea fx:id="descriptionArea" prefHeight="100.0" prefWidth="933.0" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;" wrapText="true" />
-      <Label text="Repo Url">
-         <font>
-            <Font name="Poppins SemiBold" size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="groupNameField1" prefHeight="32.0" prefWidth="458.0" promptText="" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;" />
-     </VBox>
-
-    <!-- Members Section -->
-    <VBox spacing="10" style="-fx-padding: 20 0 0 0;">
-        <Label text="Project Task">
-             <font>
-                <Font name="Poppins SemiBold" size="16.0" />
-            </font>
-        </Label>
-        
-        <!-- Member Table -->
-        <TableView fx:id="membersTable" prefHeight="200" prefWidth="685.0" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-radius: 8;">
-            <columns>
-                <TableColumn fx:id="nameColumn" prefWidth="250.0" text="Nama" />
-                <TableColumn fx:id="joinedAtColumn" prefWidth="200.0" text="Created At" />
-                <TableColumn fx:id="rolesColumn" prefWidth="150.0" text="Member" />
-            </columns>
-            <placeholder>
-                <Label text="No members added yet." />
-            </placeholder>
-        </TableView>
-
-        <Hyperlink onAction="#handleAddMember" text="+ Add More Task">
-            <VBox.margin>
-                <Insets top="10" />
-            </VBox.margin>
-        </Hyperlink>
-    </VBox>
-   <AnchorPane>
-      <children>
-         <Button fx:id="saveButton1" layoutX="753.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleSave" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #D32F2F; -fx-background-radius: 6; -fx-padding: 10 30;" text="DELETE PROJECT" textFill="WHITE">
-            <font>
-               <Font name="Poppins Bold" size="14.0" />
-            </font>
-         </Button>
-            <Button fx:id="saveButton" layoutX="423.0" layoutY="10.0" onAction="#handleSave" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #388E3C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10 30;" text="SAVE">
-               <font>
-                   <Font name="Poppins Bold" size="14.0" />
-               </font>
-           </Button>
-      </children>
-   </AnchorPane>
-
+    <TextField fx:id="groupNameField" prefHeight="32.0" prefWidth="458.0" promptText="" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;"/>
+    <Label text="Description">
+      <font>
+        <Font name="Poppins SemiBold" size="14.0"/>
+      </font>
+      <VBox.margin>
+        <Insets top="10"/>
+      </VBox.margin>
+    </Label>
+    <TextArea fx:id="descriptionArea" prefHeight="100.0" prefWidth="933.0" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;" wrapText="true"/>
+    <Label text="Repo Url">
+      <font>
+        <Font name="Poppins SemiBold" size="14.0"/>
+      </font>
+    </Label>
+    <TextField fx:id="groupNameField1" prefHeight="32.0" prefWidth="458.0" promptText="" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;"/>
+  </VBox>
+  <!-- Members Section -->
+  <VBox spacing="10" style="-fx-padding: 20 0 0 0;">
+    <Label text="Project Task">
+      <font>
+        <Font name="Poppins SemiBold" size="16.0"/>
+      </font>
+    </Label>
+    <!-- Member Table -->
+    <TableView fx:id="membersTable" prefHeight="200" prefWidth="685.0" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-radius: 8;">
+      <columns>
+        <TableColumn fx:id="nameColumn" prefWidth="250.0" text="Nama"/>
+        <TableColumn fx:id="joinedAtColumn" prefWidth="200.0" text="Created At"/>
+        <TableColumn fx:id="rolesColumn" prefWidth="150.0" text="Member"/>
+      </columns>
+      <placeholder>
+        <Label text="No members added yet."/>
+      </placeholder>
+    </TableView>
+    <Hyperlink onAction="#handleAddMember" text="+ Add More Task">
+      <VBox.margin>
+        <Insets top="10"/>
+      </VBox.margin>
+    </Hyperlink>
+  </VBox>
+  <AnchorPane>
+    <children>
+      <Button fx:id="saveButton1" layoutX="753.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleSave" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #D32F2F; -fx-background-radius: 6; -fx-padding: 10 30;" text="DELETE PROJECT" textFill="WHITE">
+        <font>
+          <Font name="Poppins Bold" size="14.0"/>
+        </font>
+      </Button>
+      <Button fx:id="saveButton" layoutX="423.0" layoutY="10.0" onAction="#handleSave" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #388E3C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10 30;" text="SAVE">
+        <font>
+          <Font name="Poppins Bold" size="14.0"/>
+        </font>
+      </Button>
+    </children>
+  </AnchorPane>
 </VBox>
