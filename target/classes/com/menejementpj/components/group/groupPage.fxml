@@ -21,14 +21,14 @@
                <children>
             <StackPane layoutX="20.0">
               <children>
-                <Label prefHeight="35.0" prefWidth="355.0" text="Sekumpulan Orang Bernafas" textFill="#212121" StackPane.alignment="TOP_CENTER">
+                <Label fx:id="groupNama" prefHeight="35.0" prefWidth="355.0" text="Sekumpulan Orang Bernafas" textFill="#212121" StackPane.alignment="TOP_CENTER">
                   <font>
                     <Font name="Poppins SemiBold" size="24.0" />
                   </font>
                 </Label>
               </children>
             </StackPane>
-          <Label layoutX="20.0" layoutY="37.0" prefHeight="19.0" prefWidth="238.0" text="Created At 2024-11-15 09:30:00 UTC" textFill="#757575">
+          <Label fx:id="groupCreate" layoutX="20.0" layoutY="37.0" prefHeight="19.0" prefWidth="238.0" text="Created At 2024-11-15 09:30:00 UTC" textFill="#757575">
             <font>
               <Font name="Poppins SemiBold" size="13.0" />
             </font>
@@ -49,7 +49,7 @@
             <Font name="Poppins SemiBold" size="18.0" />
           </font>
         </Label>
-        <Label alignment="TOP_LEFT" contentDisplay="TOP" layoutX="20.0" layoutY="116.0" prefHeight="156.0" prefWidth="722.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 6;" text="Lorem Ipsum" textFill="#212121">
+        <Label fx:id="groupDescrib" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="20.0" layoutY="116.0" prefHeight="156.0" prefWidth="722.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 6; -fx-wrap-text: true;" text="Lorem Ipsum" textFill="#212121">
           <font>
             <Font name="Poppins Regular" size="15.0" />
           </font>
@@ -78,12 +78,12 @@
             <Font name="Poppins SemiBold" size="12.0" />
           </font>
         </Button>
-            <Label alignment="TOP_LEFT" contentDisplay="TOP" layoutX="20.0" layoutY="50.0" prefHeight="201.0" prefWidth="590.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 6;" text="Lorem Ipsum" textFill="#212121">
+            <Label fx:id="groupNews" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="20.0" layoutY="50.0" prefHeight="201.0" prefWidth="590.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 6; -fx-wrap-text: true;" text="non" textFill="#212121">
                <font>
                   <Font name="Poppins Regular" size="15.0" />
                </font>
                <padding>
-                  <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </Label>
       </children>
@@ -183,7 +183,7 @@
             </AnchorPane>
             <ScrollPane prefHeight="698.0" prefWidth="325.0">
                <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox fx:id="memberContainer" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <fx:include source="groupMemberCard.fxml" />
                      </children>
@@ -192,7 +192,7 @@
             </ScrollPane>
          </children>
       </VBox>
-      <Button fx:id="createProjectButton1" layoutX="134.0" layoutY="674.0" mnemonicParsing="false" onAction="#handleCreateProjectClick" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #D32F2F; -fx-background-radius: 5;" stylesheets="@../../css/button.css" text="LEAVE" textFill="WHITE">
+      <Button fx:id="createProjectButton1" layoutX="134.0" layoutY="674.0" mnemonicParsing="false" onAction="#handleLeave" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #D32F2F; -fx-background-radius: 5;" stylesheets="@../../css/button.css" text="LEAVE" textFill="WHITE">
          <font>
             <Font name="Poppins SemiBold" size="12.0" />
          </font>

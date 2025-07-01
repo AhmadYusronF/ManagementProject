@@ -1,8 +1,13 @@
 package com.menejementpj.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.menejementpj.App;
+import com.menejementpj.components.ActivityLogController;
+import com.menejementpj.db.DatabaseManager;
+import com.menejementpj.model.ActivityLog;
+import com.menejementpj.test.Debug;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +24,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class BerandaController {
+    @FXML
+    private Label groubNews;
+
     @FXML
     private VBox activityLogContainer;
 
@@ -45,9 +53,6 @@ public class BerandaController {
 
     @FXML
     private Button btnProject;
-
-    // @FXML
-    // private ListView<?> myListView;
 
     @FXML
     private StackPane myStackPane;
@@ -83,8 +88,34 @@ public class BerandaController {
 
     @FXML
     private void initialize() {
-
         welcomeUser.setText("Welcome, " + App.user.getUsername());
+        groubNews.setText(App.mygroup.news);
+        try {
+            List<ActivityLog> logs = DatabaseManager.getActivityLogs();
+
+            if (logs == null || logs.isEmpty()) {
+                Debug.warn("Tidak ada Log yang ditemukan.");
+                return;
+            }
+
+            for (ActivityLog log : logs) {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/menejementpj/components/project/activityLogCard.fxml"));
+                Parent logRoot = loader.load();
+                ActivityLogController controller = loader.getController();
+
+                controller.setData(log.title, log.subTitle, log.progres);
+
+                activityLogContainer.getChildren().add(logRoot);
+            }
+
+            Debug.success("Semua activity log berhasil ditampilkan!");
+
+        } catch (Exception e) {
+            Debug.error("Gagal memuat activity log: " + e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
     private void showPopup(ActionEvent event, String fxmlFile, String title) {

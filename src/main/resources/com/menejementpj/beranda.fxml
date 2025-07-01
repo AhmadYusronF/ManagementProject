@@ -20,22 +20,22 @@
       <children>
         <Label fx:id="welcomeUser" layoutX="77.0" layoutY="37.0" text="Welcome, Ahmad Yusron Fadil">
           <font>
-            <Font name="Poppins Bold" size="24.0"/>
+            <Font name="Poppins Bold" size="24.0" />
           </font>
         </Label>
         <VBox layoutX="804.0" layoutY="111.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="550.0" prefWidth="300.0">
           <children>
             <StackPane fx:id="myStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="300.0" style="-fx-background-radius: 10; -fx-background-color: transparent;" VBox.vgrow="SOMETIMES">
               <clip>
-                <Rectangle arcHeight="20" arcWidth="20" height="550" width="300"/>
+                <Rectangle arcHeight="20" arcWidth="20" height="550" width="300" />
               </clip>
               <children>
                 <Label text="My Task" textFill="#212121" StackPane.alignment="TOP_CENTER">
                   <font>
-                    <Font name="Poppins SemiBold" size="20.0"/>
+                    <Font name="Poppins SemiBold" size="20.0" />
                   </font>
                   <StackPane.margin>
-                    <Insets top="5.0"/>
+                    <Insets top="5.0" />
                   </StackPane.margin>
                 </Label>
               </children>
@@ -55,10 +55,10 @@
           <children>
             <Label text="Activity Log">
               <font>
-                <Font name="Poppins SemiBold" size="18.0"/>
+                <Font name="Poppins SemiBold" size="18.0" />
               </font>
               <VBox.margin>
-                <Insets bottom="10.0" top="20.0"/>
+                <Insets bottom="10.0" top="20.0" />
               </VBox.margin>
             </Label>
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
@@ -78,20 +78,20 @@
               <children>
                 <Label text="Group News" textFill="#212121">
                   <font>
-                    <Font name="Poppins SemiBold" size="24.0"/>
+                    <Font name="Poppins SemiBold" size="24.0" />
                   </font>
                 </Label>
               </children>
               <padding>
-                <Insets left="20.0"/>
+                <Insets left="20.0" />
               </padding>
             </HBox>
-            <Label alignment="TOP_LEFT" contentDisplay="TOP" layoutX="20.0" layoutY="50.0" prefHeight="201.0" prefWidth="590.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 6;" text="Lorem Ipsum" textFill="#212121">
+            <Label fx:id="groubNews" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="20.0" layoutY="50.0" prefHeight="201.0" prefWidth="590.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 6; -fx-wrap-text: true;" text="non" textFill="#212121">
               <font>
-                <Font name="Poppins Regular" size="15.0"/>
+                <Font name="Poppins Regular" size="15.0" />
               </font>
               <padding>
-                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
               </padding>
             </Label>
           </children>
@@ -100,84 +100,84 @@
     </AnchorPane>
     <VBox alignment="CENTER" prefHeight="800.0" prefWidth="100.0" style="-fx-background-color: #F5F5F5; -fx-border-color: #E0E0E0; -fx-border-width: 2;">
       <children>
-        <Region prefHeight="130.0" prefWidth="200.0"/>
+        <Region prefHeight="130.0" prefWidth="200.0" />
         <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@Images/Untitled%20design.png"/>
+            <Image url="@Images/Untitled%20design.png" />
           </image>
         </ImageView>
-        <Region prefHeight="150.0" prefWidth="96.0"/>
+        <Region prefHeight="150.0" prefWidth="96.0" />
         <Button fx:id="btnHome" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #007766;" textFill="#757575">
           <font>
-            <Font name="Poppins SemiBold" size="14.0"/>
+            <Font name="Poppins SemiBold" size="14.0" />
           </font>
           <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@Images/Home%20Icon%20Active.png"/>
+                <Image url="@Images/Home%20Icon%20Active.png" />
               </image>
             </ImageView>
           </graphic>
         </Button>
-        <Region prefHeight="130.0" prefWidth="200.0"/>
+        <Region prefHeight="130.0" prefWidth="200.0" />
         <Button fx:id="btnGroub" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGoToGroub" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
           <font>
-            <Font name="Poppins SemiBold" size="14.0"/>
+            <Font name="Poppins SemiBold" size="14.0" />
           </font>
           <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@Images/Group%20Icon.png"/>
+                <Image url="@Images/Group%20Icon.png" />
               </image>
             </ImageView>
           </graphic>
         </Button>
-        <Region prefHeight="130.0" prefWidth="200.0"/>
+        <Region prefHeight="130.0" prefWidth="200.0" />
         <Button fx:id="btnProject" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGotoProject" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
           <font>
-            <Font name="Poppins SemiBold" size="14.0"/>
+            <Font name="Poppins SemiBold" size="14.0" />
           </font>
           <graphic>
             <ImageView fx:id="b" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@Images/Project%20Icon.png"/>
+                <Image url="@Images/Project%20Icon.png" />
               </image>
             </ImageView>
           </graphic>
         </Button>
-        <Region prefHeight="130.0" prefWidth="200.0"/>
+        <Region prefHeight="130.0" prefWidth="200.0" />
         <Button fx:id="btnChat" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleGotoChat" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
           <font>
-            <Font name="Poppins SemiBold" size="14.0"/>
+            <Font name="Poppins SemiBold" size="14.0" />
           </font>
           <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@Images/Chat%20Icon.png"/>
+                <Image url="@Images/Chat%20Icon.png" />
               </image>
             </ImageView>
           </graphic>
         </Button>
-        <Region prefHeight="250.0" prefWidth="96.0"/>
+        <Region prefHeight="250.0" prefWidth="96.0" />
         <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@Images/Untitled%20design.png"/>
+            <Image url="@Images/Untitled%20design.png" />
           </image>
         </ImageView>
-        <Region prefHeight="150.0" prefWidth="96.0"/>
+        <Region prefHeight="150.0" prefWidth="96.0" />
         <Button fx:id="btnLogout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleLogout" prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: #fffff000;" stylesheets="@css/button.css" textFill="#757575">
           <font>
-            <Font name="Poppins SemiBold" size="14.0"/>
+            <Font name="Poppins SemiBold" size="14.0" />
           </font>
           <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
               <image>
-                <Image url="@Images/Exit%20Icon.png"/>
+                <Image url="@Images/Exit%20Icon.png" />
               </image>
             </ImageView>
           </graphic>
         </Button>
-        <Region prefHeight="130.0" prefWidth="96.0"/>
+        <Region prefHeight="130.0" prefWidth="96.0" />
       </children>
     </VBox>
   </children>

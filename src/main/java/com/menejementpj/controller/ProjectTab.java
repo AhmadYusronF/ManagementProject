@@ -73,10 +73,12 @@ public class ProjectTab {
                 return;
             }
 
+            int col = 0;
+            int row = 0;
+
             for (Project project : projects) {
                 FXMLLoader loader = new FXMLLoader(
                         getClass().getResource("/com/menejementpj/components/project/projectCard.fxml"));
-
                 Parent cardRoot = loader.load();
                 ProjectCardController controller = loader.getController();
 
@@ -86,7 +88,15 @@ public class ProjectTab {
                         project.description,
                         project.id);
 
+                GridPane.setColumnIndex(cardRoot, col);
+                GridPane.setRowIndex(cardRoot, row);
                 projectContainer.getChildren().add(cardRoot);
+
+                col++;
+                if (col == 2) {
+                    col = 0;
+                    row++;
+                }
             }
 
             Debug.success("Semua komponen project berhasil dimuat.");

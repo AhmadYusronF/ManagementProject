@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: #ffffff; -fx-border-color: #E0E0E0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: #ffffff; -fx-border-color: #E0E0E0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.components.UserMemberController">
    <children>
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="300.0">
          <children>
@@ -17,7 +17,7 @@
                   <Image url="@../../Images/Untitled%20design.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" text="Owner">
+            <Label fx:id="role" alignment="CENTER" text="Owner">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
@@ -25,7 +25,7 @@
                   <Insets left="20.0" />
                </HBox.margin>
             </Label>
-            <Label text="Ahmad Yusron Fadil">
+            <Label fx:id="username" text="Ahmad Yusron Fadil">
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>

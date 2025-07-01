@@ -811,3 +811,7 @@ CREATE TABLE `group_chat` (
 );
 
 DROP TABLE project_chat;
+
+
+ALTER TABLE `groups` 
+	ADD COLUMN  group_news TEXT COMMENT 'add news in group';

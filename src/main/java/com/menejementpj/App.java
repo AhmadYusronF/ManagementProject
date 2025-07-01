@@ -2,6 +2,7 @@ package com.menejementpj;
 
 import com.menejementpj.auth.Session;
 import com.menejementpj.auth.UserData;
+import com.menejementpj.model.Group;
 import com.menejementpj.auth.GroupData;
 
 import javafx.application.Application;
@@ -21,6 +22,7 @@ public class App extends Application {
     public static GroupData group = new GroupData();
     public static Session userSession = new Session();
     public static UserData user = new UserData();
+    public static Group mygroup = new Group("", "", null, "", 0);
 
     @Override
     public void start(Stage stage) throws IOException {

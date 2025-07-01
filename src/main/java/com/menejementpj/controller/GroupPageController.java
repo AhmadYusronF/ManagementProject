@@ -7,14 +7,37 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.menejementpj.App;
+import com.menejementpj.components.CreateNews;
+import com.menejementpj.components.UserMemberController;
+import com.menejementpj.db.DatabaseManager;
+import com.menejementpj.model.User;
+import com.menejementpj.test.Debug;
 
 import java.io.IOException;
+import java.util.List;
 
 public class GroupPageController {
+    @FXML
+    private Label groupNama;
+
+    @FXML
+    private Label groupCreate;
+
+    @FXML
+    private Label groupDescrib;
+
+    @FXML
+    private Label groupNews;
+
+    @FXML
+    private VBox memberContainer;
+
     @FXML
     private Button createProjectButton;
 
@@ -66,35 +89,7 @@ public class GroupPageController {
 
     @FXML
     void handleCreateProjectClick(ActionEvent event) {
-        showPopup(event, "/com/menejementpj/popupCreateProject.fxml", "Create New Project");
-    }
-
-    @FXML
-    void handleViewAllProjectsClick(ActionEvent event) {
-        showPopup(event, "/com/menejementpj/popupProject.fxml", "All Projects");
-    }
-
-    @FXML
-    void handleViewAllMembersClick(ActionEvent event) {
-        showPopup(event, "/com/menejementpj/popupProject.fxml", "All Members");
-    }
-
-    private void showPopup(ActionEvent event, String fxmlFile, String title) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent root = loader.load();
-
-            Stage popupStage = new Stage();
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.initOwner(((Node) event.getSource()).getScene().getWindow());
-            popupStage.setTitle(title);
-            popupStage.setScene(new Scene(root));
-            popupStage.showAndWait();
-
-        } catch (IOException e) {
-            System.err.println("⚠️ Failed to load FXML file: " + fxmlFile);
-            e.printStackTrace();
-        }
+        showPopupCreateNews(event);
     }
 
     private void showPopupChat(ActionEvent event, String fxmlFile, String title) {
@@ -124,4 +119,58 @@ public class GroupPageController {
         }
     }
 
+    void showPopupCreateNews(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/menejementpj/components/group/groupNewsPopUp.fxml"));
+            Parent root = loader.load();
+
+            CreateNews childController = loader.getController();
+            childController.setParentController(this);
+
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setScene(new Scene(root));
+            popupStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void handleLeave(ActionEvent event) {
+
+    }
+
+    public void refresWindow() {
+        groupNama.setText(App.mygroup.nama);
+        groupCreate.setText("Create At: " + App.mygroup.createAt);
+        groupDescrib.setText(App.mygroup.describ);
+        groupNews.setText(App.mygroup.news);
+        Debug.success("sukser refres " + App.mygroup.news);
+    }
+
+    @FXML
+    private void initialize() {
+        refresWindow();
+
+        try {
+            List<User> users = DatabaseManager.getUserMember();
+
+            for (User user : users) {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/menejementpj/components/group/groupMemberCard.fxml"));
+                Parent cardRoot = loader.load();
+                UserMemberController controller = loader.getController();
+
+                controller.setData(user.id, user.userName, user.role);
+                memberContainer.getChildren().add(cardRoot);
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            Debug.error(e.getMessage());
+        }
+    }
 }

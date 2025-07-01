@@ -14,10 +14,9 @@ public class ActivityLogController {
     @FXML
     private Label title;
 
-    void setData(String title, String subTitle, String progres) {
+    public void setData(String title, String subTitle, String progres) {
         this.title.setText(title);
         this.subTitle.setText(subTitle);
         this.proggres.setText(progres);
-
     }
 }

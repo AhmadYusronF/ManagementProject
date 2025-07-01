@@ -5,9 +5,11 @@ import com.menejementpj.components.PopUpAlert;
 // import com.menejementpj.model.ActivityLog;
 import com.menejementpj.test.Debug;
 import com.menejementpj.type.*;
+import com.menejementpj.model.ActivityLog;
 import com.menejementpj.model.ChatMessage;
 // import com.mysql.cj.xdevapi.Result;
 import com.menejementpj.model.Project;
+import com.menejementpj.model.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -279,24 +281,23 @@ public class DatabaseManager {
         }
     }
 
-    public static void getDataGroup(int groupId) {
-        String sql = "SELECT group_name FROM `groups` WHERE groups_id = ?";
+    // public static void getDataGroup(int groupId) {
+    // String sql = "SELECT group_name FROM `groups` WHERE groups_id = ?";
 
-        try (Connection conn = connect();
+    // try (Connection conn = connect();
 
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, groupId);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                String groupName = rs.getString("group_name");
-                App.group.setGroupData(groupName);
-            }
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
+    // PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    // pstmt.setInt(1, groupId);
+    // ResultSet rs = pstmt.executeQuery();
+    // if (rs.next()) {
+    // String groupName = rs.getString("group_name");
+    // App.group.setGroupData(groupName);
+    // }
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // }
 
-    }
+    // }
 
     public static void sendMessage(String message) {
         String sql = "INSERT INTO group_chat (fk_groups_id, fk_users_id, message) VALUES (?, ?, ?)";
@@ -306,11 +307,9 @@ public class DatabaseManager {
             pstmt.setInt(1, App.userSession.getCurrentLoggedInGroupID());
             pstmt.setInt(2, App.userSession.getCurrentLoggedInUserID());
             pstmt.setString(3, message);
-
             pstmt.executeUpdate();
 
         } catch (Exception e) {
-
             e.printStackTrace();
         }
     }
@@ -336,8 +335,7 @@ public class DatabaseManager {
                         rs.getInt("fk_users_id"),
                         rs.getString("username"),
                         rs.getString("message"),
-                        rs.getTimestamp("sent_at").toLocalDateTime() // Retrieve and convert timestamp
-                ));
+                        rs.getTimestamp("sent_at").toLocalDateTime()));
             }
 
         } catch (Exception e) {
@@ -346,4 +344,115 @@ public class DatabaseManager {
 
         return messages;
     }
+
+    public static void getDataGroubA() {
+        String query = "SELECT * FROM `groups` WHERE groups_id = ?";
+
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, App.userSession.getCurrentLoggedInGroupID());
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                App.mygroup.id = rs.getInt("groups_id");
+                App.mygroup.nama = rs.getString("group_name");
+                App.mygroup.createAt = rs.getTimestamp("group_created_at").toLocalDateTime();
+                App.mygroup.describ = rs.getString("group_description");
+                App.mygroup.news = rs.getString("group_news");
+            }
+            Debug.success("sukses dapat data");
+        } catch (Exception e) {
+            Debug.error("Data Groubmy tidak ditemukan" + e.getMessage());
+        }
+    }
+
+    public static List<ActivityLog> getActivityLogs() {
+        List<ActivityLog> logs = new ArrayList<>();
+        String query = "SELECT al.activity_logs_id AS id, al.activity_logs_message AS message, gp.title AS title, al.action_type AS progres FROM groups_project gp INNER JOIN activity_logs al ON al.fk_groups_project_id = gp.groups_project_id WHERE gp.fk_groups_id = ?";
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, App.userSession.getCurrentLoggedInGroupID());
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                String message = rs.getString("message");
+                String progres = rs.getString("progres");
+                logs.add(new ActivityLog(id, title, message, progres));
+            }
+            return logs;
+        } catch (Exception e) {
+            Debug.error("GagalMendapatActivity");
+            return null;
+        }
+    }
+
+    public static void setNews(String message) {
+        String query = "UPDATE `groups` SET group_news = ? WHERE groups_id = ?";
+
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, message);
+            pstmt.setInt(2, App.userSession.getCurrentLoggedInGroupID());
+
+            int rowsUpdated = pstmt.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                Debug.success("Berita grup berhasil diperbarui ");
+            } else {
+                Debug.warn("Tidak ada grup yang cocok untuk diperbarui.");
+            }
+
+        } catch (SQLException e) {
+            Debug.error("Gagal update group_news: " + e.getMessage());
+        }
+    }
+
+    public static List<User> getUserMember() {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT users_id AS id, username,fk_roles_id as role FROM users WHERE users_id IN (SELECT fk_users_id AS users_id FROM groups_member WHERE fk_groups_id = ?)";
+
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, App.userSession.getCurrentLoggedInGroupID());
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                int role = rs.getInt("role");
+                users.add(new User(id, username, role));
+            }
+            return users;
+        } catch (SQLException e) {
+            Debug.error("Gagal update group_news: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static String getRoleName(int roleId) {
+
+        String query = "SELECT roles_name FROM roles WHERE roles_id = ?";
+
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, roleId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String roleName = rs.getString("roles_name");
+                return roleName;
+            } else {
+                Debug.error("fail user role");
+                return null;
+            }
+        } catch (SQLException e) {
+            Debug.error("Gagal mrdapat rolename: " + e.getMessage());
+            return null;
+        }
+    }
+
 }

@@ -10,5 +10,7 @@ module com.example {
 
     exports com.menejementpj;
     exports com.menejementpj.auth;
+    exports com.menejementpj.model;
     exports com.menejementpj.components;
+    exports com.menejementpj.controller;
 }

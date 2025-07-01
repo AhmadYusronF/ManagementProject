@@ -78,6 +78,7 @@ public class LoginController {
             DatabaseManager.getUserSession(hidden_uid);
             System.out.println("Login successful for HUID: " + hidden_uid);
             DatabaseManager.getUserProfile(App.userSession.getCurrentLoggedInUserID());
+            DatabaseManager.getDataGroubA();
 
             try {
                 App.setRoot("beranda", "\"Beranda - Management Project\"");
