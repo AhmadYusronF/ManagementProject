@@ -7,6 +7,7 @@ import com.menejementpj.test.Debug;
 import com.menejementpj.type.*;
 import com.menejementpj.model.ActivityLog;
 import com.menejementpj.model.ChatMessage;
+import com.menejementpj.model.Group;
 // import com.mysql.cj.xdevapi.Result;
 import com.menejementpj.model.Project;
 import com.menejementpj.model.User;
@@ -18,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -356,7 +358,7 @@ public class DatabaseManager {
             if (rs.next()) {
                 App.mygroup.id = rs.getInt("groups_id");
                 App.mygroup.nama = rs.getString("group_name");
-                App.mygroup.createAt = rs.getTimestamp("group_created_at").toLocalDateTime();
+                App.mygroup.createAt = rs.getDate("group_created_at").toLocalDate();
                 App.mygroup.describ = rs.getString("group_description");
                 App.mygroup.news = rs.getString("group_news");
             }
@@ -449,6 +451,31 @@ public class DatabaseManager {
                 Debug.error("fail user role");
                 return null;
             }
+        } catch (SQLException e) {
+            Debug.error("Gagal mrdapat rolename: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static List<Group> getAllGroub() {
+        List<Group> groups = new ArrayList<>();
+        String query = "SELECT * FROM `groups`";
+
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+
+                int id = rs.getInt("groups_id");
+                String title = rs.getString("group_name");
+                LocalDateTime create = rs.getTimestamp("group_created_at").toLocalDateTime();
+                String describ = rs.getString("group_description");
+                String news = rs.getString("group_news");
+
+                groups.add(new Group(title, describ, create.toLocalDate(), news, id));
+            }
+            return groups;
         } catch (SQLException e) {
             Debug.error("Gagal mrdapat rolename: " + e.getMessage());
             return null;

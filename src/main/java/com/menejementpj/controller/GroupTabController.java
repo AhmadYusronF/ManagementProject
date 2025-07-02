@@ -1,8 +1,14 @@
 package com.menejementpj.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.menejementpj.App;
+import com.menejementpj.components.ProjectCardController;
+import com.menejementpj.db.DatabaseManager;
+import com.menejementpj.model.Group;
+import com.menejementpj.model.Project;
+import com.menejementpj.test.Debug;
 
 import javafx.event.ActionEvent;
 
@@ -53,7 +59,48 @@ public class GroupTabController {
 
     @FXML
     private void initialize() {
+        try {
 
+            List<Group> groups = DatabaseManager.getAllGroub();
+
+            if (groups == null || groups.isEmpty()) {
+                Debug.warn("Tidak ada project yang ditemukan.");
+                return;
+            }
+
+            int col = 0;
+            int row = 0;
+
+            for (Group group : groups) {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/menejementpj/components/project/projectCard.fxml"));
+                Parent cardRoot = loader.load();
+                ProjectCardController controller = loader.getController();
+
+                controller.setData(
+                        group.nama,
+                        group.createAt,
+                        group.describ,
+                        group.id
+                        );
+
+                GridPane.setColumnIndex(cardRoot, col);
+                GridPane.setRowIndex(cardRoot, row);
+                groubJoinContainer.getChildren().add(cardRoot);
+
+                col++;
+                if (col == 2) {
+                    col = 0;
+                    row++;
+                }
+            }
+
+            Debug.success("Semua komponen project berhasil dimuat.");
+
+        } catch (Exception e) {
+            Debug.error("Gagal Menampilkan Projects: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void showPopup(ActionEvent event, String fxmlFile, String title) {
