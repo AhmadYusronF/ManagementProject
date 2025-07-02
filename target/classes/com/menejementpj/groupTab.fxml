@@ -37,7 +37,7 @@
       </VBox>
       <ScrollPane layoutX="100.0" layoutY="132.0" prefHeight="669.0" prefWidth="1178.0">
          <content>
-            <GridPane fx:id="groubJoinContainer" prefHeight="650.0">
+            <GridPane fx:id="groubJoinContainer" alignment="CENTER" prefWidth="1145.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="400.0" minWidth="400.0" prefWidth="400.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="400.0" />
@@ -50,6 +50,9 @@
               </rowConstraints>
             </GridPane>
          </content>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
       </ScrollPane>
       <VBox alignment="CENTER" prefHeight="800.0" prefWidth="100.0" style="-fx-background-color: #F5F5F5; -fx-border-color: #E0E0E0; -fx-border-width: 2;">
          <children>
