@@ -6,7 +6,7 @@ import com.menejementpj.auth.UserData;
 import com.menejementpj.db.DatabaseManager;
 import com.menejementpj.model.GroupMemberDisplay;
 import com.menejementpj.model.ProjectTask;
-import com.menejementpj.components.PopUpAlert; // <--- Import PopUpAlert
+import com.menejementpj.components.PopUpAlert;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;

@@ -27,14 +27,10 @@ public class ProjectTab {
 
     @FXML
     private void initialize() {
-        // When the view is first loaded, populate the grid with projects.
+
         refreshProjectGrid();
     }
 
-    /**
-     * This is the main refresh method. It clears the grid and reloads all
-     * project cards from the database.
-     */
     private void refreshProjectGrid() {
         Debug.log("Refreshing project grid...");
         projectContainer.getChildren().clear();
@@ -57,8 +53,6 @@ public class ProjectTab {
                 Parent cardRoot = loader.load();
                 ProjectCardController controller = loader.getController();
 
-                // Give the card a command to run when its detail window closes.
-                // This ensures the grid refreshes after a project is edited or deleted.
                 controller.setRefreshCallback(this::refreshProjectGrid);
 
                 controller.setData(
@@ -70,7 +64,7 @@ public class ProjectTab {
                 projectContainer.add(cardRoot, column, row);
 
                 column++;
-                if (column >= 3) { // Assuming 3 columns per row
+                if (column >= 3) {
                     column = 0;
                     row++;
                 }
@@ -83,18 +77,12 @@ public class ProjectTab {
         }
     }
 
-    /**
-     * Handles the "Create" button click. It shows the creation popup and then
-     * refreshes the grid to display the new project.
-     */
     @FXML
     void handelCreateProject(ActionEvent event) {
         showPopup(event, "/com/menejementpj/components/project/projectCreatePopUp.fxml", "Create Project");
-        // After the popup is closed, refresh the grid to show the new project.
+
         refreshProjectGrid();
     }
-
-    // --- Navigation and Helper Methods ---
 
     @FXML
     void toggleGoToHome(ActionEvent event) throws IOException {
@@ -108,7 +96,7 @@ public class ProjectTab {
 
     @FXML
     void toggleLogout(ActionEvent event) throws IOException {
-       Utils.logout();
+        Utils.logout(event);
     }
 
     @FXML

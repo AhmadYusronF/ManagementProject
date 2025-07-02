@@ -1,6 +1,5 @@
 package com.menejementpj.controller;
 
-
 import com.menejementpj.model.MemberTask;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -16,26 +15,25 @@ public class MemberTaskCardController {
     @FXML
     private Label memberNameLabel;
     @FXML
-    private VBox tasksContainer; // The VBox that will hold the individual task rows
+    private VBox tasksContainer;
 
     public void setData(String pjNma, List<MemberTask> tasks) {
         memberNameLabel.setText(pjNma);
-        tasksContainer.getChildren().clear(); // Clear any default tasks
+        tasksContainer.getChildren().clear();
 
         for (MemberTask task : tasks) {
-            // Create a new row for each task
+
             HBox taskRow = new HBox(10);
 
             Circle statusCircle = new Circle(5);
-            int statusValue = task.getStatus(); // Get the integer status
+            int statusValue = task.getStatus();
 
-            // Set color based on the integer value
             if (statusValue >= 80) {
-                statusCircle.setFill(Color.web("#4CAF50")); // Green
+                statusCircle.setFill(Color.web("#4CAF50"));
             } else if (statusValue >= 50) {
-                statusCircle.setFill(Color.web("#FFC107")); // Yellow
+                statusCircle.setFill(Color.web("#FFC107"));
             } else {
-                statusCircle.setFill(Color.web("#F44336")); // Red
+                statusCircle.setFill(Color.web("#F44336"));
             }
 
             Label taskLabel = new Label(task.getTaskName());

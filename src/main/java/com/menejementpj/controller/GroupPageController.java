@@ -84,7 +84,7 @@ public class GroupPageController {
 
     @FXML
     void toggleLogout(ActionEvent event) throws IOException {
-        Utils.logout();
+        Utils.logout(event);
     }
 
     @FXML
@@ -102,15 +102,15 @@ public class GroupPageController {
             GroupOptionPopUpController controller = loader.getController();
 
             Stage popupStage = new Stage();
-            popupStage.initModality(Modality.APPLICATION_MODAL); // Block parent window
+            popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(root));
             popupStage.setTitle("Edit Group");
 
             controller.setDialogStage(popupStage);
-            controller.setParentController(this); // Pass reference to self for refreshing
-            controller.setGroupToEdit(App.mygroup); // Pass the current group object
+            controller.setParentController(this);
+            controller.setGroupToEdit(App.mygroup);
 
-            popupStage.showAndWait(); // Show and wait for the popup to close
+            popupStage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -185,9 +185,9 @@ public class GroupPageController {
 
             if (success) {
                 Debug.success("User " + currentUserId + " successfully left group " + currentGroupId);
-                App.userSession.setCurrentLoggedInGroupID(0); // Set to 0 if 0 means "not in a group"
+                App.userSession.setCurrentLoggedInGroupID(0);
                 Debug.success("Current Group ID after leaving: " + App.userSession.getCurrentLoggedInGroupID());
-                App.setRoot("groupTab", "Groups - My Groups"); // Navigate to the group listing page
+                App.setRoot("groupTab", "Groups - My Groups");
             } else {
                 Debug.error("Failed to leave group " + currentGroupId + " for user " + currentUserId);
                 showAlert(Alert.AlertType.ERROR, "Failed to Leave",
@@ -222,12 +222,6 @@ public class GroupPageController {
         }
     }
 
-    /**
-     * Refreshes all group-related data on the page, including group details and
-     * member list.
-     * This method should be called when the group data might have changed (e.g.,
-     * after saving edits, joining/leaving).
-     */
     public void refreshAllGroupData() {
         System.out.println("DEBUG: GroupPageController.refreshAllGroupData - START. currentLoggedInGroupID: "
                 + App.userSession.getCurrentLoggedInGroupID());
@@ -241,13 +235,13 @@ public class GroupPageController {
                     Debug.success("App.mygroup updated with details for group ID: " + currentGroupId);
                 } else {
                     Debug.warn("No group found in DB for ID: " + currentGroupId + ". Navigating to group list.");
-                    App.userSession.setCurrentLoggedInGroupID(0); // Reset session group ID if group not found
+                    App.userSession.setCurrentLoggedInGroupID(0);
                     try {
                         App.setRoot("groupTab", "Groups - My Groups");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    return; // Exit as there's no group to display
+                    return;
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -266,13 +260,13 @@ public class GroupPageController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return; // Exit as there's no group to display
+            return;
         }
 
-        refresWindow(); // Refresh the main group labels
+        refresWindow();
 
         try {
-            memberContainer.getChildren().clear(); // Clear existing members before loading new ones
+            memberContainer.getChildren().clear();
 
             List<User> users = DatabaseManager.getUserMember();
             System.out.println(
@@ -304,7 +298,7 @@ public class GroupPageController {
 
     @FXML
     private void initialize() {
-        // The initialize method now just calls refreshAllGroupData
+
         refreshAllGroupData();
     }
 

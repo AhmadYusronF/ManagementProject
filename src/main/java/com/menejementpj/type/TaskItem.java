@@ -12,7 +12,6 @@ public class TaskItem {
         this.status = new SimpleStringProperty(status);
     }
 
-    // --- Getters for Properties (important for binding) ---
     public StringProperty nameProperty() {
         return name;
     }
@@ -21,8 +20,6 @@ public class TaskItem {
         return status;
     }
 
-    // --- Standard Getters/Setters (for convenience, not strictly needed for
-    // ListView display) ---
     public String getName() {
         return name.get();
     }
@@ -41,8 +38,7 @@ public class TaskItem {
 
     @Override
     public String toString() {
-        // This toString is used as a fallback if you don't use a custom cell factory.
-        // With a custom cell factory, it's not directly displayed by default.
+
         return name.get() + " (" + status.get() + ")";
     }
 }

@@ -1,16 +1,14 @@
-/* --- Root and Main Container --- */
+
 .root {
   -fx-background-color: #f5f5f5;
   -fx-font-family: "Poppins", sans-serif;
 }
 
-/* --- Welcome Header --- */
 .label-welcome {
   -fx-font-family: "Poppins Bold";
   -fx-font-size: 24px;
 }
 
-/* --- Group News Section --- */
 .group-news-container {
   -fx-background-color: #ffffff;
   -fx-background-radius: 6;
@@ -32,7 +30,7 @@
   -fx-padding: 10px;
 }
 
-/* --- Activity Log Section --- */
+
 .activity-log-title {
   -fx-font-family: "Poppins SemiBold";
   -fx-font-size: 18px;
@@ -43,24 +41,23 @@
   -fx-border-color: transparent;
 }
 
-/* --- My Task Section --- */
+
 .task-container-title {
   -fx-font-family: "Poppins SemiBold";
   -fx-font-size: 20px;
   -fx-text-fill: #212121;
 }
 
-/* --- Navigation Sidebar --- */
 .navigation-bar {
   -fx-background-color: #f5f5f5;
   -fx-border-color: #e0e0e0;
-  -fx-border-width: 0 2px 0 0; /* Right border only */
+  -fx-border-width: 0 2px 0 0;
 }
 
 .nav-button {
-  -fx-background-color: transparent; /* Default state */
+  -fx-background-color: transparent; 
 }
 
 .nav-button-active {
-  -fx-background-color: #007766; /* Active state */
+  -fx-background-color: #007766;
 }

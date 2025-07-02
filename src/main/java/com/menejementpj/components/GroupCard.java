@@ -2,11 +2,11 @@ package com.menejementpj.components;
 
 import java.time.LocalDate;
 
-import com.menejementpj.App; // Import App to access userSession
-import com.menejementpj.db.DatabaseManager; // Import DatabaseManager
+import com.menejementpj.App; 
+import com.menejementpj.db.DatabaseManager; 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert; // For showing alerts
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 
@@ -21,8 +21,11 @@ public class GroupCard {
     @FXML
     private Label title;
 
-
     private int groupId;
+
+    
+
+    
 
     @FXML
     void handleJoin(ActionEvent event) {
@@ -53,16 +56,16 @@ public class GroupCard {
     }
 
     public void setData(int groupId, String title, String describ, LocalDate createAt) {
-        this.groupId = groupId; 
+        this.groupId = groupId;
         this.title.setText(title);
-        this.createat.setText("Created At: " + createAt); 
+        this.createat.setText("Created At: " + createAt);
         this.describ.setText(describ);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
-        alert.setHeaderText(null); 
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }

@@ -26,11 +26,11 @@ public class CreateActivity {
 
     @FXML
     public void initialize() {
-        // Get the current project's ID from the session
+
         int projectId = App.userSession.getCurrentProjectID();
-        // Fetch the list of tasks for this project
+
         List<TaskSelection> tasks = DatabaseManager.getTasksForProject(projectId);
-        // Populate the ChoiceBox
+
         taskName.setItems(FXCollections.observableArrayList(tasks));
     }
 
@@ -44,23 +44,19 @@ public class CreateActivity {
         String description = activityDescription.getText();
         int progress = Integer.parseInt(statusProgress.getText());
 
-        // Basic validation
         if (selectedTask == null || description.trim().isEmpty()) {
             showAlert("Validation Error", "Please select a task and provide a description.");
             return;
         }
 
-        // 1. Create the new activity log in the database
         DatabaseManager.createActivityLog(
                 App.userSession.getCurrentProjectID(),
                 selectedTask.getTaskId(),
                 App.userSession.getCurrentLoggedInUserID(),
                 description);
 
-        // 2. Update the status of the parent task
         DatabaseManager.updateTaskStatus(selectedTask.getTaskId(), progress);
 
-        // 3. Close the popup window
         dialogStage.close();
     }
 

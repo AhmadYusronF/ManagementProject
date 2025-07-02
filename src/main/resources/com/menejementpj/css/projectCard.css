@@ -10,10 +10,10 @@
     0,
     0,
     5
-  ); /* Soft shadow */
+  ); 
   -fx-spacing: 15;
   -fx-alignment: top-left;
-  -fx-min-height: 250px; /* Ensure cards have a minimum height */
+  -fx-min-height: 250px; 
   -fx-pref-width: 300px;
 }
 
@@ -44,7 +44,7 @@
 
 /* --- Join Button --- */
 .detail-button {
-  -fx-background-color: #008080; /* Teal color */
+  -fx-background-color: #008080; 
   -fx-text-fill: white;
   -fx-font-size: 14px;
   -fx-font-weight: bold;
@@ -55,5 +55,5 @@
 }
 
 .detail-button:hover {
-  -fx-background-color: #006666; /* Darker teal on hover */
+  -fx-background-color: #006666; 
 }

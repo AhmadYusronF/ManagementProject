@@ -1,25 +1,25 @@
 .my-message-bubble {
-  -fx-background-color: #007766; /* Blue for your messages */
+  -fx-background-color: #007766; 
   -fx-background-radius: 10;
 }
 .my-message-bubble .label {
-  -fx-text-fill: white; /* White text for your messages */
+  -fx-text-fill: white; 
 }
 
-/* Timestamp color for YOUR messages (on the green bubble) */
+
 .my-message-bubble .timestamp-label {
-  -fx-text-fill: #d4ebe8; /* A light, soft teal-white */
+  -fx-text-fill: #d4ebe8; 
 }
 
 .other-message-bubble {
-  -fx-background-color: #e5e5ea; /* Gray for other messages */
+  -fx-background-color: #e5e5ea; 
   -fx-background-radius: 10;
 }
 .other-message-bubble .label {
-  -fx-text-fill: black; /* Black text for other messages */
+  -fx-text-fill: black; 
 }
 
-/* Timestamp color for OTHER'S messages (on the gray bubble) */
+
 .other-message-bubble .timestamp-label {
-  -fx-text-fill: #6e6e73; /* A medium gray */
+  -fx-text-fill: #6e6e73; 
 }

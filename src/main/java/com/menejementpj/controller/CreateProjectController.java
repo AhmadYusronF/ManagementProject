@@ -7,7 +7,7 @@ import com.menejementpj.App;
 import com.menejementpj.db.DatabaseManager;
 import com.menejementpj.model.ProjectTask;
 import com.menejementpj.utils.Utils;
-import com.menejementpj.components.PopUpAlert; // Import PopUpAlert
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -45,9 +45,9 @@ public class CreateProjectController {
     private TableColumn<ProjectTask, String> memberCollumn;
 
     @FXML
-    private TextArea descriptionTextArea; // Note: This might conflict with projectDecriptionArea based on FXML.
+    private TextArea descriptionTextArea; 
     @FXML
-    private TextArea titleTextArea; // Note: This might conflict with projectNameField based on FXML.
+    private TextArea titleTextArea;
 
     @FXML
     void handleConfirm(ActionEvent event) {
@@ -103,7 +103,7 @@ public class CreateProjectController {
                 App.userSession.getCurrentLoggedInGroupID());
 
         if (newProjectId != -1) {
-            // If tasks were added in the UI, now associate them with the new project ID
+           
             for (ProjectTask task : taskList) {
                 DatabaseManager.createTask(newProjectId, task.getAssignedMemberId(), task.getTaskName());
             }
@@ -117,7 +117,7 @@ public class CreateProjectController {
     @FXML
     public void handleAddTask(ActionEvent event) {
         try {
-            TaskDialogController controller = showTaskDialog(null); // Pass null for a new task
+            TaskDialogController controller = showTaskDialog(null); 
             if (controller.isSaved()) {
                 taskList.add(controller.getTask());
             }
@@ -157,9 +157,7 @@ public class CreateProjectController {
     public void handleDeleteTask(ActionEvent event) {
         ProjectTask selectedTask = taskTable.getSelectionModel().getSelectedItem();
         if (selectedTask != null) {
-            // You would typically also delete from DB here
-            // DatabaseManager.deleteTask(selectedTask.getProjectTaskId()); // You'd need to
-            // implement this
+           
             taskList.remove(selectedTask);
         } else {
             showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a task to delete.");
@@ -180,7 +178,7 @@ public class CreateProjectController {
 
         TaskDialogController controller = loader.getController();
         controller.setDialogStage(dialogStage);
-        controller.setTask(task); // Pass the task to the dialog controller
+        controller.setTask(task);
         dialogStage.showAndWait();
         return controller;
     }

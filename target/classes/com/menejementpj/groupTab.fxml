@@ -37,20 +37,17 @@
       </VBox>
       <ScrollPane layoutX="100.0" layoutY="132.0" prefHeight="669.0" prefWidth="1178.0">
          <content>
-            <GridPane fx:id="groubJoinContainer" prefHeight="650.0" prefWidth="1161.0">
+            <GridPane fx:id="groubJoinContainer" prefHeight="650.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="400.0" minWidth="400.0" prefWidth="400.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="400.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="398.0" minHeight="10.0" prefHeight="280.0" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="383.0" minHeight="10.0" prefHeight="299.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="300.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
               </rowConstraints>
-               <children>
-                  <fx:include source="components/group/groupCard.fxml" />
-               </children>
             </GridPane>
          </content>
       </ScrollPane>

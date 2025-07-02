@@ -52,54 +52,20 @@ public class GroupCreatePopupController {
         membersTable.setItems(memberList);
 
         availableRoles = DatabaseManager.getRoles();
-
-        // --- CORRECTED LOGIC HERE ---
         int currentLoggedInUserId = App.userSession.getCurrentLoggedInUserID();
-
-        // IMPORTANT: You need a way to get the username for this ID.
-        // Let's assume you have a method in DatabaseManager like:
-        // public static UserData getUserById(int userId) { ... }
-        // or
-        // public static String getUsernameById(int userId) { ... }
-
-        if (currentLoggedInUserId != -1) { // Ensure a user is actually logged in
-            // Option 1: If App.user is reliably updated after login
-            // and contains the username for the current session.
-            // This assumes App.user.setUserId() and App.user.setUsername() are called after
-            // login.
+        if (currentLoggedInUserId != -1) {
             String currentLoggedInUsername = App.user.getUsername();
-
-            // Option 2 (Safer): Fetch username from DB using the session ID
-            // You'll need to implement this in DatabaseManager if it doesn't exist
-            // try {
-            // UserData loggedInUser = DatabaseManager.getUserById(currentLoggedInUserId);
-            // if (loggedInUser != null) {
-            // memberList.add(
-            // new GroupMemberDisplay(loggedInUser.getUserId(), loggedInUser.getUsername(),
-            // "Owner", LocalDate.now()));
-            // } else {
-            // System.err.println("Error: Logged in user data not found in DB for ID: " +
-            // currentLoggedInUserId);
-            // }
-            // } catch (SQLException e) {
-            // e.printStackTrace();
-            // System.err.println("Database error fetching logged in user data.");
-            // }
-
-            // For now, let's assume App.user's username is also set correctly after login
-            // along with App.userSession.getCurrentLoggedInUserID()
             memberList.add(
                     new GroupMemberDisplay(currentLoggedInUserId, currentLoggedInUsername, "Owner", LocalDate.now()));
 
         } else {
             System.err.println("WARNING: No user logged in, cannot add creator as member.");
-            // Perhaps show an alert to the user, or handle this case appropriately
         }
-        // --- END CORRECTED LOGIC ---
+
     }
 
     @FXML
-    public void handleSave(ActionEvent event) {
+    public void handleSave(ActionEvent event) throws IOException {
         String groupName = groupNameField.getText();
         String description = descriptionArea.getText();
 
@@ -113,9 +79,13 @@ public class GroupCreatePopupController {
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Success", "Group created successfully!");
             App.userSession.setCurrentLoggedInGroupID(DatabaseManager.getLastInsertedGroupId());
+
             closeWindow();
         } else {
             showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to create the group.");
+        }
+        if (App.userSession.getCurrentLoggedInGroupID() != 0) {
+            App.setRoot("groupPage", "Groub");
         }
     }
 
@@ -192,6 +162,7 @@ public class GroupCreatePopupController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             memberList.remove(selectedMember);
         }
+
     }
 
     private AddMemberController showAddMemberPopup() throws IOException {

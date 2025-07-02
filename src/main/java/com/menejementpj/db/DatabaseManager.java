@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class DatabaseManager {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/managementprojectdb";
+    private static final String DB_URL = "jdbc:mysql://localhost:3307/menejementproject";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "";
 
@@ -615,9 +615,9 @@ public class DatabaseManager {
                 String taskName = rs.getString("task");
                 String username = rs.getString("username");
                 int userId = rs.getInt("users_id");
-                LocalDate createdAt = rs.getTimestamp("project_task_created_at").toLocalDateTime().toLocalDate();
+                // LocalDate createdAt = rs.getTimestamp("project_task_created_at").toLocalDateTime().toLocalDate();
 
-                // Use the new ProjectTask constructor including the task ID
+               
                 tasks.add(new ProjectTask(taskId, taskName, username, userId));
             }
         } catch (Exception e) {

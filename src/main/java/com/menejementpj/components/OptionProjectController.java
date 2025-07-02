@@ -54,11 +54,7 @@ public class OptionProjectController {
         memberCollumn.setCellValueFactory(new PropertyValueFactory<>("assignedMemberName"));
         taskTable.setItems(taskList);
 
-        // Load tasks for the current project when initialized, if a project is set
-        // This might need to be called after setProject()
-        // if (currentProject != null) {
-        // taskList.setAll(DatabaseManager.getProjectTasksForTable(currentProject.id));
-        // }
+        
     }
 
     public void setDialogStage(Stage dialogStage) {
@@ -70,8 +66,8 @@ public class OptionProjectController {
         projectNameField.setText(project.title);
         projectDecriptionArea.setText(project.description);
         repoUrlField.setText(project.repoUrl);
-        // Load tasks related to this project
-        taskList.setAll(DatabaseManager.getProjectTasksForTable(currentProject.id)); // Load tasks here
+        
+        taskList.setAll(DatabaseManager.getProjectTasksForTable(currentProject.id)); 
     }
 
     public boolean wasProjectDeleted() {
@@ -80,7 +76,7 @@ public class OptionProjectController {
 
     @FXML
     void handleSave(ActionEvent event) {
-        // Logic to update the project details
+       
         currentProject.title = projectNameField.getText();
         currentProject.description = projectDecriptionArea.getText();
         currentProject.repoUrl = repoUrlField.getText();
@@ -103,7 +99,7 @@ public class OptionProjectController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             if (DatabaseManager.deleteProject(currentProject.id)) {
-                this.projectWasDeleted = true; // Set the flag to true on successful deletion
+                this.projectWasDeleted = true;
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Project deleted successfully!");
                 dialogStage.close();
             } else {
@@ -115,18 +111,14 @@ public class OptionProjectController {
     @FXML
     void handleAddTask(ActionEvent event) {
         try {
-            // Note: when creating a new task, it needs to be associated with
-            // currentProject.id
-            // This is typically handled when the task is saved to the DB via
-            // DatabaseManager.createTask()
+           
             TaskDialogController controller = showPopup(event, "/com/menejementpj/components/project/TaskDialog.fxml",
-                    "Add New Task").getController(); // Get controller directly
+                    "Add New Task").getController(); 
 
             if (controller.isSaved()) {
-                ProjectTask newTask = controller.getTask(); // Get the new task from the dialog
-                // Add to UI list
+                ProjectTask newTask = controller.getTask(); 
                 taskList.add(newTask);
-                // Persist to DB, associating with the current project
+                
                 if (DatabaseManager.createTask(currentProject.id, newTask.getAssignedMemberId(),
                         newTask.getTaskName())) {
                     showAlert(Alert.AlertType.INFORMATION, "Success", "Task added successfully!");
@@ -148,33 +140,33 @@ public class OptionProjectController {
             return;
         }
         try {
-            // 1. Load the FXML and get the controller
+
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/menejementpj/components/project/TaskDialog.fxml"));
             Parent root = loader.load();
             TaskDialogController controller = loader.getController();
 
-            // 2. Create and configure the stage
+          
             Stage popupStage = new Stage();
             popupStage.setTitle("Edit Task");
             popupStage.initModality(Modality.WINDOW_MODAL);
             popupStage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
             popupStage.setScene(new Scene(root));
 
-            // 3. Set the data BEFORE showing the stage
+           
             controller.setDialogStage(popupStage);
-            controller.setTask(selectedTask); // This now happens before the dialog is shown
+            controller.setTask(selectedTask);
 
-            // 4. Show the dialog and wait for it to be closed
+            
             popupStage.showAndWait();
 
-            // 5. Process the result after the dialog is closed
+           
             if (controller.isSaved()) {
                 ProjectTask updatedTask = controller.getTask();
-                // Update the UI
+               
                 taskList.set(taskTable.getSelectionModel().getSelectedIndex(), updatedTask);
 
-                // Update the database
+                
                 if (DatabaseManager.updateTask(updatedTask.getProjectTaskId(),
                         updatedTask.getTaskName(),
                         updatedTask.getAssignedMemberId())) {
@@ -211,7 +203,7 @@ public class OptionProjectController {
         Stage popupStage = new Stage();
         popupStage.initModality(Modality.WINDOW_MODAL);
 
-        // Determine the owner window from the event source or the main dialog stage
+        
         Node source = (Node) event.getSource();
         Stage ownerStage = (source != null) ? (Stage) source.getScene().getWindow() : this.dialogStage;
         popupStage.initOwner(ownerStage);
@@ -219,11 +211,11 @@ public class OptionProjectController {
         popupStage.setTitle(title);
         popupStage.setScene(new Scene(root));
 
-        // Pass the stage to the dialog's controller if it needs to close itself
+        
         if (loader.getController() instanceof TaskDialogController) {
             TaskDialogController controller = loader.getController();
             controller.setDialogStage(popupStage);
-            // The task is now passed via setTask method, not constructor
+          
         }
 
         popupStage.showAndWait();

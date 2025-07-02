@@ -1,18 +1,13 @@
-/* This CSS file contains all the styling for the application.
-  It defines the look and feel of the buttons, cards, and text
-  to match the provided user interface image.
-*/
 
-/* --- Root and Main Container --- */
 .root {
-  -fx-background-color: #f8f9fa; /* A light grey background for the whole scene */
+  -fx-background-color: #f8f9fa; 
 }
 
 .main-container {
   -fx-background-color: #f8f9fa;
 }
 
-/* --- Header --- */
+
 .header-title {
   -fx-font-family: "System";
   -fx-font-size: 18px;
@@ -21,7 +16,7 @@
 }
 
 .create-button {
-  -fx-background-color: #008080; /* Teal color */
+  -fx-background-color: #008080;
   -fx-text-fill: white;
   -fx-font-size: 16px;
   -fx-font-weight: bold;
@@ -31,10 +26,10 @@
 }
 
 .create-button:hover {
-  -fx-background-color: #006666; /* Darker teal on hover */
+  -fx-background-color: #006666; 
 }
 
-/* --- Cards --- */
+
 .card {
   -fx-background-color: #ffffff;
   -fx-padding: 20px;
@@ -47,10 +42,10 @@
     0,
     0,
     5
-  ); /* Soft shadow */
+  ); 
   -fx-spacing: 15;
   -fx-alignment: top-left;
-  -fx-min-height: 250px; /* Ensure cards have a minimum height */
+  -fx-min-height: 250px; 
   -fx-pref-width: 300px;
 }
 
@@ -81,7 +76,7 @@
 
 /* --- Join Button --- */
 .join-button {
-  -fx-background-color: #008080; /* Teal color */
+  -fx-background-color: #008080;
   -fx-text-fill: white;
   -fx-font-size: 14px;
   -fx-font-weight: bold;
@@ -92,5 +87,5 @@
 }
 
 .join-button:hover {
-  -fx-background-color: #006666; /* Darker teal on hover */
+  -fx-background-color: #006666; 
 }

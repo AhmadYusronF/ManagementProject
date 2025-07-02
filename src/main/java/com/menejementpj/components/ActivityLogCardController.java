@@ -28,11 +28,11 @@ public class ActivityLogCardController {
         Color statusColor;
 
         if (progressValue >= 80) {
-            statusColor = Color.web("#4CAF50"); // Green
+            statusColor = Color.web("#4CAF50"); 
         } else if (progressValue >= 50) {
-            statusColor = Color.web("#FFC107"); // Yellow
+            statusColor = Color.web("#FFC107"); 
         } else {
-            statusColor = Color.web("#F44336"); // Red
+            statusColor = Color.web("#F44336"); 
         }
         
         proggres.setTextFill(statusColor);

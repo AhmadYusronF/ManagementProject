@@ -81,7 +81,11 @@ public class LoginController {
             DatabaseManager.getDataGroubA();
 
             try {
-                App.setRoot("beranda", "\"Beranda - Management Project\"");
+                if (App.userSession.getCurrentLoggedInGroupID() == 0) {
+                    App.setRoot("groupTab", "Join Group");
+                } else {
+                    App.setRoot("beranda", "\"Beranda - Management Project\"");
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();

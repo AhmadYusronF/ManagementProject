@@ -3,8 +3,9 @@ package com.menejementpj.controller;
 import java.io.IOException;
 import java.util.List;
 
-import com.menejementpj.App;
+
 import com.menejementpj.components.GroupCard;
+import com.menejementpj.components.PopUpAlert;
 import com.menejementpj.db.DatabaseManager;
 import com.menejementpj.model.Group;
 
@@ -29,6 +30,7 @@ public class GroupTabController {
     @FXML
     void handleCreateGroub(ActionEvent event) {
         // showPopup(event, null, null);
+
         showPopup(event, "/com/menejementpj/components/group/groupCreatePopUp.fxml", "GrubCreate");
     }
 
@@ -39,22 +41,22 @@ public class GroupTabController {
 
     @FXML
     void toggleLogout(ActionEvent event) throws IOException {
-      Utils.logout();
+        Utils.logout(event);
     }
 
     @FXML
     void toggleGoToHome(ActionEvent event) throws IOException {
-        App.setRoot("beranda", "Beranda");
+        PopUpAlert.popupInfo("Status", "Belum Masuk Groub", "Masuk Groub Dahulu Untuk Akses Data!");
     }
 
     @FXML
     void toggleGotoChat(ActionEvent event) {
-
+        PopUpAlert.popupInfo("Status", "Belum Masuk Groub", "Masuk Groub Dahulu Untuk Akses Data!");
     }
 
     @FXML
     void toggleGotoProject(ActionEvent event) throws IOException {
-        App.setRoot("projectTab", "Project");
+        PopUpAlert.popupInfo("Status", "Belum Masuk Groub", "Masuk Groub Dahulu Untuk Akses Data!");
     }
 
     @FXML
@@ -87,7 +89,7 @@ public class GroupTabController {
                 groubJoinContainer.getChildren().add(cardRoot);
 
                 col++;
-                if (col == 2) {
+                if (col >= 3) {
                     col = 0;
                     row++;
                 }

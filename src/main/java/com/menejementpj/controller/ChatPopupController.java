@@ -12,10 +12,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox; // Changed from HBox
+import javafx.scene.layout.VBox; 
 
 import java.io.IOException;
-import java.time.LocalDateTime; // Import LocalDateTime
+import java.time.LocalDateTime; 
 import java.util.List;
 
 public class ChatPopupController {
@@ -49,12 +49,12 @@ public class ChatPopupController {
 
         DatabaseManager.sendMessage(messageText);
 
-        // We create a ChatMessage object to represent the new message
+       
         ChatMessage newMessage = new ChatMessage(
                 App.userSession.getCurrentLoggedInUserID(),
                 App.user.getUsername(),
                 messageText,
-                LocalDateTime.now() // <-- CHANGE 1: Added the current time
+                LocalDateTime.now() 
         );
         addMessageToView(newMessage);
 

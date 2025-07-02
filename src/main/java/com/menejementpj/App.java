@@ -38,12 +38,16 @@ public class App extends Application {
 
     public static void setRoot(String fxml, String title) throws IOException {
         scene.setRoot(loadFXML(fxml));
-        primaryStageInstance.setTitle(title); // Update the window title
+        primaryStageInstance.setTitle(title);
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+
+    public static Parent loadFXMLalter(String fxmlName) throws IOException {
+        return FXMLLoader.load(App.class.getResource("/com/menejementpj/" + fxmlName + ".fxml"));
     }
 
     public static void main(String[] args) {

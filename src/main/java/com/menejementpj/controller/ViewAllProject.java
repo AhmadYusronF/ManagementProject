@@ -12,7 +12,6 @@ public class ViewAllProject {
 
     @FXML
     void handleClose(ActionEvent event) {
-        // Gets the stage from the button and closes it
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }

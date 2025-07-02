@@ -23,7 +23,7 @@ public class ChatMessageItemController {
     @FXML
     private Label messageLabel;
 
-    // The new FXML fields
+  
     @FXML
     private HBox headerBox;
     @FXML
@@ -38,14 +38,14 @@ public class ChatMessageItemController {
 
         int currentUserId = App.userSession.getCurrentLoggedInUserID();
         if (message.getSenderId() == currentUserId) {
-            // My message: align right, layout is Time | Spacer | Name
+       
             rootContainer.setAlignment(Pos.CENTER_RIGHT);
-            headerBox.getChildren().setAll(sentAtLabel, headerSpacer, nameLabel); // Order for my messages
+            headerBox.getChildren().setAll(sentAtLabel, headerSpacer, nameLabel); 
             messageBubble.getStyleClass().add("my-message-bubble");
         } else {
-            // Other's message: align left, layout is Name | Spacer | Time
+ 
             rootContainer.setAlignment(Pos.CENTER_LEFT);
-            headerBox.getChildren().setAll(nameLabel, headerSpacer, sentAtLabel); // Swapped order for other's messages
+            headerBox.getChildren().setAll(nameLabel, headerSpacer, sentAtLabel); 
             messageBubble.getStyleClass().add("other-message-bubble");
         }
     }

@@ -118,11 +118,6 @@ public class ProjectViewController {
         }
     }
 
-    /**
-     * UPDATED METHOD:
-     * Handles the "Option" button click. After the options popup closes, it checks
-     * a flag from the popup's controller to see if the project was deleted.
-     */
     @FXML
     void handleOption(ActionEvent event) {
         if (currentProject == null)
@@ -147,13 +142,12 @@ public class ProjectViewController {
 
             dialogStage.showAndWait();
 
-            // After the options window is closed, check if the project was deleted
             if (controller.wasProjectDeleted()) {
-                // If the project no longer exists, close this detail view window
+
                 ((Stage) projectNameLabel.getScene().getWindow()).close();
                 refreshProjectView();
             } else {
-                // Otherwise, just refresh the view to show any edits
+
                 refreshProjectView();
             }
 

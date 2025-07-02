@@ -1,32 +1,26 @@
-/*
- * CSS Stylesheet for the Create Group Popup
- */
 
-/* --- Main Container --- */
 .root-container {
-  -fx-background-color: #f4f7fc; /* A light, clean background */
+  -fx-background-color: #f4f7fc; 
   -fx-font-family: "Poppins";
 }
 
-/* --- Labels --- */
 .title-label {
   -fx-font-size: 24px;
   -fx-font-weight: bold;
-  -fx-text-fill: #2c3e50; /* A dark, professional blue-gray */
+  -fx-text-fill: #2c3e50; 
 }
 
 .section-label {
   -fx-font-size: 16px;
   -fx-font-weight: bold;
-  -fx-text-fill: #34495e; /* A slightly softer dark blue-gray */
+  -fx-text-fill: #34495e; 
 }
 
-/* --- Input Fields (TextField and TextArea) --- */
 .text-field,
 .text-area {
   -fx-background-color: #ffffff;
   -fx-background-radius: 8px;
-  -fx-border-color: #bdc3c7; /* A soft gray border */
+  -fx-border-color: #bdc3c7; 
   -fx-border-radius: 8px;
   -fx-font-size: 14px;
   -fx-padding: 8px 12px;
@@ -35,16 +29,16 @@
 
 .text-field:focused,
 .text-area:focused {
-  -fx-border-color: #3498db; /* A nice blue for focus highlight */
+  -fx-border-color: #3498db; 
   -fx-background-color: #ffffff;
   -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.4), 5, 0, 0, 0);
 }
 
 .text-area .content {
-  -fx-background-color: transparent; /* Ensure text area content background is consistent */
+  -fx-background-color: transparent; 
 }
 
-/* --- TableView --- */
+
 .table-view {
   -fx-background-color: #ffffff;
   -fx-border-color: #e0e0e0;
@@ -53,13 +47,13 @@
 }
 
 .table-view .column-header-background {
-  -fx-background-color: #f8f9fa; /* A very light gray for headers */
+  -fx-background-color: #f8f9fa; 
 }
 
 .table-view .column-header,
 .table-view .filler {
   -fx-background-color: transparent;
-  -fx-size: 40px; /* Increase header height for better padding */
+  -fx-size: 40px; 
   -fx-font-size: 12px;
   -fx-font-weight: bold;
   -fx-text-fill: #34495e;
@@ -71,7 +65,7 @@
   -fx-font-size: 14px;
 }
 
-/* --- Hyperlink --- */
+
 .hyperlink {
   -fx-font-size: 14px;
   -fx-text-fill: #3498db;
@@ -82,9 +76,9 @@
   -fx-underline: true;
 }
 
-/* --- Save Button --- */
+
 .save-button {
-  -fx-background-color: #27ae60; /* A pleasant green */
+  -fx-background-color: #27ae60; 
   -fx-text-fill: white;
   -fx-font-size: 14px;
   -fx-font-weight: bold;
@@ -95,5 +89,5 @@
 }
 
 .save-button:hover {
-  -fx-background-color: #229954; /* A slightly darker green on hover */
+  -fx-background-color: #229954;
 }

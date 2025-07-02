@@ -14,8 +14,4 @@ public class TaskItemController {
     @FXML
     private Label titleTask;
 
-    // public void setActivityLog(String proggres,String title,){
-    // proggresTask.setText(proggres);
-    // }
-
 }

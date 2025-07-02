@@ -7,14 +7,12 @@ public class UserData {
     private String roleName;
     private int userId;
 
-    // Existing constructor (getGroupMembers)
     public UserData(int userId, String username) {
         this.userId = userId;
         this.username = username;
         this.roleName = null;
     }
 
-    // Existing constructor (App.java)
     public UserData() {
         this.userId = 0;
         this.username = null;
@@ -60,8 +58,6 @@ public class UserData {
         this.userId = 0;
         this.roleName = "Cract";
     }
-
-    // --- NEWLY ADDED METHODS ---
 
     @Override
     public boolean equals(Object o) {
