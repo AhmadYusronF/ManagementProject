@@ -1,12 +1,11 @@
 package com.menejementpj.controller;
 
 import java.io.IOException;
-import java.util.List;
+
 
 import com.menejementpj.App;
 
-import com.menejementpj.db.DatabaseManager;
-import com.menejementpj.model.ActivityLog;
+
 import com.menejementpj.test.Debug;
 
 import javafx.event.ActionEvent;
@@ -64,9 +63,17 @@ public class BerandaController {
 
     @FXML
     void toggleGoToGroub(ActionEvent event) throws IOException {
-        if (App.userSession.getCurrentLoggedInGroupID() != 0) {
+        int currentGroupIdInSession = App.userSession.getCurrentLoggedInGroupID();
+        System.out.println(
+                "DEBUG: BerandaController.toggleGoToGroub - Current Group ID in session: " + currentGroupIdInSession);
+
+        if (currentGroupIdInSession > 0) { // If a valid group ID is set
+            System.out.println("DEBUG: BerandaController.toggleGoToGroub - Navigating to groupPage for ID: "
+                    + currentGroupIdInSession);
             App.setRoot("components/group/groupPage", "GroubPage - myGroub");
         } else {
+            System.out.println(
+                    "DEBUG: BerandaController.toggleGoToGroub - No valid group ID in session. Navigating to groupTab.");
             App.setRoot("groupTab", "Group - join or create");
         }
     }

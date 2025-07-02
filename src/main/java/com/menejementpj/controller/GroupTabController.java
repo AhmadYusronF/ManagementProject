@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.List;
 
 import com.menejementpj.App;
-import com.menejementpj.components.ProjectCardController;
+import com.menejementpj.components.GroupCard;
 import com.menejementpj.db.DatabaseManager;
 import com.menejementpj.model.Group;
-import com.menejementpj.model.Project;
+
 import com.menejementpj.test.Debug;
 
 import javafx.event.ActionEvent;
@@ -73,16 +73,14 @@ public class GroupTabController {
 
             for (Group group : groups) {
                 FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/com/menejementpj/components/project/projectCard.fxml"));
+                        getClass().getResource("/com/menejementpj/components/group/groupCard.fxml"));
                 Parent cardRoot = loader.load();
-                ProjectCardController controller = loader.getController();
+                GroupCard controller = loader.getController();
 
                 controller.setData(
+                        group.id,
                         group.nama,
-                        group.createAt,
-                        group.describ,
-                        group.id
-                        );
+                        group.describ, group.createAt);
 
                 GridPane.setColumnIndex(cardRoot, col);
                 GridPane.setRowIndex(cardRoot, row);
@@ -95,10 +93,10 @@ public class GroupTabController {
                 }
             }
 
-            Debug.success("Semua komponen project berhasil dimuat.");
+            Debug.success("Semua komponen group berhasil dimuat.");
 
         } catch (Exception e) {
-            Debug.error("Gagal Menampilkan Projects: " + e.getMessage());
+            Debug.error("Gagal Menampilkan group: " + e.getMessage());
             e.printStackTrace();
         }
     }

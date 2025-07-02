@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -14,12 +15,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.menejementpj.App;
 import com.menejementpj.components.CreateNews;
+import com.menejementpj.components.GroupOptionPopUpController;
 import com.menejementpj.components.UserMemberController;
 import com.menejementpj.db.DatabaseManager;
 import com.menejementpj.model.User;
+import com.menejementpj.model.Group; // Import the Group model
 import com.menejementpj.test.Debug;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class GroupPageController {
@@ -64,12 +68,7 @@ public class GroupPageController {
 
     @FXML
     void toggleGoToHome(ActionEvent event) throws IOException {
-        App.setRoot("beranda", "\"Beranda - Management Project\"");
-    }
-
-    @FXML
-    void toggleGoToGroub(ActionEvent event) throws IOException {
-        App.setRoot("groupPage", "GroupPage - myGroup");
+        App.setRoot("beranda", "Beranda - Management Project");
     }
 
     @FXML
@@ -92,9 +91,34 @@ public class GroupPageController {
         showPopupCreateNews(event);
     }
 
+    @FXML
+    void handleGroupOption(ActionEvent event) {
+        System.out.println("DEBUG: handleGroupOption - Options button touched.");
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/menejementpj/components/group/groupOptionPopUp.fxml")); // Adjust path
+            Parent root = loader.load();
+            GroupOptionPopUpController controller = loader.getController();
+
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL); // Block parent window
+            popupStage.setScene(new Scene(root));
+            popupStage.setTitle("Edit Group");
+
+            controller.setDialogStage(popupStage);
+            controller.setParentController(this); // Pass reference to self for refreshing
+            controller.setGroupToEdit(App.mygroup); // Pass the current group object
+
+            popupStage.showAndWait(); // Show and wait for the popup to close
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to open group options popup.");
+        }
+    }
+
     private void showPopupChat(ActionEvent event, String fxmlFile, String title) {
         try {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
 
@@ -140,37 +164,154 @@ public class GroupPageController {
 
     @FXML
     void handleLeave(ActionEvent event) {
+        int currentUserId = App.userSession.getCurrentLoggedInUserID();
+        int currentGroupId = App.userSession.getCurrentLoggedInGroupID();
 
+        if (currentUserId == -1) {
+            Debug.warn("Cannot leave group: No user logged in.");
+            showAlert(Alert.AlertType.WARNING, "Not Logged In", "Please log in to leave a group.");
+            return;
+        }
+
+        if (currentGroupId == -1) {
+            Debug.warn("Cannot leave group: No group selected in session.");
+            showAlert(Alert.AlertType.WARNING, "No Group Selected", "You are not currently in a group to leave.");
+            return;
+        }
+
+        try {
+            boolean success = DatabaseManager.leaveGroup(currentGroupId, currentUserId);
+
+            if (success) {
+                Debug.success("User " + currentUserId + " successfully left group " + currentGroupId);
+                App.userSession.setCurrentLoggedInGroupID(0); // Set to 0 if 0 means "not in a group"
+                Debug.success("Current Group ID after leaving: " + App.userSession.getCurrentLoggedInGroupID());
+                App.setRoot("groupTab", "Groups - My Groups"); // Navigate to the group listing page
+            } else {
+                Debug.error("Failed to leave group " + currentGroupId + " for user " + currentUserId);
+                showAlert(Alert.AlertType.ERROR, "Failed to Leave",
+                        "Could not leave the group. You might not be a member or an error occurred.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Debug.error("Navigation error after leaving group: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Navigation Error",
+                    "An error occurred while navigating away from the group page.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Debug.error("Database error while leaving group: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Database Error",
+                    "A database error occurred while trying to leave the group.");
+        }
     }
 
     public void refresWindow() {
-        groupNama.setText(App.mygroup.nama);
-        groupCreate.setText("Create At: " + App.mygroup.createAt);
-        groupDescrib.setText(App.mygroup.describ);
-        groupNews.setText(App.mygroup.news);
-        Debug.success("sukser refres " + App.mygroup.news);
+        if (App.mygroup != null) {
+            groupNama.setText(App.mygroup.nama);
+            groupCreate.setText("Create At: " + App.mygroup.createAt);
+            groupDescrib.setText(App.mygroup.describ);
+            groupNews.setText(App.mygroup.news);
+            Debug.success("sukser refres " + App.mygroup.news);
+        } else {
+            Debug.warn("refresWindow called but App.mygroup is null.");
+            groupNama.setText("");
+            groupCreate.setText("");
+            groupDescrib.setText("");
+            groupNews.setText("");
+        }
+    }
+
+    /**
+     * Refreshes all group-related data on the page, including group details and
+     * member list.
+     * This method should be called when the group data might have changed (e.g.,
+     * after saving edits, joining/leaving).
+     */
+    public void refreshAllGroupData() {
+        System.out.println("DEBUG: GroupPageController.refreshAllGroupData - START. currentLoggedInGroupID: "
+                + App.userSession.getCurrentLoggedInGroupID());
+
+        int currentGroupId = App.userSession.getCurrentLoggedInGroupID();
+        if (currentGroupId > 0) {
+            try {
+                Group currentGroup = DatabaseManager.getGroupById(currentGroupId);
+                if (currentGroup != null) {
+                    App.mygroup = currentGroup;
+                    Debug.success("App.mygroup updated with details for group ID: " + currentGroupId);
+                } else {
+                    Debug.warn("No group found in DB for ID: " + currentGroupId + ". Navigating to group list.");
+                    App.userSession.setCurrentLoggedInGroupID(0); // Reset session group ID if group not found
+                    try {
+                        App.setRoot("groupTab", "Groups - My Groups");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return; // Exit as there's no group to display
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Debug.error("Database error fetching group details: " + e.getMessage());
+                try {
+                    App.setRoot("groupTab", "Groups - My Groups"); // Navigate to group list on DB error
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                return;
+            }
+        } else {
+            Debug.warn("refreshAllGroupData called without a valid current group ID. Navigating to group list.");
+            try {
+                App.setRoot("groupTab", "Groups - My Groups");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return; // Exit as there's no group to display
+        }
+
+        refresWindow(); // Refresh the main group labels
+
+        try {
+            memberContainer.getChildren().clear(); // Clear existing members before loading new ones
+
+            List<User> users = DatabaseManager.getUserMember();
+            System.out.println(
+                    "DEBUG: GroupPageController.refreshAllGroupData - Members received from DatabaseManager.getUserMember(): "
+                            + (users != null ? users.size() : "null"));
+
+            if (users == null || users.isEmpty()) {
+                Debug.warn("No members found for group ID: " + currentGroupId + " in GroupPageController.");
+            } else {
+                for (User user : users) {
+                    FXMLLoader loader = new FXMLLoader(
+                            getClass().getResource("/com/menejementpj/components/group/groupMemberCard.fxml"));
+                    Parent cardRoot = loader.load();
+                    UserMemberController controller = loader.getController();
+
+                    controller.setData(user.id, user.userName, user.role);
+                    memberContainer.getChildren().add(cardRoot);
+                }
+            }
+            Debug.success("GroupPageController.refreshAllGroupData - Member list loaded successfully for group ID: "
+                    + currentGroupId);
+
+        } catch (Exception e) {
+            Debug.error("Error loading group members in refreshAllGroupData: " + e.getMessage());
+            e.printStackTrace();
+        }
+        System.out.println("DEBUG: GroupPageController.refreshAllGroupData - END.");
     }
 
     @FXML
     private void initialize() {
-        refresWindow();
+        // The initialize method now just calls refreshAllGroupData
+        refreshAllGroupData();
+    }
 
-        try {
-            List<User> users = DatabaseManager.getUserMember();
-
-            for (User user : users) {
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/com/menejementpj/components/group/groupMemberCard.fxml"));
-                Parent cardRoot = loader.load();
-                UserMemberController controller = loader.getController();
-
-                controller.setData(user.id, user.userName, user.role);
-                memberContainer.getChildren().add(cardRoot);
-            }
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            Debug.error(e.getMessage());
-        }
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

@@ -1,0 +1,99 @@
+/*
+ * CSS Stylesheet for the Create Group Popup
+ */
+
+/* --- Main Container --- */
+.root-container {
+  -fx-background-color: #f4f7fc; /* A light, clean background */
+  -fx-font-family: "Poppins";
+}
+
+/* --- Labels --- */
+.title-label {
+  -fx-font-size: 24px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #2c3e50; /* A dark, professional blue-gray */
+}
+
+.section-label {
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #34495e; /* A slightly softer dark blue-gray */
+}
+
+/* --- Input Fields (TextField and TextArea) --- */
+.text-field,
+.text-area {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 8px;
+  -fx-border-color: #bdc3c7; /* A soft gray border */
+  -fx-border-radius: 8px;
+  -fx-font-size: 14px;
+  -fx-padding: 8px 12px;
+  -fx-prompt-text-fill: #95a5a6;
+}
+
+.text-field:focused,
+.text-area:focused {
+  -fx-border-color: #3498db; /* A nice blue for focus highlight */
+  -fx-background-color: #ffffff;
+  -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.4), 5, 0, 0, 0);
+}
+
+.text-area .content {
+  -fx-background-color: transparent; /* Ensure text area content background is consistent */
+}
+
+/* --- TableView --- */
+.table-view {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #e0e0e0;
+  -fx-border-radius: 8px;
+  -fx-background-radius: 8px;
+}
+
+.table-view .column-header-background {
+  -fx-background-color: #f8f9fa; /* A very light gray for headers */
+}
+
+.table-view .column-header,
+.table-view .filler {
+  -fx-background-color: transparent;
+  -fx-size: 40px; /* Increase header height for better padding */
+  -fx-font-size: 12px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #34495e;
+}
+
+.table-view .cell {
+  -fx-border-color: transparent;
+  -fx-padding: 10px;
+  -fx-font-size: 14px;
+}
+
+/* --- Hyperlink --- */
+.hyperlink {
+  -fx-font-size: 14px;
+  -fx-text-fill: #3498db;
+  -fx-border-color: transparent;
+}
+
+.hyperlink:hover {
+  -fx-underline: true;
+}
+
+/* --- Save Button --- */
+.save-button {
+  -fx-background-color: #27ae60; /* A pleasant green */
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-background-radius: 8px;
+  -fx-padding: 10px 30px;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);
+}
+
+.save-button:hover {
+  -fx-background-color: #229954; /* A slightly darker green on hover */
+}

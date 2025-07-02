@@ -14,7 +14,6 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e0e0e0" height="65.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="330.0" />
       <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="25.0" spacing="10.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c0c0c0" height="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="card-image-placeholder" width="50.0" />
             <VBox>
                <children>
                   <Label fx:id="title" styleClass="card-title" text="The Communitity Journal" />

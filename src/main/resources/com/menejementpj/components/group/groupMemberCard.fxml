@@ -1,39 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: #ffffff; -fx-border-color: #E0E0E0;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.components.UserMemberController">
    <children>
-      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="300.0">
+      <AnchorPane>
          <children>
-            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../Images/Untitled%20design.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="role" alignment="CENTER" text="Owner">
+            <Label fx:id="role" alignment="CENTER" layoutX="20.0" layoutY="20.0" text="Owner">
                <font>
                   <Font name="Poppins SemiBold" size="14.0" />
                </font>
-               <HBox.margin>
-                  <Insets left="20.0" />
-               </HBox.margin>
             </Label>
-            <Label fx:id="username" text="Ahmad Yusron Fadil">
-               <HBox.margin>
-                  <Insets left="20.0" />
-               </HBox.margin>
+            <Label fx:id="username" layoutX="122.0" layoutY="20.0" prefWidth="140.0" text="Ahmad Yusron Fadil">
                <font>
                   <Font name="Poppins Regular" size="14.0" />
                </font>
             </Label>
          </children>
-      </HBox>
+      </AnchorPane>
    </children>
 </VBox>

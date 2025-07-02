@@ -10,7 +10,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -19,12 +18,11 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" spacing="20" style="-fx-background-color: #f4f7fc; -fx-padding: 40;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.components.GroupCreatePopupController">
+<VBox alignment="TOP_CENTER" spacing="20" style="-fx-background-color: #f4f7fc; -fx-padding: 40;" stylesheets="@../../css/createGroup.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.components.GroupCreatePopupController">
 
     <!-- Main Title -->
     <Label text="CREATE GROUP">
@@ -59,17 +57,6 @@
             </Label>
             <TextArea fx:id="descriptionArea" prefHeight="100.0" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;" wrapText="true" />
         </VBox>
-
-        <!-- Right Side: Icon Upload -->
-        <VBox alignment="TOP_LEFT" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
-            <Label text="Icon">
-                 <font>
-                    <Font name="System" size="14.0" />
-                </font>
-            </Label>
-            <Pane fx:id="iconPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="82.0" prefWidth="105.0" style="-fx-border-color: #E0E0E0; -fx-border-radius: 6; -fx-background-color: #ffffff;" />
-            <Hyperlink onAction="#handleUploadFile" text="Upload File" />
-        </VBox>
       <rowConstraints>
          <RowConstraints />
       </rowConstraints>
@@ -94,17 +81,26 @@
                 <Label text="No members added yet." />
             </placeholder>
         </TableView>
-
-        <Hyperlink onAction="#handleAddMember" text="+ Add More Member">
-            <VBox.margin>
-                <Insets top="10" />
-            </VBox.margin>
-        </Hyperlink>
     </VBox>
+   <HBox>
+      <children>
+         <Button mnemonicParsing="false" onAction="#handleAddMember" style="-fx-background-color: transparent;" text="Add Member">
+            <HBox.margin>
+               <Insets right="20.0" />
+            </HBox.margin>
+         </Button>
+         <Button mnemonicParsing="false" onAction="#handleEditRoles" style="-fx-background-color: transparent;" text="Edit Roles">
+            <HBox.margin>
+               <Insets right="20.0" />
+            </HBox.margin>
+         </Button>
+         <Button mnemonicParsing="false" onAction="#handleKickMember" style="-fx-background-color: transparent;" text="Kick Member" />
+      </children>
+   </HBox>
     
     <!-- Action Button -->
     <HBox alignment="CENTER" style="-fx-padding: 20 0 0 0;">
-         <Button fx:id="saveButton" onAction="#handleSave" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #388E3C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10 30;" text="SAVE">
+         <Button fx:id="saveButton" onAction="#handleSave" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #388E3C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10 30;" stylesheets="@../../css/button.css" text="SAVE">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>

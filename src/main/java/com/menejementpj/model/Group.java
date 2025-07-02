@@ -1,7 +1,7 @@
 package com.menejementpj.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 public class Group {
     public int id;

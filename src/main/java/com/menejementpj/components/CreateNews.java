@@ -39,7 +39,7 @@ public class CreateNews {
 
             Utils.closeWindow(event);
         } catch (Exception e) {
-            // TODO: handle exception
+
             Debug.error("error update");
         }
 

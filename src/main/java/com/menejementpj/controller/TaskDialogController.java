@@ -3,6 +3,7 @@ package com.menejementpj.controller;
 import com.menejementpj.App;
 import com.menejementpj.auth.UserData;
 import com.menejementpj.db.DatabaseManager;
+import com.menejementpj.model.GroupMemberDisplay;
 import com.menejementpj.model.ProjectTask;
 
 import javafx.collections.FXCollections;
@@ -32,9 +33,17 @@ public class TaskDialogController {
 
     @FXML
     public void initialize() {
-        // Load group members into the ComboBox
-        List<UserData> groupMembers = DatabaseManager.getGroupMembers(App.userSession.getCurrentLoggedInGroupID());
-        memberComboBox.setItems(FXCollections.observableArrayList(groupMembers));
+        List<GroupMemberDisplay> groupMembersRaw;
+        try {
+            groupMembersRaw = DatabaseManager.getGroupMembers(App.userSession.getCurrentLoggedInGroupID());
+            List<UserData> groupMembers = groupMembersRaw.stream()
+                    .map(gm -> new UserData(gm.getUserId(), gm.getUsername()))
+                    .toList();
+            memberComboBox.setItems(FXCollections.observableArrayList(groupMembers));
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+            memberComboBox.setItems(FXCollections.observableArrayList());
+        }
     }
 
     /**

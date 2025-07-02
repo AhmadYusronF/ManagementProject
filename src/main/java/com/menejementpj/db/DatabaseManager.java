@@ -13,8 +13,10 @@ import com.menejementpj.model.MemberTask;
 // import com.mysql.cj.xdevapi.Result;
 import com.menejementpj.model.Project;
 import com.menejementpj.model.ProjectTask;
+import com.menejementpj.model.Role;
 import com.menejementpj.model.TaskSelection;
 import com.menejementpj.model.User;
+import com.menejementpj.model.GroupMemberDisplay;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,11 +31,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.print.DocFlavor.STRING;
-
 public class DatabaseManager {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3307/fadilmj";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/managementprojectdb";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "";
 
@@ -76,7 +76,7 @@ public class DatabaseManager {
                 PreparedStatement pstmt = conn.prepareStatement(query)) {
 
         } catch (Exception e) {
-            // TODO: handle exception
+
         }
         return "tes";
     }
@@ -243,26 +243,6 @@ public class DatabaseManager {
         }
     }
 
-    // public static List<ActivityLog>(int userID){
-    // List<ActivityLog> activityLogs;
-
-    // String query = "SELECT task,project_task_description,status status FROM
-    // project_task WHERE fk_users_id = ?";
-    // try (Connection conn = connect();
-    // PreparedStatement pstmt = conn.prepareStatement(query);
-    // ){
-    // pstmt.setInt(1, userID);
-    // ResultSet rs = pstmt.executeQuery();
-
-    // while (rs.next()) {
-    // String title = rs.getString(query)
-    // activityLogs.add(new ActivityLog(query, query, query))
-    // }
-
-    // } catch (Exception e) {
-    // // TODO: handle exception
-    // }
-    // }
 
     public static List<Project> getProjectGrup() {
 
@@ -423,31 +403,46 @@ public class DatabaseManager {
         }
     }
 
-    public static List<User> getUserMember() {
-        List<User> users = new ArrayList<>();
-        String query = "SELECT users_id AS id, username,fk_roles_id as role FROM users WHERE users_id IN (SELECT fk_users_id AS users_id FROM groups_member WHERE fk_groups_id = ?)";
+    public static List<User> getUserMember() { // Removed throws SQLException, now handles internally
+        List<User> members = new ArrayList<>();
+        int currentGroupId = App.userSession.getCurrentLoggedInGroupID();
+
+        if (currentGroupId <= 0) {
+            System.out.println("DEBUG: getUserMember - No valid group ID in session. Returning empty list.");
+            return members;
+        }
+
+        String sql = "SELECT u.users_id, u.username, gm.fk_roles_id " +
+                "FROM users u " +
+                "JOIN groups_member gm ON u.users_id = gm.fk_users_id " +
+                "WHERE gm.fk_groups_id = ?";
 
         try (Connection conn = connect();
-                PreparedStatement pstmt = conn.prepareStatement(query)) {
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, App.userSession.getCurrentLoggedInGroupID());
-            ResultSet rs = pstmt.executeQuery();
+            pstmt.setInt(1, currentGroupId);
 
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String username = rs.getString("username");
-                int role = rs.getInt("role");
-                users.add(new User(id, username, role));
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int userId = rs.getInt("users_id");
+                    String username = rs.getString("username");
+                    int roleId = rs.getInt("fk_roles_id");
+                    System.out.println("DEBUG: getUserMember - Fetched User ID: " + userId + ", Username: " + username
+                            + ", Role ID from DB: " + roleId);
+                    members.add(new User(userId, username, roleId));
+                }
             }
-            return users;
         } catch (SQLException e) {
-            Debug.error("Gagal update group_news: " + e.getMessage());
-            return null;
+            e.printStackTrace();
+            System.err.println("ERROR: DatabaseManager.getUserMember - Database error: " + e.getMessage());
+            // Return an empty list on error, do not return null
+            return new ArrayList<>();
         }
+        System.out.println("DEBUG: getUserMember - Finished fetching. Total members found: " + members.size());
+        return members;
     }
 
     public static String getRoleName(int roleId) {
-
         String query = "SELECT roles_name FROM roles WHERE roles_id = ?";
 
         try (Connection conn = connect();
@@ -459,12 +454,12 @@ public class DatabaseManager {
                 String roleName = rs.getString("roles_name");
                 return roleName;
             } else {
-                Debug.error("fail user role");
-                return null;
+                Debug.error("fail user role: Role ID " + roleId + " not found."); // More specific error
+                return null; // Return null if role not found
             }
         } catch (SQLException e) {
-            Debug.error("Gagal mrdapat rolename: " + e.getMessage());
-            return null;
+            Debug.error("Gagal mendapat rolename: " + e.getMessage());
+            return null; // Return null on database error
         }
     }
 
@@ -709,21 +704,364 @@ public class DatabaseManager {
         return logs;
     }
 
-    public static List<UserData> getGroupMembers(int groupId) {
-        List<UserData> members = new ArrayList<>();
-        String sql = "SELECT u.users_id, u.username FROM users u " +
-                "JOIN groups_member gm ON u.users_id = gm.fk_users_id " +
-                "WHERE gm.fk_groups_id = ?";
+    public static UserData findUserByUsername(String username) {
+        String sql = "SELECT users_id, username FROM users WHERE username = ?";
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, groupId);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return new UserData(rs.getInt("users_id"), rs.getString("username"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<Role> getRoles() {
+        List<Role> roles = new ArrayList<>();
+        String sql = "SELECT roles_id, roles_name FROM roles";
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                members.add(new UserData(rs.getInt("users_id"), rs.getString("username")));
+                roles.add(new Role(rs.getInt("roles_id"), rs.getString("roles_name")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return roles;
+    }
+
+    public static boolean createGroupWithMembers(String groupName, String description,
+            List<GroupMemberDisplay> members) {
+        String insertGroupSql = "INSERT INTO groups (group_name, group_description, fk_user_id) VALUES (?, ?, ?)";
+        String insertMemberSql = "INSERT INTO groups_member (fk_groups_id, fk_users_id, fk_roles_id) VALUES (?, ?, ?)";
+
+        Connection conn = null;
+        try {
+            conn = connect();
+            conn.setAutoCommit(false);
+
+            int newGroupId = -1;
+            try (PreparedStatement pstmtGroup = conn.prepareStatement(insertGroupSql,
+                    Statement.RETURN_GENERATED_KEYS)) {
+                pstmtGroup.setString(1, groupName);
+                pstmtGroup.setString(2, description);
+                pstmtGroup.setInt(3, App.userSession.getCurrentLoggedInUserID());
+
+                if (pstmtGroup.executeUpdate() > 0) {
+                    try (ResultSet rs = pstmtGroup.getGeneratedKeys()) {
+                        if (rs.next())
+                            newGroupId = rs.getInt(1);
+                    }
+                }
+                if (newGroupId == -1)
+                    throw new SQLException("Creating group failed.");
+            }
+
+            // Fetch roles once to avoid repeated calls inside the loop
+            List<Role> allRoles = DatabaseManager.getRoles();
+            int defaultMemberRoleId = allRoles.stream()
+                    .filter(r -> r.getRoleName().equalsIgnoreCase("Member"))
+                    .mapToInt(Role::getRoleId)
+                    .findFirst()
+                    .orElse(2); // Fallback to 2 if "Member" role not found
+
+            int ownerRoleId = allRoles.stream()
+                    .filter(r -> r.getRoleName().equalsIgnoreCase("Owner"))
+                    .mapToInt(Role::getRoleId)
+                    .findFirst()
+                    .orElse(defaultMemberRoleId); // Fallback to default member if "Owner" role not found
+
+            try (PreparedStatement pstmtMember = conn.prepareStatement(insertMemberSql)) {
+                for (GroupMemberDisplay member : members) {
+                    if (member.getUserId() == 0) {
+                        throw new SQLException("User ID 0 does not exist. Invalid member: " + member.getUsername());
+                    }
+
+                    if (!userExists(member.getUserId(), conn)) {
+                        throw new SQLException("User ID " + member.getUserId() + " does not exist.");
+                    }
+
+                    pstmtMember.setInt(1, newGroupId);
+                    pstmtMember.setInt(2, member.getUserId());
+
+                    int roleIdToAssign;
+                    if ("Owner".equalsIgnoreCase(member.getRoleName())) {
+                        roleIdToAssign = ownerRoleId;
+                        Debug.success("Assigning Owner role ID: " + roleIdToAssign + " to " + member.getUsername());
+                    } else {
+                        // For other roles, use the stream filter as before
+                        roleIdToAssign = allRoles.stream()
+                                .filter(r -> r.getRoleName().equalsIgnoreCase(member.getRoleName()))
+                                .mapToInt(Role::getRoleId)
+                                .findFirst()
+                                .orElse(defaultMemberRoleId); // Use default member role if specific role not found
+                        Debug.success("Assigning role ID: " + roleIdToAssign + " (" + member.getRoleName() + ") to "
+                                + member.getUsername());
+                    }
+
+                    pstmtMember.setInt(3, roleIdToAssign);
+                    pstmtMember.addBatch();
+                }
+                pstmtMember.executeBatch();
+            }
+
+            conn.commit();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (conn != null)
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            return false;
+        } finally {
+            if (conn != null)
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+        }
+    }
+
+    public static List<UserData> searchAvailableUsers(String usernameQuery) {
+        List<UserData> users = new ArrayList<>();
+        String sql = "SELECT u.users_id, u.username FROM users u " +
+                "LEFT JOIN groups_member gm ON u.users_id = gm.fk_users_id " +
+                "WHERE gm.fk_users_id IS NULL AND u.username LIKE ?";
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, "%" + usernameQuery + "%");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                users.add(new UserData(rs.getInt("users_id"), rs.getString("username")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    private static boolean userExists(int userId, Connection conn) throws SQLException {
+        String query = "SELECT COUNT(*) FROM users WHERE users_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
+            }
+        }
+    }
+
+    public static boolean addMemberToGroup(int groupId, int userId) {
+        String checkMembershipSql = "SELECT COUNT(*) FROM groups_member WHERE fk_groups_id = ? AND fk_users_id = ?";
+        String insertMemberSql = "INSERT INTO groups_member (fk_groups_id, fk_users_id, fk_roles_id) VALUES (?, ?, ?)";
+
+        try (Connection conn = connect()) {
+
+            try (PreparedStatement pstmtCheck = conn.prepareStatement(checkMembershipSql)) {
+                pstmtCheck.setInt(1, groupId);
+                pstmtCheck.setInt(2, userId);
+                try (ResultSet rs = pstmtCheck.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        System.out.println("User " + userId + " is already a member of group " + groupId);
+                        return false;
+                    }
+                }
+            }
+
+            int roleId = getRoles().stream()
+                    .filter(r -> r.getRoleName().equalsIgnoreCase("Member"))
+                    .mapToInt(Role::getRoleId)
+                    .findFirst()
+                    .orElse(3);
+
+            try (PreparedStatement pstmtInsert = conn.prepareStatement(insertMemberSql)) {
+                pstmtInsert.setInt(1, groupId);
+                pstmtInsert.setInt(2, userId);
+                pstmtInsert.setInt(3, roleId);
+
+                int rowsAffected = pstmtInsert.executeUpdate();
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Database error while adding member to group: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean leaveGroup(int groupId, int userId) throws SQLException {
+        String deleteMemberSql = "DELETE FROM groups_member WHERE fk_groups_id = ? AND fk_users_id = ?";
+
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(deleteMemberSql)) {
+
+            pstmt.setInt(1, groupId);
+            pstmt.setInt(2, userId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+
+    public static Group getGroupById(int groupId) throws SQLException {
+
+        String sql = "SELECT groups_id, group_name, group_description, group_created_at, group_news FROM groups WHERE groups_id = ?";
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, groupId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+
+                    return new Group(
+                            rs.getString("group_name"),
+                            rs.getString("group_description"),
+                            rs.getDate("group_created_at").toLocalDate(),
+                            rs.getString("group_news"),
+                            rs.getInt("groups_id"));
+                }
+            }
+        }
+        return null;
+    }
+
+    public static boolean updateGroup(int groupId, String newName, String newDescription) throws SQLException {
+        String sql = "UPDATE `groups` SET group_name = ?, group_description = ? WHERE groups_id = ?";
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, newName);
+            pstmt.setString(2, newDescription);
+            pstmt.setInt(3, groupId);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+
+    public static boolean deleteGroup(int groupId) throws SQLException {
+        Connection conn = null;
+        try {
+            conn = connect();
+            conn.setAutoCommit(false); // Start transaction
+
+            // 1. Delete members associated with the group
+            String deleteMembersSql = "DELETE FROM groups_member WHERE fk_groups_id = ?";
+            try (PreparedStatement pstmtMembers = conn.prepareStatement(deleteMembersSql)) {
+                pstmtMembers.setInt(1, groupId);
+                pstmtMembers.executeUpdate(); // Execute deletion
+            }
+
+            // 2. Delete the group itself
+            String deleteGroupSql = "DELETE FROM `groups` WHERE groups_id = ?";
+            try (PreparedStatement pstmtGroup = conn.prepareStatement(deleteGroupSql)) {
+                pstmtGroup.setInt(1, groupId);
+                int rowsAffected = pstmtGroup.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    conn.commit(); // Commit transaction if group deleted
+                    return true;
+                } else {
+                    conn.rollback(); // Rollback if group not found/deleted
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            if (conn != null) {
+                conn.rollback(); // Rollback on error
+            }
+            throw e; // Re-throw the exception
+        } finally {
+            if (conn != null) {
+                conn.setAutoCommit(true); // Reset auto-commit
+                conn.close(); // Close connection
+            }
+        }
+    }
+
+    public static boolean updateGroupMemberRole(int groupId, int userId, int roleId) throws SQLException {
+        String sql = "UPDATE groups_member SET fk_roles_id = ? WHERE fk_groups_id = ? AND fk_users_id = ?";
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, roleId);
+            pstmt.setInt(2, groupId);
+            pstmt.setInt(3, userId);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+
+    public static boolean removeMemberFromGroup(int groupId, int userId) throws SQLException {
+        String sql = "DELETE FROM groups_member WHERE fk_groups_id = ? AND fk_users_id = ?";
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, groupId);
+            pstmt.setInt(2, userId);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+
+    public static List<GroupMemberDisplay> getGroupMembers(int groupId) throws SQLException {
+        List<GroupMemberDisplay> members = new ArrayList<>();
+        String sql = "SELECT u.users_id, u.username, r.roles_name, gm.joined_at " +
+                "FROM users u " +
+                "JOIN groups_member gm ON u.users_id = gm.fk_users_id " +
+                "JOIN roles r ON gm.fk_roles_id = r.roles_id " +
+                "WHERE gm.fk_groups_id = ?";
+
+        System.out.println("DEBUG: getGroupMembers - Fetching members for Group ID: " + groupId);
+
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, groupId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int userId = rs.getInt("users_id");
+                    String username = rs.getString("username");
+                    String roleName = rs.getString("roles_name");
+                    LocalDate joinedAt = rs.getDate("joined_at").toLocalDate();
+
+                    System.out.println("DEBUG: getGroupMembers - Found member: ID=" + userId + ", Name=" + username
+                            + ", Role=" + roleName + ", Joined=" + joinedAt);
+                    members.add(new GroupMemberDisplay(userId, username, roleName, joinedAt));
+                }
+            }
+        }
+        System.out.println("DEBUG: getGroupMembers - Finished fetching. Total members found: " + members.size());
+        return members;
+    }
+
+    public static boolean updateGroupNews(int groupId, String newNews) {
+        String sql = "UPDATE `groups` SET group_news = ? WHERE groups_id = ?";
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, newNews);
+            pstmt.setInt(2, groupId);
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err
+                    .println("ERROR: DatabaseManager.updateGroupNews - Failed to update group_news: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static int getLastInsertedGroupId() {
+        try (java.sql.Connection conn = connect();
+             java.sql.Statement stmt = conn.createStatement();
+             java.sql.ResultSet rs = stmt.executeQuery("SELECT MAX(groups_id) FROM groups")) { // Corrected column to groups_id
+            if (rs.next()) {
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return members;
+        return -1;
     }
 
 }
