@@ -7,7 +7,7 @@ import com.menejementpj.App;
 import com.menejementpj.components.ProjectCardController;
 import com.menejementpj.db.DatabaseManager;
 import com.menejementpj.model.Group;
-import com.menejementpj.model.Project;
+
 import com.menejementpj.test.Debug;
 
 import javafx.event.ActionEvent;
