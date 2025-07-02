@@ -11,7 +11,7 @@ import com.menejementpj.model.Group;
 import com.menejementpj.test.Debug;
 
 import javafx.event.ActionEvent;
-
+import com.menejementpj.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -39,7 +39,7 @@ public class GroupTabController {
 
     @FXML
     void toggleLogout(ActionEvent event) throws IOException {
-        App.setRoot("login", "Login - Management Project");
+      Utils.logout();
     }
 
     @FXML

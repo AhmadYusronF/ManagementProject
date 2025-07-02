@@ -1,5 +1,8 @@
 package com.menejementpj.utils;
 
+import java.io.IOException;
+
+import com.menejementpj.App;
 import javafx.event.ActionEvent;
 
 public class Utils {
@@ -10,4 +13,13 @@ public class Utils {
 
         stage.close();
     }
+
+    public static void logout() throws IOException {
+        App.group.setNull();
+        App.mygroup.setNul();
+        App.user.setNull();
+        App.userSession.setNull();
+        App.setRoot("login", "Login - Management Project");
+    }
+
 }

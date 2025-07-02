@@ -18,6 +18,7 @@ import com.menejementpj.components.CreateNews;
 import com.menejementpj.components.GroupOptionPopUpController;
 import com.menejementpj.components.UserMemberController;
 import com.menejementpj.db.DatabaseManager;
+import com.menejementpj.utils.Utils;
 import com.menejementpj.model.User;
 import com.menejementpj.model.Group; // Import the Group model
 import com.menejementpj.test.Debug;
@@ -83,7 +84,7 @@ public class GroupPageController {
 
     @FXML
     void toggleLogout(ActionEvent event) throws IOException {
-        App.setRoot("login", "Login - Management Project");
+        Utils.logout();
     }
 
     @FXML

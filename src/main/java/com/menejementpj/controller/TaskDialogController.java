@@ -1,3 +1,4 @@
+// In ManagementProject/src/main/java/com/menejementpj/controller/TaskDialogController.java
 package com.menejementpj.controller;
 
 import com.menejementpj.App;
@@ -5,6 +6,7 @@ import com.menejementpj.auth.UserData;
 import com.menejementpj.db.DatabaseManager;
 import com.menejementpj.model.GroupMemberDisplay;
 import com.menejementpj.model.ProjectTask;
+import com.menejementpj.components.PopUpAlert; // <--- Import PopUpAlert
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -15,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TaskDialogController {
 
@@ -28,7 +31,7 @@ public class TaskDialogController {
     private Button saveButton;
 
     private Stage dialogStage;
-    private ProjectTask task;
+    private ProjectTask originalTask;
     private boolean isSaved = false;
 
     @FXML
@@ -38,7 +41,7 @@ public class TaskDialogController {
             groupMembersRaw = DatabaseManager.getGroupMembers(App.userSession.getCurrentLoggedInGroupID());
             List<UserData> groupMembers = groupMembersRaw.stream()
                     .map(gm -> new UserData(gm.getUserId(), gm.getUsername()))
-                    .toList();
+                    .collect(Collectors.toList());
             memberComboBox.setItems(FXCollections.observableArrayList(groupMembers));
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
@@ -46,21 +49,14 @@ public class TaskDialogController {
         }
     }
 
-    /**
-     * Sets the stage of this dialog.
-     */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
-    /**
-     * Sets the task to be edited in the dialog.
-     */
     public void setTask(ProjectTask task) {
-        this.task = task;
+        this.originalTask = task;
         if (task != null) {
             taskNameField.setText(task.getTaskName());
-            // Find and select the existing member
             memberComboBox.getItems().stream()
                     .filter(u -> u.getUserId() == task.getAssignedMemberId())
                     .findFirst()
@@ -68,20 +64,22 @@ public class TaskDialogController {
         }
     }
 
-    /**
-     * Returns true if the user clicked Save, false otherwise.
-     */
     public boolean isSaved() {
         return isSaved;
     }
 
-    /**
-     * Returns the created/updated task.
-     */
     public ProjectTask getTask() {
         UserData selectedUser = memberComboBox.getSelectionModel().getSelectedItem();
-        // Create a new task object from the dialog fields
-        return new ProjectTask(taskNameField.getText(), selectedUser.getUsername(), selectedUser.getUserId());
+        if (originalTask != null) {
+            return new ProjectTask(originalTask.getProjectTaskId(),
+                                   taskNameField.getText(),
+                                   selectedUser.getUsername(),
+                                   selectedUser.getUserId());
+        } else {
+            return new ProjectTask(taskNameField.getText(),
+                                   selectedUser.getUsername(),
+                                   selectedUser.getUserId());
+        }
     }
 
     @FXML
@@ -98,13 +96,12 @@ public class TaskDialogController {
     }
 
     private boolean isInputValid() {
-        // Add validation logic here (e.g., check if fields are empty)
         if (taskNameField.getText() == null || taskNameField.getText().trim().isEmpty()) {
-            // Show alert
+            PopUpAlert.popupWarn("Validation Error", "Task Name Required", "Please enter a name for the task."); // <--- UNCOMMENTED/ADDED
             return false;
         }
         if (memberComboBox.getSelectionModel().getSelectedItem() == null) {
-            // Show alert
+            PopUpAlert.popupWarn("Validation Error", "Assignee Required", "Please select a member to assign the task to."); // <--- UNCOMMENTED/ADDED
             return false;
         }
         return true;

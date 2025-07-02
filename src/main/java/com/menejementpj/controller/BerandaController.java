@@ -2,11 +2,22 @@ package com.menejementpj.controller;
 
 import java.io.IOException;
 
-
 import com.menejementpj.App;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import com.menejementpj.test.Debug;
+import java.util.Map;
+import com.menejementpj.auth.UserData;
+import com.menejementpj.components.ActivityLogCardController;
+import com.menejementpj.db.DatabaseManager;
+import com.menejementpj.model.ActivityLog;
+import com.menejementpj.model.MemberTask;
+import com.menejementpj.model.Project;
+import com.menejementpj.model.Task;
+import com.menejementpj.utils.Utils;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -58,7 +69,7 @@ public class BerandaController {
 
     @FXML
     void toggleLogout(ActionEvent event) throws IOException {
-        App.setRoot("login", "Login - Management Project");
+        Utils.logout();
     }
 
     @FXML
@@ -95,34 +106,76 @@ public class BerandaController {
 
     @FXML
     private void initialize() {
-        welcomeUser.setText("Welcome, " + App.user.getUsername());
-        groubNews.setText(App.mygroup.news);
+        welcomeUser.setText("Welcome, " + App.user.getUsername()); //
+        groubNews.setText(App.mygroup.news); //
+
+        // This map will hold all tasks, grouped by the user they are assigned to.
+        Map<UserData, List<MemberTask>> allTasksByUser = new LinkedHashMap<>();
+        List<ActivityLog> allLogs = new ArrayList<>();
+
         try {
-            // List<ActivityLog> logs = DatabaseManager.getActivityLogs();
+            // Get all projects for the current group.
+            List<Project> projects = DatabaseManager.getProjectGrup(); //
 
-            // if (logs == null || logs.isEmpty()) {
-            // Debug.warn("Tidak ada Log yang ditemukan.");
-            // return;
-            // }
+            // Loop through each project to collect tasks and logs.
+            if (projects != null) {
+                for (Project p : projects) {
+                    // Get all tasks for this project, already grouped by user.
+                    Map<UserData, List<MemberTask>> tasksInProject = DatabaseManager.getTasksGroupedByMember(p.id); //
 
-            // for (ActivityLog log : logs) {
-            // FXMLLoader loader = new FXMLLoader(
-            // getClass().getResource("/com/menejementpj/components/project/activityLogCard.fxml"));
-            // Parent logRoot = loader.load();
-            // // ActivityLogController controller = loader.getController();
+                    // Merge the tasks from this project into our main map.
+                    for (Map.Entry<UserData, List<MemberTask>> entry : tasksInProject.entrySet()) {
+                        UserData user = entry.getKey();
+                        List<MemberTask> tasks = entry.getValue();
+                        allTasksByUser.computeIfAbsent(user, k -> new ArrayList<>()).addAll(tasks); //
+                    }
 
-            // // controller.setData(log.title, log.subTitle, log.progres);
+                    // Collect all activity logs.
+                    allLogs.addAll(DatabaseManager.getActivityLogs(p.id)); //
+                }
+            }
 
-            // activityLogContainer.getChildren().add(logRoot);
-            // }
+            // --- Create Member Task Cards ---
+            taskContainer.getChildren().clear(); // Clear existing cards.
+            // Now, create one card for each user with their complete list of tasks.
+            for (Map.Entry<UserData, List<MemberTask>> entry : allTasksByUser.entrySet()) {
+                // We only want to display the tasks for the currently logged-in user.
+                if (entry.getKey().getUserId() == App.userSession.getCurrentLoggedInUserID()) { //
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                                "/com/menejementpj/components/project/memberTaskCard.fxml")); //
+                        VBox cardNode = loader.load(); //
+                        MemberTaskCardController controller = loader.getController(); //
 
-            Debug.success("Semua activity log berhasil ditampilkan!");
+                        controller.setData(entry.getKey().getUsername(), entry.getValue()); // Set user's name and all
+                                                                                            // their tasks.
+                        taskContainer.getChildren().add(cardNode); //
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            // --- Display Activity Logs ---
+            activityLogContainer.getChildren().clear(); // Clear existing logs.
+            if (allLogs.isEmpty()) {
+                Debug.warn("Tidak ada Log yang ditemukan."); //
+            } else {
+                for (ActivityLog log : allLogs) {
+                    FXMLLoader loader = new FXMLLoader(
+                            getClass().getResource("/com/menejementpj/components/project/activityLogCard.fxml")); //
+                    Parent logRoot = loader.load(); //
+                    ActivityLogCardController controller = loader.getController(); //
+                    controller.setData(log); //
+                    activityLogContainer.getChildren().add(logRoot); //
+                }
+                Debug.success("Semua activity log berhasil ditampilkan!"); //
+            }
 
         } catch (Exception e) {
-            Debug.error("Gagal memuat activity log: " + e.getMessage());
+            Debug.error("Gagal memuat data Beranda: " + e.getMessage()); // This is a general catch-all for robustness.
             e.printStackTrace();
         }
-
     }
 
     private void showPopup(ActionEvent event, String fxmlFile, String title) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -198,4 +199,8 @@
          </font>
       </Button>
   </children>
+   <stylesheets>
+      <URL value="@../../css/groupPage.css" />
+      <URL value="@../../css/beranda.css" />
+   </stylesheets>
 </AnchorPane>

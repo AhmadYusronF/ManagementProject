@@ -1,199 +1,66 @@
-.project-card-title {
-  /* Standard CSS for compatibility */
-  color: #000000;
-  font-weight: bold;
-  font-size: 16px;
-  font-family: "poppins", sans-serif;
-
-  /* JavaFX specific */
-  -fx-text-fill: #000000;
-  -fx-font-weight: bold;
-  -fx-font-size: 16px;
-  -fx-font-family: "poppins", sans-serif;
+/* --- Root and Main Container --- */
+.root {
+  -fx-background-color: #f5f5f5;
+  -fx-font-family: "Poppins", sans-serif;
 }
 
-.project-card-description {
-  color: #d0e8ff;
-  font-size: 13px;
-  font-family: "poppins", sans-serif;
-
-  -fx-text-fill: #d0e8ff;
-  -fx-font-size: 13px;
-  -fx-font-family: "poppins", sans-serif;
+/* --- Welcome Header --- */
+.label-welcome {
+  -fx-font-family: "Poppins Bold";
+  -fx-font-size: 24px;
 }
 
-.project-card-created-at {
-  color: #a0cfff;
-  font-style: italic;
-  font-size: 12px;
-  font-family: "poppins", sans-serif;
-
-  -fx-text-fill: #a0cfff;
-  -fx-font-style: italic;
-  -fx-font-size: 12px;
-  -fx-font-family: "poppins", sans-serif;
-}
-
-/* THIS IS THE *ONLY* .list-cell BLOCK THAT SHOULD REMAIN */
-/* Style individual list cells */
-.list-cell {
-  /* Standard CSS properties (ignored by JavaFX) */
-  background-color: #ffffff;
-  color: #ffffff;
-  font-family: "poppins", sans-serif;
-  font-size: 13px;
-  padding: 8px 10px;
-
-  /* JavaFX specific properties */
+/* --- Group News Section --- */
+.group-news-container {
   -fx-background-color: #ffffff;
-  -fx-text-fill: #ffffff; /* <--- THIS IS THE CORRECT WHITE COLOR */
-  -fx-font-family: "poppins", sans-serif;
-  -fx-font-size: 13px;
-  -fx-padding: 8px 10px;
-  -fx-alignment: CENTER_LEFT;
-
-  /* --- THIS ADDS THE BOTTOM LINE TO EACH CELL --- */
-  -fx-border-width: 0 0 1px 0;
-  -fx-border-color: #00000054; /* Light white line, with some transparency */
+  -fx-background-radius: 6;
 }
 
-/* Style selected list cells */
-.list-cell:filled:selected,
-.list-cell:filled:selected:hover {
-  background-color: #0056b3;
-  color: #ffffff;
-
-  -fx-background-color: #0056b3;
-  -fx-text-fill: #ffffff;
-  -fx-border-color: #0056b3;
+.group-news-title {
+  -fx-font-family: "Poppins SemiBold";
+  -fx-font-size: 24px;
+  -fx-text-fill: #212121;
 }
 
-/* Style hovered list cells (when mouse is over them) */
-.list-cell:filled:hover {
-  background-color: #0056b3;
-  color: #f0f0f0;
-
-  -fx-background-color: #0056b3;
-  -fx-text-fill: #f0f0f0;
-  -fx-border-color: #2a2b2c;
+.group-news-content {
+  -fx-background-color: #e0e0e0;
+  -fx-background-radius: 6;
+  -fx-wrap-text: true;
+  -fx-font-family: "Poppins Regular";
+  -fx-font-size: 15px;
+  -fx-text-fill: #212121;
+  -fx-padding: 10px;
 }
 
-/* --- New Styles for Status Labels --- */
-.status-completed {
-  color: #4caf50;
-  font-size: 14px;
-  font-weight: bold;
-
-  -fx-text-fill: #4caf50;
-  -fx-font-size: 14px;
-  -fx-font-weight: bold;
+/* --- Activity Log Section --- */
+.activity-log-title {
+  -fx-font-family: "Poppins SemiBold";
+  -fx-font-size: 18px;
 }
 
-.status-in-progress {
-  color: #2196f3;
-  font-size: 14px;
-
-  -fx-text-fill: #2196f3;
-  -fx-font-size: 14px;
-}
-
-.status-pending {
-  color: #ffc107;
-  font-size: 14px;
-
-  -fx-text-fill: #ffc107;
-  -fx-font-size: 14px;
-}
-
-.status-review {
-  color: #ff5722;
-  font-size: 14px;
-
-  -fx-text-fill: #ff5722;
-  -fx-font-size: 14px;
-}
-
-.status-not-started {
-  color: #9e9e9e;
-  font-size: 14px;
-
-  -fx-text-fill: #9e9e9e;
-  -fx-font-size: 14px;
-}
-
-/* You might want to adjust padding or spacing within your .list-cell */
-.list-cell .vbox {
-  /* Target the VBox inside your list-cell */
-  padding: 0; /* Remove default VBox padding if any */
-  -fx-padding: 0; /* Remove default VBox padding if any */
-}
-
-.modern-scroll-pane {
-  background-color: transparent;
-  -fx-background-color: transparent;
-  -fx-background: transparent;
-}
-
-/* --- The entire scrollbar --- */
-.modern-scroll-pane .scroll-bar:vertical {
-  background-color: transparent;
-  -fx-background-color: transparent;
-  -fx-pref-width: 14;
-  -fx-padding: 2;
-}
-
-/* --- The background of the scrollbar (the track) --- */
-.modern-scroll-pane .scroll-bar:vertical .track {
-  background-color: transparent;
-  border-color: transparent;
-  border-radius: 8px; /* Rounded corners for the track */
-
+.scroll-pane {
   -fx-background-color: transparent;
   -fx-border-color: transparent;
-  -fx-background-radius: 8px; /* Rounded corners for the track */
 }
 
-/* --- The draggable part of the scrollbar (the thumb) --- */
-.modern-scroll-pane .scroll-bar:vertical .thumb {
-  background-color: #019779; /* Use your theme's accent color */
-  border-radius: 8px; /* Rounded corners for the thumb */
-
-  -fx-background-color: #019779; /* Use your theme's accent color */
-  -fx-background-insets: 2, 0, 0;
-  -fx-background-radius: 8px; /* Rounded corners for the thumb */
+/* --- My Task Section --- */
+.task-container-title {
+  -fx-font-family: "Poppins SemiBold";
+  -fx-font-size: 20px;
+  -fx-text-fill: #212121;
 }
 
-/* --- Optional: Change thumb color on hover for better UX --- */
-.modern-scroll-pane .scroll-bar:vertical .thumb:hover {
-  background-color: #02c79d; /* A slightly lighter green */
-  -fx-background-color: #02c79d; /* A slightly lighter green */
+/* --- Navigation Sidebar --- */
+.navigation-bar {
+  -fx-background-color: #f5f5f5;
+  -fx-border-color: #e0e0e0;
+  -fx-border-width: 0 2px 0 0; /* Right border only */
 }
 
-/*
- * --- Hide the arrow buttons at the top and bottom ---
- */
-.modern-scroll-pane .scroll-bar .increment-button,
-.modern-scroll-pane .scroll-bar .decrement-button {
-  background-color: transparent;
-  border-radius: 0;
-  padding: 0;
-  min-width: 0;
-  min-height: 0;
-  width: 0;
-  height: 0;
-
-  -fx-background-color: transparent;
-  -fx-background-radius: 0;
-  -fx-padding: 0;
-  -fx-min-width: 0;
-  -fx-min-height: 0;
-  -fx-pref-width: 0;
-  -fx-pref-height: 0;
+.nav-button {
+  -fx-background-color: transparent; /* Default state */
 }
 
-/* --- Hide the arrow shapes themselves --- */
-.modern-scroll-pane .scroll-bar .increment-arrow,
-.modern-scroll-pane .scroll-bar .decrement-arrow {
-  -fx-shape: "";
-  -fx-padding: 0;
+.nav-button-active {
+  -fx-background-color: #007766; /* Active state */
 }

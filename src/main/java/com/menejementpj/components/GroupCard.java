@@ -21,17 +21,9 @@ public class GroupCard {
     @FXML
     private Label title;
 
-    // New field to store the group ID
+
     private int groupId;
 
-    /**
-     * Handles the action when the "Join" button is clicked.
-     * This method attempts to add the current logged-in user to this group.
-     * It uses the DatabaseManager to perform the database operation and
-     * provides feedback to the user via an Alert.
-     * 
-     * @param event The ActionEvent triggered by the button click.
-     */
     @FXML
     void handleJoin(ActionEvent event) {
         int currentUserId = App.userSession.getCurrentLoggedInUserID();
@@ -61,16 +53,16 @@ public class GroupCard {
     }
 
     public void setData(int groupId, String title, String describ, LocalDate createAt) {
-        this.groupId = groupId; // Store the group ID
+        this.groupId = groupId; 
         this.title.setText(title);
-        this.createat.setText("Created At: " + createAt); // Changed to "Created At" for clarity
+        this.createat.setText("Created At: " + createAt); 
         this.describ.setText(describ);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
-        alert.setHeaderText(null); // No header text for simplicity
+        alert.setHeaderText(null); 
         alert.setContentText(message);
         alert.showAndWait();
     }

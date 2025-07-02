@@ -3,6 +3,7 @@ package com.menejementpj.controller;
 import com.menejementpj.components.ProjectCardController;
 import java.io.IOException;
 import java.util.List;
+import com.menejementpj.utils.Utils;
 
 import com.menejementpj.App;
 import com.menejementpj.db.DatabaseManager;
@@ -107,7 +108,7 @@ public class ProjectTab {
 
     @FXML
     void toggleLogout(ActionEvent event) throws IOException {
-        App.setRoot("login", "Login - Management Project");
+       Utils.logout();
     }
 
     @FXML

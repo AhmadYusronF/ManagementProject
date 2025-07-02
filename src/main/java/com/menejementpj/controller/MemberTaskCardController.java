@@ -1,6 +1,6 @@
 package com.menejementpj.controller;
 
-import com.menejementpj.auth.UserData;
+
 import com.menejementpj.model.MemberTask;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -18,8 +18,8 @@ public class MemberTaskCardController {
     @FXML
     private VBox tasksContainer; // The VBox that will hold the individual task rows
 
-    public void setData(UserData member, List<MemberTask> tasks) {
-        memberNameLabel.setText(member.getUsername());
+    public void setData(String pjNma, List<MemberTask> tasks) {
+        memberNameLabel.setText(pjNma);
         tasksContainer.getChildren().clear(); // Clear any default tasks
 
         for (MemberTask task : tasks) {

@@ -16,7 +16,7 @@ import java.util.List;
 public class AddMemberController {
     @FXML private TextField searchField;
     @FXML private ListView<UserData> userListView;
-    
+
     private Stage dialogStage;
     private UserData selectedUser;
     private boolean userSelected = false;
@@ -29,7 +29,7 @@ public class AddMemberController {
             loadUsers(newText);
         });
     }
-    
+
 
     private void loadUsers(String query) {
         List<UserData> users = DatabaseManager.searchAvailableUsers(query);

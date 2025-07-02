@@ -1,18 +1,20 @@
 package com.menejementpj.auth;
 
+import java.util.Objects;
+
 public class UserData {
     private String username;
     private String roleName;
     private int userId;
 
-    // getGroupMembers
+    // Existing constructor (getGroupMembers)
     public UserData(int userId, String username) {
         this.userId = userId;
         this.username = username;
         this.roleName = null;
     }
 
-    // App.java
+    // Existing constructor (App.java)
     public UserData() {
         this.userId = 0;
         this.username = null;
@@ -45,14 +47,34 @@ public class UserData {
 
     public void setUserData(String username, String rolename) {
         this.username = username;
-
         this.roleName = rolename;
     }
 
     @Override
     public String toString() {
-
         return this.getUsername();
     }
 
+    public void setNull() {
+        this.username = null;
+        this.userId = 0;
+        this.roleName = "Cract";
+    }
+
+    // --- NEWLY ADDED METHODS ---
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        UserData userData = (UserData) o;
+        return userId == userData.userId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
 }

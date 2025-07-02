@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.controller.BerandaController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #F5F5F5;" stylesheets="@css/beranda.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.controller.BerandaController">
   <children>
     <AnchorPane layoutX="100.0" prefHeight="800.0" prefWidth="1181.0">
       <children>
@@ -42,7 +42,7 @@
             </StackPane>
             <ScrollPane prefHeight="518.0" prefWidth="300.0">
               <content>
-                <VBox fx:id="taskContainer" prefHeight="513.0" prefWidth="283.0">
+                <VBox fx:id="taskContainer" prefHeight="513.0" prefWidth="283.0" stylesheets="@css/scroll.css">
                   <children>
                     
                   </children>
@@ -63,7 +63,7 @@
             </Label>
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
               <content>
-                <VBox fx:id="activityLogContainer" prefHeight="200.0" prefWidth="583.0">
+                <VBox fx:id="activityLogContainer" prefHeight="200.0" prefWidth="583.0" stylesheets="@css/scroll.css">
                   <children>
                     
                   </children>

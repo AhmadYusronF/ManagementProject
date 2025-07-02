@@ -17,5 +17,12 @@ public class Group {
         this.news = news;
         this.id = id;
     }
+       public void setNul() {
+        this.id = 0;
+        this.nama = null;
+        this.describ = null;
+        this.createAt = null;
+        this.news = null;
+    }
 
 }

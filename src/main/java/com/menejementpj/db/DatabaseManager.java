@@ -3,14 +3,12 @@ package com.menejementpj.db;
 import com.menejementpj.App;
 import com.menejementpj.auth.UserData;
 import com.menejementpj.components.PopUpAlert;
-// import com.menejementpj.model.ActivityLog;
 import com.menejementpj.test.Debug;
 import com.menejementpj.type.*;
 import com.menejementpj.model.ActivityLog;
 import com.menejementpj.model.ChatMessage;
 import com.menejementpj.model.Group;
 import com.menejementpj.model.MemberTask;
-// import com.mysql.cj.xdevapi.Result;
 import com.menejementpj.model.Project;
 import com.menejementpj.model.ProjectTask;
 import com.menejementpj.model.Role;
@@ -243,7 +241,6 @@ public class DatabaseManager {
         }
     }
 
-
     public static List<Project> getProjectGrup() {
 
         List<Project> projects = new ArrayList<>();
@@ -271,25 +268,7 @@ public class DatabaseManager {
         }
     }
 
-    // public static void getDataGroup(int groupId) {
-    // String sql = "SELECT group_name FROM `groups` WHERE groups_id = ?";
-
-    // try (Connection conn = connect();
-
-    // PreparedStatement pstmt = conn.prepareStatement(sql)) {
-    // pstmt.setInt(1, groupId);
-    // ResultSet rs = pstmt.executeQuery();
-    // if (rs.next()) {
-    // String groupName = rs.getString("group_name");
-    // App.group.setGroupData(groupName);
-    // }
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
-
-    // }
-
-    public static void sendMessage(String message) {
+    public static boolean sendMessage(String message) { // Changed return type to boolean
         String sql = "INSERT INTO group_chat (fk_groups_id, fk_users_id, message) VALUES (?, ?, ?)";
 
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -297,10 +276,11 @@ public class DatabaseManager {
             pstmt.setInt(1, App.userSession.getCurrentLoggedInGroupID());
             pstmt.setInt(2, App.userSession.getCurrentLoggedInUserID());
             pstmt.setString(3, message);
-            pstmt.executeUpdate();
-
+            int rowsAffected = pstmt.executeUpdate(); // Get rows affected
+            return rowsAffected > 0; // Return true on success
         } catch (Exception e) {
             e.printStackTrace();
+            return false; // Return false on error
         }
     }
 
@@ -356,32 +336,7 @@ public class DatabaseManager {
         }
     }
 
-    // public static List<ActivityLog> getActivityLogs() {
-    // List<ActivityLog> logs = new ArrayList<>();
-    // String query = "SELECT al.activity_logs_id AS id, al.activity_logs_message AS
-    // message, gp.title AS title, al.action_type AS progres FROM groups_project gp
-    // INNER JOIN activity_logs al ON al.fk_groups_project_id = gp.groups_project_id
-    // WHERE gp.fk_groups_id = ?";
-    // try (Connection conn = connect();
-    // PreparedStatement pstmt = conn.prepareStatement(query)) {
-    // pstmt.setInt(1, App.userSession.getCurrentLoggedInGroupID());
-    // ResultSet rs = pstmt.executeQuery();
-
-    // while (rs.next()) {
-    // int id = rs.getInt("id");
-    // String title = rs.getString("title");
-    // String message = rs.getString("message");
-    // int progres = rs.getInt("progres");
-    // logs.add(new ActivityLog(id, title, message, progres));
-    // }
-    // return logs;
-    // } catch (Exception e) {
-    // Debug.error("GagalMendapatActivity");
-    // return null;
-    // }
-    // }
-
-    public static void setNews(String message) {
+    public static boolean setNews(String message) { // Changed return type to boolean
         String query = "UPDATE `groups` SET group_news = ? WHERE groups_id = ?";
 
         try (Connection conn = connect();
@@ -394,16 +349,19 @@ public class DatabaseManager {
 
             if (rowsUpdated > 0) {
                 Debug.success("Berita grup berhasil diperbarui ");
+                return true;
             } else {
                 Debug.warn("Tidak ada grup yang cocok untuk diperbarui.");
+                return false;
             }
 
         } catch (SQLException e) {
             Debug.error("Gagal update group_news: " + e.getMessage());
+            return false;
         }
     }
 
-    public static List<User> getUserMember() { // Removed throws SQLException, now handles internally
+    public static List<User> getUserMember() {
         List<User> members = new ArrayList<>();
         int currentGroupId = App.userSession.getCurrentLoggedInGroupID();
 
@@ -435,7 +393,6 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("ERROR: DatabaseManager.getUserMember - Database error: " + e.getMessage());
-            // Return an empty list on error, do not return null
             return new ArrayList<>();
         }
         System.out.println("DEBUG: getUserMember - Finished fetching. Total members found: " + members.size());
@@ -454,12 +411,12 @@ public class DatabaseManager {
                 String roleName = rs.getString("roles_name");
                 return roleName;
             } else {
-                Debug.error("fail user role: Role ID " + roleId + " not found."); // More specific error
-                return null; // Return null if role not found
+                Debug.error("fail user role: Role ID " + roleId + " not found.");
+                return null;
             }
         } catch (SQLException e) {
             Debug.error("Gagal mendapat rolename: " + e.getMessage());
-            return null; // Return null on database error
+            return null;
         }
     }
 
@@ -488,7 +445,6 @@ public class DatabaseManager {
         }
     }
 
-    // fadil
     public static Project getProjectDetails(int projectId) {
         String sql = "SELECT * FROM groups_project WHERE groups_project_id = ?";
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -587,15 +543,18 @@ public class DatabaseManager {
         }
     }
 
-    public static void createTask(int projectId, int userId, String taskName) {
+    // <--- NEW: Changed return type from void to boolean
+    public static boolean createTask(int projectId, int userId, String taskName) {
         String sql = "INSERT INTO project_task (fk_groups_project_id, fk_users_id, task, status) VALUES (?, ?, ?, 0)";
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, projectId);
             pstmt.setInt(2, userId);
             pstmt.setString(3, taskName);
-            pstmt.executeUpdate();
+            int rowsAffected = pstmt.executeUpdate(); // Get rows affected
+            return rowsAffected > 0; // Return true if task was inserted successfully
         } catch (Exception e) {
             e.printStackTrace();
+            return false; // Return false on error
         }
     }
 
@@ -610,9 +569,41 @@ public class DatabaseManager {
         }
     }
 
+    // Inside DatabaseManager.java, updateTask method
+    public static boolean updateTask(int projectTaskId, String newTaskName, int newAssignedUserId) {
+        String sql = "UPDATE project_task SET task = ?, fk_users_id = ? WHERE project_task_id = ?";
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // --- ADD THESE DEBUG LOGS ---
+            System.out.println("DEBUG: DatabaseManager.updateTask - Executing SQL Query:");
+            System.out.println("DEBUG: SQL: " + sql);
+            System.out.println("DEBUG: Parameter 1 (newTaskName): '" + newTaskName + "'");
+            System.out.println("DEBUG: Parameter 2 (newAssignedUserId): " + newAssignedUserId);
+            System.out.println("DEBUG: Parameter 3 (projectTaskId): " + projectTaskId);
+            // --- END DEBUG LOGS ---
+
+            pstmt.setString(1, newTaskName);
+            pstmt.setInt(2, newAssignedUserId);
+            pstmt.setInt(3, projectTaskId);
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            // --- ADD THIS DEBUG LOG ---
+            System.out.println("DEBUG: DatabaseManager.updateTask - Rows Affected by update: " + rowsAffected);
+            // --- END DEBUG LOG ---
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error updating task: " + e.getMessage());
+            return false;
+        }
+    }
+
     public static List<ProjectTask> getProjectTasksForTable(int projectId) {
         List<ProjectTask> tasks = new ArrayList<>();
-        String sql = "SELECT pt.task, pt.project_task_created_at, u.username, u.users_id " +
+        String sql = "SELECT pt.project_task_id, pt.task, pt.project_task_created_at, u.username, u.users_id " +
                 "FROM project_task pt " +
                 "JOIN users u ON pt.fk_users_id = u.users_id " +
                 "WHERE pt.fk_groups_project_id = ?";
@@ -620,7 +611,14 @@ public class DatabaseManager {
             pstmt.setInt(1, projectId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                tasks.add(new ProjectTask(rs.getString("task"), rs.getString("username"), rs.getInt("users_id")));
+                int taskId = rs.getInt("project_task_id"); // Get the task's ID
+                String taskName = rs.getString("task");
+                String username = rs.getString("username");
+                int userId = rs.getInt("users_id");
+                LocalDate createdAt = rs.getTimestamp("project_task_created_at").toLocalDateTime().toLocalDate();
+
+                // Use the new ProjectTask constructor including the task ID
+                tasks.add(new ProjectTask(taskId, taskName, username, userId));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -653,8 +651,6 @@ public class DatabaseManager {
             pstmt.setInt(1, projectId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                // Note: For this to work correctly as a Map key, your UserData class
-                // should have properly implemented equals() and hashCode() methods.
                 UserData user = new UserData(rs.getInt("users_id"), rs.getString("username"));
                 MemberTask task = new MemberTask(rs.getInt("project_task_id"), rs.getString("task"),
                         rs.getInt("status"));
@@ -759,19 +755,18 @@ public class DatabaseManager {
                     throw new SQLException("Creating group failed.");
             }
 
-            // Fetch roles once to avoid repeated calls inside the loop
             List<Role> allRoles = DatabaseManager.getRoles();
             int defaultMemberRoleId = allRoles.stream()
                     .filter(r -> r.getRoleName().equalsIgnoreCase("Member"))
                     .mapToInt(Role::getRoleId)
                     .findFirst()
-                    .orElse(2); // Fallback to 2 if "Member" role not found
+                    .orElse(2);
 
             int ownerRoleId = allRoles.stream()
                     .filter(r -> r.getRoleName().equalsIgnoreCase("Owner"))
                     .mapToInt(Role::getRoleId)
                     .findFirst()
-                    .orElse(defaultMemberRoleId); // Fallback to default member if "Owner" role not found
+                    .orElse(defaultMemberRoleId);
 
             try (PreparedStatement pstmtMember = conn.prepareStatement(insertMemberSql)) {
                 for (GroupMemberDisplay member : members) {
@@ -791,12 +786,11 @@ public class DatabaseManager {
                         roleIdToAssign = ownerRoleId;
                         Debug.success("Assigning Owner role ID: " + roleIdToAssign + " to " + member.getUsername());
                     } else {
-                        // For other roles, use the stream filter as before
                         roleIdToAssign = allRoles.stream()
                                 .filter(r -> r.getRoleName().equalsIgnoreCase(member.getRoleName()))
                                 .mapToInt(Role::getRoleId)
                                 .findFirst()
-                                .orElse(defaultMemberRoleId); // Use default member role if specific role not found
+                                .orElse(defaultMemberRoleId);
                         Debug.success("Assigning role ID: " + roleIdToAssign + " (" + member.getRoleName() + ") to "
                                 + member.getUsername());
                     }
@@ -948,36 +942,73 @@ public class DatabaseManager {
             conn = connect();
             conn.setAutoCommit(false); // Start transaction
 
-            // 1. Delete members associated with the group
+            List<Integer> projectIds = new ArrayList<>();
+            String getProjectIdsSql = "SELECT groups_project_id FROM groups_project WHERE fk_groups_id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(getProjectIdsSql)) {
+                pstmt.setInt(1, groupId);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    while (rs.next()) {
+                        projectIds.add(rs.getInt("groups_project_id"));
+                    }
+                }
+            }
+
+            if (!projectIds.isEmpty()) {
+                String deleteActivityLogsSql = "DELETE FROM activity_logs WHERE fk_groups_project_id IN (SELECT groups_project_id FROM groups_project WHERE fk_groups_id = ?)";
+                try (PreparedStatement pstmt = conn.prepareStatement(deleteActivityLogsSql)) {
+                    pstmt.setInt(1, groupId);
+                    pstmt.executeUpdate();
+                }
+            }
+
+            if (!projectIds.isEmpty()) {
+                String deleteProjectTasksSql = "DELETE FROM project_task WHERE fk_groups_project_id IN (SELECT groups_project_id FROM groups_project WHERE fk_groups_id = ?)";
+                try (PreparedStatement pstmt = conn.prepareStatement(deleteProjectTasksSql)) {
+                    pstmt.setInt(1, groupId);
+                    pstmt.executeUpdate();
+                }
+            }
+
+            String deleteProjectsSql = "DELETE FROM groups_project WHERE fk_groups_id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(deleteProjectsSql)) {
+                pstmt.setInt(1, groupId);
+                pstmt.executeUpdate();
+            }
+
+            String deleteGroupChatSql = "DELETE FROM group_chat WHERE fk_groups_id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(deleteGroupChatSql)) {
+                pstmt.setInt(1, groupId);
+                pstmt.executeUpdate();
+            }
+
             String deleteMembersSql = "DELETE FROM groups_member WHERE fk_groups_id = ?";
             try (PreparedStatement pstmtMembers = conn.prepareStatement(deleteMembersSql)) {
                 pstmtMembers.setInt(1, groupId);
-                pstmtMembers.executeUpdate(); // Execute deletion
+                pstmtMembers.executeUpdate();
             }
 
-            // 2. Delete the group itself
             String deleteGroupSql = "DELETE FROM `groups` WHERE groups_id = ?";
             try (PreparedStatement pstmtGroup = conn.prepareStatement(deleteGroupSql)) {
                 pstmtGroup.setInt(1, groupId);
                 int rowsAffected = pstmtGroup.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    conn.commit(); // Commit transaction if group deleted
+                    conn.commit();
                     return true;
                 } else {
-                    conn.rollback(); // Rollback if group not found/deleted
+                    conn.rollback();
                     return false;
                 }
             }
         } catch (SQLException e) {
             if (conn != null) {
-                conn.rollback(); // Rollback on error
+                conn.rollback();
             }
-            throw e; // Re-throw the exception
+            throw e;
         } finally {
             if (conn != null) {
-                conn.setAutoCommit(true); // Reset auto-commit
-                conn.close(); // Close connection
+                conn.setAutoCommit(true);
+                conn.close();
             }
         }
     }
@@ -1053,8 +1084,8 @@ public class DatabaseManager {
 
     public static int getLastInsertedGroupId() {
         try (java.sql.Connection conn = connect();
-             java.sql.Statement stmt = conn.createStatement();
-             java.sql.ResultSet rs = stmt.executeQuery("SELECT MAX(groups_id) FROM groups")) { // Corrected column to groups_id
+                java.sql.Statement stmt = conn.createStatement();
+                java.sql.ResultSet rs = stmt.executeQuery("SELECT MAX(groups_id) FROM groups")) {
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -1063,5 +1094,4 @@ public class DatabaseManager {
         }
         return -1;
     }
-
 }

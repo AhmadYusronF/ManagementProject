@@ -53,6 +53,12 @@ public class OptionProjectController {
         createdAtCollumn.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
         memberCollumn.setCellValueFactory(new PropertyValueFactory<>("assignedMemberName"));
         taskTable.setItems(taskList);
+
+        // Load tasks for the current project when initialized, if a project is set
+        // This might need to be called after setProject()
+        // if (currentProject != null) {
+        // taskList.setAll(DatabaseManager.getProjectTasksForTable(currentProject.id));
+        // }
     }
 
     public void setDialogStage(Stage dialogStage) {
@@ -64,6 +70,8 @@ public class OptionProjectController {
         projectNameField.setText(project.title);
         projectDecriptionArea.setText(project.description);
         repoUrlField.setText(project.repoUrl);
+        // Load tasks related to this project
+        taskList.setAll(DatabaseManager.getProjectTasksForTable(currentProject.id)); // Load tasks here
     }
 
     public boolean wasProjectDeleted() {
@@ -78,9 +86,10 @@ public class OptionProjectController {
         currentProject.repoUrl = repoUrlField.getText();
 
         if (DatabaseManager.updateProject(currentProject)) {
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Project details updated successfully!");
             dialogStage.close();
         } else {
-            // Show an error alert
+            showAlert(Alert.AlertType.ERROR, "Save Failed", "Failed to update project details.");
         }
     }
 
@@ -95,9 +104,10 @@ public class OptionProjectController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             if (DatabaseManager.deleteProject(currentProject.id)) {
                 this.projectWasDeleted = true; // Set the flag to true on successful deletion
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Project deleted successfully!");
                 dialogStage.close();
             } else {
-                // Show an error alert
+                showAlert(Alert.AlertType.ERROR, "Deletion Failed", "Failed to delete the project.");
             }
         }
     }
@@ -105,15 +115,28 @@ public class OptionProjectController {
     @FXML
     void handleAddTask(ActionEvent event) {
         try {
-            FXMLLoader loader = showPopup(event, "/com/menejementpj/components/project/TaskDialog.fxml",
-                    "Add New Task");
-            TaskDialogController controller = loader.getController();
+            // Note: when creating a new task, it needs to be associated with
+            // currentProject.id
+            // This is typically handled when the task is saved to the DB via
+            // DatabaseManager.createTask()
+            TaskDialogController controller = showPopup(event, "/com/menejementpj/components/project/TaskDialog.fxml",
+                    "Add New Task").getController(); // Get controller directly
 
             if (controller.isSaved()) {
-                taskList.add(controller.getTask());
+                ProjectTask newTask = controller.getTask(); // Get the new task from the dialog
+                // Add to UI list
+                taskList.add(newTask);
+                // Persist to DB, associating with the current project
+                if (DatabaseManager.createTask(currentProject.id, newTask.getAssignedMemberId(),
+                        newTask.getTaskName())) {
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Task added successfully!");
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to add task to database.");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Application Error", "Error opening task dialog.");
         }
     }
 
@@ -125,15 +148,45 @@ public class OptionProjectController {
             return;
         }
         try {
-            FXMLLoader loader = showPopup(event, "/com/menejementpj/components/project/TaskDialog.fxml", "Edit Task");
+            // 1. Load the FXML and get the controller
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/menejementpj/components/project/TaskDialog.fxml"));
+            Parent root = loader.load();
             TaskDialogController controller = loader.getController();
-            controller.setTask(selectedTask); // Pre-fill the dialog with existing task data
 
+            // 2. Create and configure the stage
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Edit Task");
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.initOwner((Stage) ((Node) event.getSource()).getScene().getWindow());
+            popupStage.setScene(new Scene(root));
+
+            // 3. Set the data BEFORE showing the stage
+            controller.setDialogStage(popupStage);
+            controller.setTask(selectedTask); // This now happens before the dialog is shown
+
+            // 4. Show the dialog and wait for it to be closed
+            popupStage.showAndWait();
+
+            // 5. Process the result after the dialog is closed
             if (controller.isSaved()) {
-                taskList.set(taskTable.getSelectionModel().getSelectedIndex(), controller.getTask());
+                ProjectTask updatedTask = controller.getTask();
+                // Update the UI
+                taskList.set(taskTable.getSelectionModel().getSelectedIndex(), updatedTask);
+
+                // Update the database
+                if (DatabaseManager.updateTask(updatedTask.getProjectTaskId(),
+                        updatedTask.getTaskName(),
+                        updatedTask.getAssignedMemberId())) {
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Task updated successfully!");
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Database Error",
+                            "Failed to update task in database. Check console for details.");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Application Error", "Error opening task dialog.");
         }
     }
 
@@ -141,7 +194,11 @@ public class OptionProjectController {
     void handleDeleteTask(ActionEvent event) {
         ProjectTask selectedTask = taskTable.getSelectionModel().getSelectedItem();
         if (selectedTask != null) {
+
             taskList.remove(selectedTask);
+            showAlert(Alert.AlertType.INFORMATION, "Info",
+                    "Task removed from list. (Database deletion not yet implemented)");
+
         } else {
             showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a task to delete.");
         }
@@ -166,6 +223,7 @@ public class OptionProjectController {
         if (loader.getController() instanceof TaskDialogController) {
             TaskDialogController controller = loader.getController();
             controller.setDialogStage(popupStage);
+            // The task is now passed via setTask method, not constructor
         }
 
         popupStage.showAndWait();

@@ -14,5 +14,8 @@ public class GroupData {
     public void setGroupData(String name) {
         this.groupName = name;
     }
+     public void setNull() {
+        this.groupName = null;
+    }
 
 }

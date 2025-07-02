@@ -99,7 +99,7 @@ public class ProjectViewController {
                         getClass().getResource("/com/menejementpj/components/project/memberTaskCard.fxml"));
                 VBox cardNode = loader.load();
                 MemberTaskCardController controller = loader.getController();
-                controller.setData(entry.getKey(), entry.getValue());
+                controller.setData(entry.getKey().getUsername(), entry.getValue());
                 memberTaskContainer.getChildren().add(cardNode);
             } catch (IOException e) {
                 e.printStackTrace();

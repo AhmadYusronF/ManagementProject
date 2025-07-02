@@ -7,6 +7,7 @@ import com.menejementpj.App;
 import com.menejementpj.db.DatabaseManager;
 import com.menejementpj.model.ProjectTask;
 import com.menejementpj.utils.Utils;
+import com.menejementpj.components.PopUpAlert; // Import PopUpAlert
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,10 +45,9 @@ public class CreateProjectController {
     private TableColumn<ProjectTask, String> memberCollumn;
 
     @FXML
-    private TextArea descriptionTextArea;
-
+    private TextArea descriptionTextArea; // Note: This might conflict with projectDecriptionArea based on FXML.
     @FXML
-    private TextArea titleTextArea;
+    private TextArea titleTextArea; // Note: This might conflict with projectNameField based on FXML.
 
     @FXML
     void handleConfirm(ActionEvent event) {
@@ -69,11 +69,10 @@ public class CreateProjectController {
     @FXML
     void handleCancel(ActionEvent event) {
         System.out.println("CANCELLED: Project creation aborted.");
-        closeWindow(event);
+        Utils.closeWindow(event);
     }
 
     private void closeWindow(ActionEvent event) {
-
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.close();
     }
@@ -104,6 +103,7 @@ public class CreateProjectController {
                 App.userSession.getCurrentLoggedInGroupID());
 
         if (newProjectId != -1) {
+            // If tasks were added in the UI, now associate them with the new project ID
             for (ProjectTask task : taskList) {
                 DatabaseManager.createTask(newProjectId, task.getAssignedMemberId(), task.getTaskName());
             }
@@ -117,7 +117,7 @@ public class CreateProjectController {
     @FXML
     public void handleAddTask(ActionEvent event) {
         try {
-            TaskDialogController controller = showTaskDialog(null);
+            TaskDialogController controller = showTaskDialog(null); // Pass null for a new task
             if (controller.isSaved()) {
                 taskList.add(controller.getTask());
             }
@@ -136,24 +136,37 @@ public class CreateProjectController {
         try {
             TaskDialogController controller = showTaskDialog(selectedTask);
             if (controller.isSaved()) {
-                taskList.set(taskTable.getSelectionModel().getSelectedIndex(), controller.getTask());
+                ProjectTask updatedTask = controller.getTask();
+                taskList.set(taskTable.getSelectionModel().getSelectedIndex(), updatedTask);
+
+                if (DatabaseManager.updateTask(selectedTask.getProjectTaskId(), // Use selectedTask.getProjectTaskId()
+                        updatedTask.getTaskName(),
+                        updatedTask.getAssignedMemberId())) {
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Task updated successfully!");
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to update task in database.");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Application Error", "Error opening task dialog.");
         }
     }
 
     @FXML
-     public void handleDeleteTask(ActionEvent event) {
+    public void handleDeleteTask(ActionEvent event) {
         ProjectTask selectedTask = taskTable.getSelectionModel().getSelectedItem();
         if (selectedTask != null) {
+            // You would typically also delete from DB here
+            // DatabaseManager.deleteTask(selectedTask.getProjectTaskId()); // You'd need to
+            // implement this
             taskList.remove(selectedTask);
         } else {
             showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a task to delete.");
         }
     }
 
-     private TaskDialogController showTaskDialog(ProjectTask task) throws IOException {
+    private TaskDialogController showTaskDialog(ProjectTask task) throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/com/menejementpj/components/project/TaskDialog.fxml"));
         VBox page = loader.load();
@@ -167,7 +180,7 @@ public class CreateProjectController {
 
         TaskDialogController controller = loader.getController();
         controller.setDialogStage(dialogStage);
-        controller.setTask(task);
+        controller.setTask(task); // Pass the task to the dialog controller
         dialogStage.showAndWait();
         return controller;
     }

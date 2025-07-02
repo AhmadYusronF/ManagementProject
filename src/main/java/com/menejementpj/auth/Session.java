@@ -43,4 +43,10 @@ public class Session {
         currentLoggedInUserID = userId;
         currentLoggedInGroupID = groupId;
     }
+
+    public void setNull() {
+        currentLoggedInHidden_uid = 0;
+        currentLoggedInUserID = 0;
+        currentLoggedInGroupID = 0;
+    }
 }
