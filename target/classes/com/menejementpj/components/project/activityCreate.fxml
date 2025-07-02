@@ -1,57 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="27.0" layoutY="27.0" text="CREATE ACTIVITY">
-         <font>
-            <Font name="Poppins SemiBold" size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="27.0" layoutY="78.0" text="Task Name">
-         <font>
-            <Font name="Poppins SemiBold" size="20.0" />
-         </font>
-      </Label>
-      <TextField layoutX="28.0" layoutY="112.0" prefHeight="45.0" prefWidth="650.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 5;" />
-      <Button layoutX="65.0" layoutY="277.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="250.0" style="-fx-background-color: #D32F2F; -fx-background-radius: 10;" text="Cancel" textFill="WHITE">
-         <font>
-            <Font name="Poppins SemiBold" size="32.0" />
-         </font>
-      </Button>
-      <Button layoutX="598.0" layoutY="277.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="250.0" style="-fx-background-color: #007766; -fx-background-radius: 10;" text="Confirm" textFill="WHITE">
-         <font>
-            <Font name="Poppins SemiBold" size="32.0" />
-         </font>
-      </Button>
-      <ImageView fitHeight="69.0" fitWidth="69.0" layoutX="369.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="30.0" layoutY="178.0" text="Activity Description">
-         <font>
-            <Font name="Poppins SemiBold" size="20.0" />
-         </font>
-      </Label>
-      <TextField layoutX="28.0" layoutY="212.0" prefHeight="40.0" prefWidth="650.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 5;" />
-      <Label layoutX="729.0" layoutY="78.0" text="Progress">
-         <font>
-            <Font name="Poppins SemiBold" size="20.0" />
-         </font>
-      </Label>
-      <TextField layoutX="726.0" layoutY="112.0" prefHeight="45.0" prefWidth="94.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 5;" />
-      <Label layoutX="829.0" layoutY="117.0" text="\%">
-         <font>
-            <Font name="Poppins SemiBold" size="24.0" />
-         </font>
-      </Label>
-      <Button layoutX="637.0" layoutY="123.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: #007766; -fx-background-radius: 6;" text="+" textFill="WHITE">
-         <font>
-            <Font name="Poppins SemiBold" size="10.0" />
-         </font>
-      </Button>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.components.CreateActivity">
+  <children>
+    <Label layoutX="27.0" layoutY="27.0" text="CREATE ACTIVITY">
+      <font>
+        <Font name="Poppins SemiBold" size="24.0"/>
+      </font>
+    </Label>
+    <Label layoutX="27.0" layoutY="78.0" text="Task Name">
+      <font>
+        <Font name="Poppins SemiBold" size="20.0"/>
+      </font>
+    </Label>
+    <Button layoutX="65.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleCancelAction" prefHeight="70.0" prefWidth="250.0" style="-fx-background-color: #D32F2F; -fx-background-radius: 10;" text="Cancel" textFill="WHITE">
+      <font>
+        <Font name="Poppins SemiBold" size="32.0"/>
+      </font>
+    </Button>
+    <Button layoutX="598.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleConfirmAction" prefHeight="70.0" prefWidth="250.0" style="-fx-background-color: #007766; -fx-background-radius: 10;" text="Confirm" textFill="WHITE">
+      <font>
+        <Font name="Poppins SemiBold" size="32.0"/>
+      </font>
+    </Button>
+    <ImageView fitHeight="69.0" fitWidth="69.0" layoutX="369.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true"/>
+    <Label layoutX="30.0" layoutY="178.0" text="Activity Description">
+      <font>
+        <Font name="Poppins SemiBold" size="20.0"/>
+      </font>
+    </Label>
+    <TextField fx:id="activityDescription" layoutX="28.0" layoutY="212.0" prefHeight="40.0" prefWidth="650.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 5;"/>
+    <Label layoutX="729.0" layoutY="78.0" text="Progress">
+      <font>
+        <Font name="Poppins SemiBold" size="20.0"/>
+      </font>
+    </Label>
+    <TextField fx:id="statusProgress" layoutX="726.0" layoutY="112.0" prefHeight="45.0" prefWidth="94.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 5;"/>
+    <Label layoutX="829.0" layoutY="117.0" text="\%">
+      <font>
+        <Font name="Poppins SemiBold" size="24.0"/>
+      </font>
+    </Label>
+    <ChoiceBox fx:id="taskName" layoutX="28.0" layoutY="115.0" prefHeight="40.0" prefWidth="650.0"/>
+  </children>
 </AnchorPane>

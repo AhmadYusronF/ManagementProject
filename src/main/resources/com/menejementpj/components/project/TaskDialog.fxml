@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_LEFT" spacing="15.0" style="-fx-padding: 20; -fx-background-color: #ffffff;" stylesheets="@../../css/taskDialog.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.controller.TaskDialogController">
+  <children>
+    <Label styleClass="label-header" text="Task Details">
+      <font>
+        <Font name="System Bold" size="18.0"/>
+      </font>
+    </Label>
+    <VBox spacing="5.0">
+      <children>
+        <Label text="Task Name"/>
+        <TextField fx:id="taskNameField" promptText="Enter the task name"/>
+      </children>
+    </VBox>
+    <VBox spacing="5.0">
+      <children>
+        <Label text="Assign to Member"/>
+        <ComboBox fx:id="memberComboBox" prefWidth="300.0" promptText="Select a member"/>
+      </children>
+    </VBox>
+    <HBox alignment="CENTER_RIGHT" spacing="10.0">
+      <children>
+        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel" text="Cancel"/>
+        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSave" style="-fx-background-color: #388E3C; -fx-text-fill: white;" text="Save Task"/>
+      </children>
+      <VBox.margin>
+        <Insets top="10.0"/>
+      </VBox.margin>
+    </HBox>
+  </children>
+</VBox>

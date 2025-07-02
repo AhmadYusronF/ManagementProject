@@ -791,13 +791,12 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */
 ;
 
-
 -- update baru data base 30 jun
-ALTER TABLE `account`
-	CHANGE `hidden_uid` `hidden_uid` int(11) NOT NULL AUTO_INCREMENT ;
+ALTER TABLE
+    `account` CHANGE `hidden_uid` `hidden_uid` int(11) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE users DROP COLUMN avatar;
-
+ALTER TABLE
+    users DROP COLUMN avatar;
 
 CREATE TABLE `group_chat` (
     `group_chat_id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -812,6 +811,24 @@ CREATE TABLE `group_chat` (
 
 DROP TABLE project_chat;
 
+ALTER TABLE
+    `groups`
+ADD
+    COLUMN group_news TEXT COMMENT 'add news in group';
 
-ALTER TABLE `groups` 
-	ADD COLUMN  group_news TEXT COMMENT 'add news in group';
+-- update 3juli
+ALTER TABLE
+    `activity_logs` DROP `action_type`;
+
+ALTER TABLE
+    activity_logs
+ADD
+    COLUMN project_task_id INT;
+
+ALTER TABLE
+    activity_logs
+ADD
+    CONSTRAINT fk_task_id FOREIGN KEY (project_task_id) REFERENCES project_task (project_task_id);
+
+ALTER TABLE
+    `project_task` CHANGE `status` `status` INT NULL DEFAULT NULL;

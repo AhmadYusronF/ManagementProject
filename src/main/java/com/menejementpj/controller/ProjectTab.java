@@ -22,18 +22,86 @@ import javafx.stage.Stage;
 public class ProjectTab {
 
     @FXML
+    private GridPane projectContainer;
+
+    @FXML
+    private void initialize() {
+        // When the view is first loaded, populate the grid with projects.
+        refreshProjectGrid();
+    }
+
+    /**
+     * This is the main refresh method. It clears the grid and reloads all
+     * project cards from the database.
+     */
+    private void refreshProjectGrid() {
+        Debug.log("Refreshing project grid...");
+        projectContainer.getChildren().clear();
+
+        try {
+            List<Project> projects = DatabaseManager.getProjectGrup();
+
+            if (projects == null || projects.isEmpty()) {
+                Debug.warn("No projects found to display.");
+                return;
+            }
+
+            int column = 0;
+            int row = 0;
+
+            for (Project project : projects) {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/menejementpj/components/project/projectCard.fxml"));
+
+                Parent cardRoot = loader.load();
+                ProjectCardController controller = loader.getController();
+
+                // Give the card a command to run when its detail window closes.
+                // This ensures the grid refreshes after a project is edited or deleted.
+                controller.setRefreshCallback(this::refreshProjectGrid);
+
+                controller.setData(
+                        project.title,
+                        project.createdAt,
+                        project.description,
+                        project.id);
+
+                projectContainer.add(cardRoot, column, row);
+
+                column++;
+                if (column >= 3) { // Assuming 3 columns per row
+                    column = 0;
+                    row++;
+                }
+            }
+            Debug.success("Project grid refreshed successfully.");
+
+        } catch (Exception e) {
+            Debug.error("Failed to refresh project grid: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Handles the "Create" button click. It shows the creation popup and then
+     * refreshes the grid to display the new project.
+     */
+    @FXML
     void handelCreateProject(ActionEvent event) {
         showPopup(event, "/com/menejementpj/components/project/projectCreatePopUp.fxml", "Create Project");
+        // After the popup is closed, refresh the grid to show the new project.
+        refreshProjectGrid();
     }
+
+    // --- Navigation and Helper Methods ---
 
     @FXML
     void toggleGoToHome(ActionEvent event) throws IOException {
-        App.setRoot("beranda", "\"Beranda - Management Project\"");
+        App.setRoot("beranda", "Beranda - Management Project");
     }
 
     @FXML
     void toggleGotoChat(ActionEvent event) {
-
         showPopupChat(event, "/com/menejementpj/chatPopUp.fxml", "Group Chat");
     }
 
@@ -43,67 +111,11 @@ public class ProjectTab {
     }
 
     @FXML
-    void handleGoToProject(ActionEvent event) throws IOException {
-        App.setRoot("projectTab", "Project");
-    }
-
-    @FXML
     void toggleGotoGrup(ActionEvent event) throws IOException {
         if (App.userSession.getCurrentLoggedInGroupID() != 0) {
-
-            App.setRoot("components/group/groupPage", "GroubPage - myGroub");
+            App.setRoot("components/group/groupPage", "GroupPage - myGroup");
         } else {
             App.setRoot("groupTab", "Group - join or create");
-        }
-    }
-
-    @FXML
-    private GridPane projectContainer;
-
-    @FXML
-    private void initialize() {
-        Debug.log("initialize");
-
-        try {
-
-            List<Project> projects = DatabaseManager.getProjectGrup();
-
-            if (projects == null || projects.isEmpty()) {
-                Debug.warn("Tidak ada project yang ditemukan.");
-                return;
-            }
-
-            int col = 0;
-            int row = 0;
-
-            for (Project project : projects) {
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/com/menejementpj/components/project/projectCard.fxml"));
-                Parent cardRoot = loader.load();
-                ProjectCardController controller = loader.getController();
-
-                controller.setData(
-                        project.title,
-                        project.createdAt,
-                        project.description,
-                        project.id);
-
-                GridPane.setColumnIndex(cardRoot, col);
-                GridPane.setRowIndex(cardRoot, row);
-                projectContainer.getChildren().add(cardRoot);
-
-                col++;
-                if (col == 2) {
-                    col = 0;
-                    row++;
-                }
-            }
-
-            Debug.success("Semua komponen project berhasil dimuat.");
-
-        } catch (Exception e) {
-            Debug.error("Gagal Menampilkan Projects: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -131,7 +143,6 @@ public class ProjectTab {
             Parent root = loader.load();
 
             Scene popupScene = new Scene(root);
-
             String cssPath = "/com/menejementpj/css/chatMessage.css";
             popupScene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
 
@@ -140,15 +151,11 @@ public class ProjectTab {
             popupStage.setScene(popupScene);
             popupStage.initModality(Modality.NONE);
             popupStage.setResizable(false);
-
-            Stage ownerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            popupStage.initOwner(ownerStage);
-
+            popupStage.initOwner(((Node) event.getSource()).getScene().getWindow());
             popupStage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }

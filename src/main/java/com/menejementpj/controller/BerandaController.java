@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.menejementpj.App;
-import com.menejementpj.components.ActivityLogController;
+
 import com.menejementpj.db.DatabaseManager;
 import com.menejementpj.model.ActivityLog;
 import com.menejementpj.test.Debug;
@@ -91,23 +91,23 @@ public class BerandaController {
         welcomeUser.setText("Welcome, " + App.user.getUsername());
         groubNews.setText(App.mygroup.news);
         try {
-            List<ActivityLog> logs = DatabaseManager.getActivityLogs();
+            // List<ActivityLog> logs = DatabaseManager.getActivityLogs();
 
-            if (logs == null || logs.isEmpty()) {
-                Debug.warn("Tidak ada Log yang ditemukan.");
-                return;
-            }
+            // if (logs == null || logs.isEmpty()) {
+            // Debug.warn("Tidak ada Log yang ditemukan.");
+            // return;
+            // }
 
-            for (ActivityLog log : logs) {
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/com/menejementpj/components/project/activityLogCard.fxml"));
-                Parent logRoot = loader.load();
-                ActivityLogController controller = loader.getController();
+            // for (ActivityLog log : logs) {
+            // FXMLLoader loader = new FXMLLoader(
+            // getClass().getResource("/com/menejementpj/components/project/activityLogCard.fxml"));
+            // Parent logRoot = loader.load();
+            // // ActivityLogController controller = loader.getController();
 
-                controller.setData(log.title, log.subTitle, log.progres);
+            // // controller.setData(log.title, log.subTitle, log.progres);
 
-                activityLogContainer.getChildren().add(logRoot);
-            }
+            // activityLogContainer.getChildren().add(logRoot);
+            // }
 
             Debug.success("Semua activity log berhasil ditampilkan!");
 

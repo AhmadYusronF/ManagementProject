@@ -7,19 +7,20 @@
   and a GridPane to organize the input fields and labels for alignment.
   A TableView is used to display the list of members.
 -->
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" spacing="20" style="-fx-background-color: #F5F5F5; -fx-padding: 40;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.components.CreateProject">
+<VBox alignment="TOP_CENTER" spacing="20" style="-fx-background-color: #F5F5F5; -fx-padding: 40;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.controller.CreateProjectController">
   <!-- Main Title -->
   <Label text="CREATE PROJECT">
     <font>
@@ -33,7 +34,7 @@
         <Font name="Poppins SemiBold" size="14.0"/>
       </font>
     </Label>
-    <TextField fx:id="groupNameField" prefHeight="32.0" prefWidth="458.0" promptText="" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;"/>
+    <TextField fx:id="projectNameField" prefHeight="32.0" prefWidth="458.0" promptText="" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;"/>
     <Label text="Description">
       <font>
         <Font name="Poppins SemiBold" size="14.0"/>
@@ -42,13 +43,13 @@
         <Insets top="10"/>
       </VBox.margin>
     </Label>
-    <TextArea fx:id="descriptionArea" prefHeight="100.0" prefWidth="933.0" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;" wrapText="true"/>
+    <TextArea fx:id="projectDecriptionArea" prefHeight="100.0" prefWidth="933.0" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;" wrapText="true"/>
     <Label text="Repo Url">
       <font>
         <Font name="Poppins SemiBold" size="14.0"/>
       </font>
     </Label>
-    <TextField fx:id="groupNameField1" prefHeight="32.0" prefWidth="458.0" promptText="" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;"/>
+    <TextField fx:id="repoUrlField" prefHeight="32.0" prefWidth="458.0" promptText="" style="-fx-background-radius: 6; -fx-background-color: #ffffff; -fx-border-color: #E0E0E0;"/>
   </VBox>
   <!-- Members Section -->
   <VBox spacing="10" style="-fx-padding: 20 0 0 0;">
@@ -58,33 +59,55 @@
       </font>
     </Label>
     <!-- Member Table -->
-    <TableView fx:id="membersTable" prefHeight="200" prefWidth="685.0" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-radius: 8;">
+    <TableView fx:id="taskTable" prefHeight="200" prefWidth="685.0" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-radius: 8;">
       <columns>
         <TableColumn fx:id="nameColumn" prefWidth="250.0" text="Nama"/>
-        <TableColumn fx:id="joinedAtColumn" prefWidth="200.0" text="Created At"/>
-        <TableColumn fx:id="rolesColumn" prefWidth="150.0" text="Member"/>
+        <TableColumn fx:id="createdAtCollumn" prefWidth="200.0" text="Created At"/>
+        <TableColumn fx:id="memberCollumn" prefWidth="150.0" text="Member"/>
       </columns>
       <placeholder>
-        <Label text="No members added yet."/>
+        <Label text="No task added yet."/>
       </placeholder>
     </TableView>
-    <Hyperlink onAction="#handleAddMember" text="+ Add More Task">
-      <VBox.margin>
-        <Insets top="10"/>
-      </VBox.margin>
-    </Hyperlink>
+    <HBox prefHeight="9.0" prefWidth="933.0">
+      <children>
+        <Button mnemonicParsing="false" onAction="#handleAddTask" style="-fx-background-color: transparent;" text="Add Task" textFill="#007766">
+          <HBox.margin>
+            <Insets right="20.0"/>
+          </HBox.margin>
+          <font>
+            <Font name="Poppins SemiBold" size="12.0"/>
+          </font>
+        </Button>
+        <Button mnemonicParsing="false" onAction="#handleUpdateTask" style="-fx-background-color: transparent;" text="Update Task" textFill="#2962ff">
+          <HBox.margin>
+            <Insets right="20.0"/>
+          </HBox.margin>
+          <font>
+            <Font name="Poppins SemiBold" size="12.0"/>
+          </font>
+        </Button>
+        <Button mnemonicParsing="false" onAction="#handleDeleteTask" style="-fx-background-color: transparnet;" text="Delete Task" textFill="#d32f2f">
+          <HBox.margin>
+            <Insets right="20.0"/>
+          </HBox.margin>
+          <font>
+            <Font name="Poppins SemiBold" size="12.0"/>
+          </font>
+        </Button>
+      </children>
+    </HBox>
   </VBox>
   <AnchorPane>
     <children>
-      <Button fx:id="saveButton1" layoutX="753.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleSave" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #D32F2F; -fx-background-radius: 6; -fx-padding: 10 30;" text="DELETE PROJECT" textFill="WHITE">
+      <Button fx:id="saveButton" layoutX="423.0" layoutY="10.0" onAction="#handleSave" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #007766; -fx-text-fill: white; -fx-background-radius: 6;" styleClass="saveButton" text="SAVE" textFill="WHITE">
         <font>
           <Font name="Poppins Bold" size="14.0"/>
         </font>
-      </Button>
-      <Button fx:id="saveButton" layoutX="423.0" layoutY="10.0" onAction="#handleSave" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #388E3C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10 30;" text="SAVE">
-        <font>
-          <Font name="Poppins Bold" size="14.0"/>
-        </font>
+        <stylesheets>
+          <URL value="@../../css/button.css"/>
+          <URL value="@../../css/createProject.css"/>
+        </stylesheets>
       </Button>
     </children>
   </AnchorPane>

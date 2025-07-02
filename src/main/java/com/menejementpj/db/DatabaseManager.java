@@ -1,6 +1,7 @@
 package com.menejementpj.db;
 
 import com.menejementpj.App;
+import com.menejementpj.auth.UserData;
 import com.menejementpj.components.PopUpAlert;
 // import com.menejementpj.model.ActivityLog;
 import com.menejementpj.test.Debug;
@@ -8,8 +9,11 @@ import com.menejementpj.type.*;
 import com.menejementpj.model.ActivityLog;
 import com.menejementpj.model.ChatMessage;
 import com.menejementpj.model.Group;
+import com.menejementpj.model.MemberTask;
 // import com.mysql.cj.xdevapi.Result;
 import com.menejementpj.model.Project;
+import com.menejementpj.model.ProjectTask;
+import com.menejementpj.model.TaskSelection;
 import com.menejementpj.model.User;
 
 import java.sql.Connection;
@@ -21,7 +25,11 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.print.DocFlavor.STRING;
 
 public class DatabaseManager {
 
@@ -368,27 +376,30 @@ public class DatabaseManager {
         }
     }
 
-    public static List<ActivityLog> getActivityLogs() {
-        List<ActivityLog> logs = new ArrayList<>();
-        String query = "SELECT al.activity_logs_id AS id, al.activity_logs_message AS message, gp.title AS title, al.action_type AS progres FROM groups_project gp INNER JOIN activity_logs al ON al.fk_groups_project_id = gp.groups_project_id WHERE gp.fk_groups_id = ?";
-        try (Connection conn = connect();
-                PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, App.userSession.getCurrentLoggedInGroupID());
-            ResultSet rs = pstmt.executeQuery();
+    // public static List<ActivityLog> getActivityLogs() {
+    // List<ActivityLog> logs = new ArrayList<>();
+    // String query = "SELECT al.activity_logs_id AS id, al.activity_logs_message AS
+    // message, gp.title AS title, al.action_type AS progres FROM groups_project gp
+    // INNER JOIN activity_logs al ON al.fk_groups_project_id = gp.groups_project_id
+    // WHERE gp.fk_groups_id = ?";
+    // try (Connection conn = connect();
+    // PreparedStatement pstmt = conn.prepareStatement(query)) {
+    // pstmt.setInt(1, App.userSession.getCurrentLoggedInGroupID());
+    // ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String title = rs.getString("title");
-                String message = rs.getString("message");
-                String progres = rs.getString("progres");
-                logs.add(new ActivityLog(id, title, message, progres));
-            }
-            return logs;
-        } catch (Exception e) {
-            Debug.error("GagalMendapatActivity");
-            return null;
-        }
-    }
+    // while (rs.next()) {
+    // int id = rs.getInt("id");
+    // String title = rs.getString("title");
+    // String message = rs.getString("message");
+    // int progres = rs.getInt("progres");
+    // logs.add(new ActivityLog(id, title, message, progres));
+    // }
+    // return logs;
+    // } catch (Exception e) {
+    // Debug.error("GagalMendapatActivity");
+    // return null;
+    // }
+    // }
 
     public static void setNews(String message) {
         String query = "UPDATE `groups` SET group_news = ? WHERE groups_id = ?";
@@ -480,6 +491,239 @@ public class DatabaseManager {
             Debug.error("Gagal mrdapat rolename: " + e.getMessage());
             return null;
         }
+    }
+
+    // fadil
+    public static Project getProjectDetails(int projectId) {
+        String sql = "SELECT * FROM groups_project WHERE groups_project_id = ?";
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, projectId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String title = rs.getString("title");
+                String describ = rs.getString("groups_project_description");
+                LocalDateTime createat = rs.getTimestamp("groups_project_created_at").toLocalDateTime();
+                LocalDateTime updateAt = rs.getTimestamp("groups_project_updated_at").toLocalDateTime();
+                String url = rs.getString("repo_url");
+                int id = rs.getInt("groups_project_id");
+                return new Project(title, describ, createat.toLocalDate(), updateAt.toLocalDate(), url, id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static int createProject(String title, String description, String repoUrl, int groupId) {
+        String sql = "INSERT INTO groups_project (title, groups_project_description, fk_groups_id, repo_url) VALUES (?, ?, ?, ?)";
+        try (Connection conn = connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setString(1, title);
+            pstmt.setString(2, description);
+            pstmt.setInt(3, groupId);
+            pstmt.setString(4, repoUrl);
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static boolean updateProject(Project project) {
+        String sql = "UPDATE groups_project SET title = ?, groups_project_description = ?, repo_url = ?, groups_project_updated_at = NOW() WHERE groups_project_id = ?";
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, project.title);
+            pstmt.setString(2, project.description);
+            pstmt.setString(3, project.repoUrl);
+            pstmt.setInt(4, project.id);
+            return pstmt.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean deleteProject(int projectId) {
+        String deleteLogsSql = "DELETE FROM activity_logs WHERE fk_groups_project_id = ?";
+        String deleteTasksSql = "DELETE FROM project_task WHERE fk_groups_project_id = ?";
+        String deleteProjectSql = "DELETE FROM groups_project WHERE groups_project_id = ?";
+        Connection conn = null;
+        try {
+            conn = connect();
+            conn.setAutoCommit(false);
+            try (PreparedStatement pstmt = conn.prepareStatement(deleteLogsSql)) {
+                pstmt.setInt(1, projectId);
+                pstmt.executeUpdate();
+            }
+            try (PreparedStatement pstmt = conn.prepareStatement(deleteTasksSql)) {
+                pstmt.setInt(1, projectId);
+                pstmt.executeUpdate();
+            }
+            try (PreparedStatement pstmt = conn.prepareStatement(deleteProjectSql)) {
+                pstmt.setInt(1, projectId);
+                pstmt.executeUpdate();
+            }
+            conn.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (conn != null)
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            return false;
+        } finally {
+            if (conn != null)
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+        }
+    }
+
+    public static void createTask(int projectId, int userId, String taskName) {
+        String sql = "INSERT INTO project_task (fk_groups_project_id, fk_users_id, task, status) VALUES (?, ?, ?, 0)";
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, projectId);
+            pstmt.setInt(2, userId);
+            pstmt.setString(3, taskName);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateTaskStatus(int taskId, int progress) {
+        String sql = "UPDATE project_task SET status = ? WHERE project_task_id = ?";
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, progress);
+            pstmt.setInt(2, taskId);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<ProjectTask> getProjectTasksForTable(int projectId) {
+        List<ProjectTask> tasks = new ArrayList<>();
+        String sql = "SELECT pt.task, pt.project_task_created_at, u.username, u.users_id " +
+                "FROM project_task pt " +
+                "JOIN users u ON pt.fk_users_id = u.users_id " +
+                "WHERE pt.fk_groups_project_id = ?";
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, projectId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                tasks.add(new ProjectTask(rs.getString("task"), rs.getString("username"), rs.getInt("users_id")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tasks;
+    }
+
+    public static List<TaskSelection> getTasksForProject(int projectId) {
+        List<TaskSelection> tasks = new ArrayList<>();
+        String sql = "SELECT project_task_id, task FROM project_task WHERE fk_groups_project_id = ?";
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, projectId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                tasks.add(new TaskSelection(rs.getInt("project_task_id"), rs.getString("task")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tasks;
+    }
+
+    public static Map<UserData, List<MemberTask>> getTasksGroupedByMember(int projectId) {
+        Map<UserData, List<MemberTask>> taskMap = new LinkedHashMap<>();
+        String sql = "SELECT u.users_id, u.username, pt.project_task_id, pt.task, pt.status " +
+                "FROM project_task pt " +
+                "JOIN users u ON pt.fk_users_id = u.users_id " +
+                "WHERE pt.fk_groups_project_id = ? ORDER BY u.username, pt.project_task_id";
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, projectId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                // Note: For this to work correctly as a Map key, your UserData class
+                // should have properly implemented equals() and hashCode() methods.
+                UserData user = new UserData(rs.getInt("users_id"), rs.getString("username"));
+                MemberTask task = new MemberTask(rs.getInt("project_task_id"), rs.getString("task"),
+                        rs.getInt("status"));
+                taskMap.computeIfAbsent(user, k -> new ArrayList<>()).add(task);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return taskMap;
+    }
+
+    public static void createActivityLog(int projectId, int taskId, int userId, String message) {
+        String sql = "INSERT INTO activity_logs (fk_groups_project_id, project_task_id, fk_users_id, activity_logs_message) VALUES (?, ?, ?, ?)";
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, projectId);
+            pstmt.setInt(2, taskId);
+            pstmt.setInt(3, userId);
+            pstmt.setString(4, message);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<ActivityLog> getActivityLogs(int projectId) {
+        List<ActivityLog> logs = new ArrayList<>();
+        String sql = "SELECT u.username, pt.task, al.activity_logs_message, al.times, pt.status " +
+                "FROM activity_logs al " +
+                "JOIN project_task pt ON al.project_task_id = pt.project_task_id " +
+                "JOIN users u ON al.fk_users_id = u.users_id " +
+                "WHERE al.fk_groups_project_id = ? ORDER BY al.times DESC";
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, projectId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+
+                String usernam = rs.getString("username");
+                String task = rs.getString("task");
+                String message = rs.getString("activity_logs_message");
+                LocalDateTime times = rs.getTimestamp("times").toLocalDateTime();
+                int status = rs.getInt("status");
+                logs.add(new ActivityLog(usernam, task, message, times, status));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return logs;
+    }
+
+    public static List<UserData> getGroupMembers(int groupId) {
+        List<UserData> members = new ArrayList<>();
+        String sql = "SELECT u.users_id, u.username FROM users u " +
+                "JOIN groups_member gm ON u.users_id = gm.fk_users_id " +
+                "WHERE gm.fk_groups_id = ?";
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, groupId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                members.add(new UserData(rs.getInt("users_id"), rs.getString("username")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return members;
     }
 
 }

@@ -1,0 +1,124 @@
+/*
+ * CSS Stylesheet for projectCreatePopUp.fxml
+ */
+
+/* --- Main Container --- */
+.root {
+  -fx-background-color: #f5f5f5;
+  -fx-font-family: "Poppins";
+}
+
+/* --- Labels --- */
+.label {
+  -fx-font-size: 14px;
+  -fx-text-fill: #333333;
+}
+
+/* Style for the main "CREATE PROJECT" title */
+.title-label {
+  -fx-font-size: 24px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #212121;
+}
+
+/* Style for section headers like "Project Name", "Description" */
+.section-label {
+  -fx-font-size: 14px;
+  -fx-font-weight: bold; /* Poppins SemiBold is bold */
+}
+
+/* --- Input Fields --- */
+.text-field,
+.text-area {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 6;
+  -fx-border-color: #e0e0e0;
+  -fx-border-radius: 6;
+  -fx-font-size: 14px;
+  -fx-padding: 8 12;
+}
+
+.text-field:focused,
+.text-area:focused {
+  -fx-border-color: #007766; /* Highlight color on focus */
+  -fx-background-color: #ffffff;
+}
+
+.text-area .content {
+  -fx-background-color: #ffffff; /* Ensure text area content background is white */
+}
+
+.table-view {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #e0e0e0;
+  -fx-border-radius: 8;
+  -fx-background-radius: 8;
+}
+
+.table-view .column-header-background {
+  -fx-background-color: #f5f5f5;
+}
+
+.table-view .column-header,
+.table-view .filler {
+  -fx-background-color: transparent;
+  -fx-size: 35;
+  -fx-font-size: 12px;
+  -fx-font-weight: regular;
+}
+
+.table-view .cell {
+  -fx-border-color: transparent;
+  -fx-padding: 8;
+}
+
+/* --- Buttons --- */
+
+/* General style for solid buttons */
+.solid-button {
+  -fx-font-weight: bold;
+  -fx-background-radius: 6;
+  -fx-padding: 10 30;
+  -fx-font-size: 14px;
+  -fx-cursor: hand;
+}
+
+/* Specific style for the SAVE button */
+.saveButton {
+  -fx-background-color: #007766;
+  -fx-text-fill: white;
+}
+.saveButton:hover {
+  -fx-background-color: #00a58c;
+}
+
+.deleteButton {
+  -fx-background-color: #d32f2f;
+  -fx-text-fill: white;
+}
+.deleteButton:hover {
+  -fx-background-color: #c62828;
+}
+
+/* Style for transparent, link-like buttons */
+.link-button {
+  -fx-background-color: transparent;
+  -fx-font-size: 12px;
+  -fx-font-weight: bold; /* Poppins SemiBold */
+  -fx-cursor: hand;
+  -fx-padding: 5;
+}
+.link-button:hover {
+  -fx-underline: true;
+}
+
+/* Specific text colors for link-style buttons */
+.add-task-button {
+  -fx-text-fill: #007766;
+}
+.update-task-button {
+  -fx-text-fill: #2962ff;
+}
+.delete-task-button {
+  -fx-text-fill: #d32f2f;
+}

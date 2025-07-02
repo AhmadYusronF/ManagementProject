@@ -4,23 +4,41 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<!-- 
+  The fx:controller has been updated to point to the correct controller.
+  fx:id attributes have been added to all necessary labels.
+-->
 
-<HBox alignment="CENTER_LEFT" spacing="15" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.components.ActivityLogController">
-   <children>
-      <Rectangle arcHeight="5" arcWidth="5" fill="#4CAF50" height="40" width="10" />
-      <VBox HBox.hgrow="ALWAYS">
-         <children>
-            <Label fx:id="title" style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Implementasi UI Awal" />
-            <Label fx:id="subTitle" style="-fx-font-size: 12px; -fx-text-fill: #555555;" text="Menyelesaikan layout dasar untuk tampilan proyek." />
-         </children>
-      </VBox>
-      <Label fx:id="proggres" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #4CAF50;" text="100%" />
-   </children>
-   <opaqueInsets>
-      <Insets />
-   </opaqueInsets>
-   <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
-   </padding>
+<HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: #E0E0E0; -fx-background-radius: 6; -fx-border-radius: 6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.menejementpj.components.ActivityLogCardController">
+  <children>
+    <VBox HBox.hgrow="ALWAYS">
+      <children>
+        <!-- fx:id added for the sender's name -->
+        <Label fx:id="senderNameLabel" style="-fx-font-weight: bold;" text="Sender Name"/>
+        <!-- fx:id for the task title -->
+        <Label fx:id="title" style="-fx-font-size: 14px;" text="Task Title">
+          <font>
+            <Font name="Poppins Regular" size="12.0"/>
+          </font>
+        </Label>
+        <!-- fx:id for the activity description -->
+        <Label fx:id="subTitle" style="-fx-font-size: 14px; -fx-text-fill: #555555;" text="Activity description goes here.">
+          <font>
+            <Font name="Poppins Regular" size="14.0"/>
+          </font>
+        </Label>
+        <!-- fx:id added for the timestamp -->
+        <Label fx:id="timestampLabel" text="2025-07-02 12:00" textFill="#9e9e9e"/>
+      </children>
+    </VBox>
+    <!-- 
+        The inline text-fill color has been removed from the style.
+        The controller will now set the color dynamically.
+      -->
+    <Label fx:id="proggres" style="-fx-font-weight: bold; -fx-font-size: 14px;" text="100%"/>
+  </children>
+  <padding>
+    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+  </padding>
 </HBox>

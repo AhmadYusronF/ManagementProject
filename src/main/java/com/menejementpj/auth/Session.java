@@ -4,6 +4,15 @@ public class Session {
     private int currentLoggedInHidden_uid = -1;
     private int currentLoggedInUserID = -1;
     private int currentLoggedInGroupID = -1;
+    private int currentProjectID = -1;
+
+    public int getCurrentProjectID() {
+        return currentProjectID;
+    }
+
+    public void setCurrentProjectID(int currentProjectID) {
+        this.currentProjectID = currentProjectID;
+    }
 
     public int getCurrentLoggedInHidden_uid() {
         return currentLoggedInHidden_uid;

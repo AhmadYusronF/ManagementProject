@@ -1,0 +1,77 @@
+/*
+ * CSS Stylesheet for TaskDialog.fxml
+ */
+
+/* --- Root Container --- */
+.root {
+    -fx-background-color: #ffffff;
+    -fx-font-family: "Poppins";
+}
+
+/* --- Labels --- */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+.label-header {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* --- Text Field --- */
+.text-field {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 6;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 6;
+    -fx-font-size: 14px;
+    -fx-padding: 8 12;
+}
+
+.text-field:focused {
+    -fx-border-color: #007766;
+    -fx-background-color: #ffffff;
+}
+
+/* --- ComboBox --- */
+.combo-box {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 6;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 6;
+    -fx-font-size: 14px;
+}
+
+.combo-box .list-cell {
+    -fx-font-size: 14px;
+}
+
+/* --- Buttons --- */
+.button {
+    -fx-background-radius: 6;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20;
+    -fx-cursor: hand;
+}
+
+/* Save Button Style */
+#saveButton {
+    -fx-background-color: #388E3C;
+    -fx-text-fill: white;
+}
+
+#saveButton:hover {
+    -fx-background-color: #2E7D32;
+}
+
+/* Cancel Button Style */
+#cancelButton {
+    -fx-background-color: #D32F2F;
+    -fx-text-fill: white;
+}
+
+#cancelButton:hover {
+    -fx-background-color: #C62828;
+}

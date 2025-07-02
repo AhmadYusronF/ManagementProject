@@ -1,15 +1,40 @@
 package com.menejementpj.model;
 
-public class ActivityLog {
-    public int id;
-    public String title;
-    public String subTitle;
-    public String progres;
+import java.time.LocalDateTime;
 
-    public ActivityLog(int id, String title, String subTitle, String progres) {
-        this.id = id;
+public class ActivityLog {
+    private final String senderName;
+    private final String title; // Represents the task name
+    private final String description; // Represents the activity_logs_message
+    private final LocalDateTime timestamp;
+    private final int progress;
+
+    public ActivityLog(String senderName, String title, String description, LocalDateTime timestamp, int progress) {
+        this.senderName = senderName;
         this.title = title;
-        this.subTitle = subTitle;
-        this.progres = progres;
+        this.description = description;
+        this.timestamp = timestamp;
+        this.progress = progress;
+    }
+
+    // Getters for all fields
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public int getProgress() {
+        return progress;
     }
 }
